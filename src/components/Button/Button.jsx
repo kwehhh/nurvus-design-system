@@ -8,7 +8,7 @@ import './Button.scss';
  * Button component.
  * @returns {ReactElement} of Button component.
  */
-function Button(props) {
+const Button = React.forwardRef(function Button(props, ref) {
   const {
     className,
     children,
@@ -22,12 +22,13 @@ function Button(props) {
       className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'button', className) }
       data-size={ size }
       data-type={ type }
+      ref={ ref }
       { ...restProps }
     >
       { children }
     </button>
   );
-}
+});
 
 Button.propTypes = {
   /**
@@ -41,20 +42,20 @@ Button.propTypes = {
   /**
    * Size of button.
    */
-   size: PropTypes.oneOf[
+  size: PropTypes.oneOf([
     'extra-large',
     'large',
     'medium',
     'small',
     'mini'
-   ],
+  ]),
   /**
    * Size of button.
    */
-   type: PropTypes.oneOf[
+  type: PropTypes.oneOf([
     'primary',
     'secondary'
-   ]
+  ])
 };
 
 export default Button;
