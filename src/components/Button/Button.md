@@ -1,7 +1,7 @@
 Basic Example
 ```jsx
 import React from 'react';
-import { Button, Layout } from '@unfocused/nurvus-ui';
+import { Button, Layout } from '@nurvus/design-system';
 
 <Layout display="flex" itemSpacing={ 40 }>
   <Layout display="flex">
@@ -70,7 +70,7 @@ import { Button, Layout } from '@unfocused/nurvus-ui';
 onClick Example
 ```jsx
 import React from 'react';
-import { Button, Layout } from '@unfocused/nurvus-ui';
+import { Button, Layout } from '@nurvus/design-system';
 
 <Layout display="flex">
   <Button onClick={ () => console.log('You Clicked Me!') }>Hello</Button>

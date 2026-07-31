@@ -1,0 +1,84 @@
+#
+# Publish @nurvus/design-system to the public npm registry.
+#
+# ONE action ties Git + GitHub + npm together: publishing a GitHub Release.
+#   1. Bump "version" in package.json (e.g. 0.1.0-alpha.1).
+#   2. Commit + push.
+#   3. Create a GitHub Release with tag `v<version>` (tick "pre-release" for
+#      any -alpha/-beta). That single step creates the git tag AND fires this
+#      workflow, which builds and publishes the matching npm version.
+#
+#      package.json 0.1.0-alpha.1  ==  git tag v0.1.0-alpha.1  ==  npm 0.1.0-alpha.1
+#
+# AUTH — npm Trusted Publishing (OIDC), no stored NPM_TOKEN:
+#   Needs `id-token: write` (below) + a Trusted Publisher configured for this
+#   package on npmjs.com:
+#     Package -> Settings -> Trusted Publisher -> GitHub Actions
+#       repo:     UnfocusedDrive/nurvus-design-system
+#       workflow: publish.yml
+#   npm authenticates via OIDC at publish time and attaches build provenance
+#   (links the npm release to this commit + workflow run).
+#
+# FIRST-PUBLISH BOOTSTRAP (one time): a brand-new package can't have a Trusted
+#   Publisher configured until the package exists. Do ONE manual publish to
+#   create it, then this workflow handles every release afterward:
+#     cd nurvus-design-system
+#     npm publish --dry-run          # inspect
+#     npm publish --tag alpha        # access:public comes from package.json
+#   Then configure the Trusted Publisher (above) and use Releases from then on.
+#   (OIDC-only by design: no NPM_TOKEN secret is used or needed.)
+#
+# DIST-TAG: prerelease versions (contain "-") publish under `alpha` so they
+#   never take over `latest`. Consumers: npm install @nurvus/design-system@alpha
+#
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write # required for npm OIDC trusted publishing + provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout released tag
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Use latest npm (trusted publishing + provenance support)
+        run: npm install -g npm@latest
+
+      - name: Verify release tag matches package.json version
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          echo "package.json=$PKG_VERSION   release tag=$GITHUB_REF_NAME"
+          if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
+            echo "::error::Release tag ($GITHUB_REF_NAME) must match package.json version (v$PKG_VERSION)"
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build package (dist/)
+        run: npm run build
+
+      - name: Verify build output
+        run: test -f dist/index.js || (echo "dist/index.js missing after build" && exit 1)
+
+      - name: Publish to npm (dist-tag from version, with provenance)
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [[ "$VERSION" == *-* ]]; then DIST_TAG=alpha; else DIST_TAG=latest; fi
+          echo "Publishing $VERSION under dist-tag: $DIST_TAG"
+          npm publish --tag "$DIST_TAG" --provenance

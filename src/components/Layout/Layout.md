@@ -1,6 +1,6 @@
 Basic Example
 ```jsx
-import { Button, Layout, Title } from '@unfocused/nurvus-ui';
+import { Button, Layout, Title } from '@nurvus/design-system';
 import AddIcon from '@material-ui/icons/Add';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
@@ -16,7 +16,7 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 
 Horizontal Example
 ```jsx
-import { Button, Layout, Title } from '@unfocused/nurvus-ui';
+import { Button, Layout, Title } from '@nurvus/design-system';
 import AddIcon from '@material-ui/icons/Add';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';

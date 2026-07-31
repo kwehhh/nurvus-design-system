@@ -16,7 +16,7 @@ Use the following example after installation:
 ```jsx static
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button } from '@unfocused/nurvus-ui';
+import { Button } from '@nurvus/design-system';
 
 function App() {
   return (
