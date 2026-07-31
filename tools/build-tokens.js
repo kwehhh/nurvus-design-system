@@ -13,11 +13,18 @@ const tokensFile = path.join(__dirname, '../src/styles/tokens.scss');
  */
 function JSON2SCSS(data) {
   const parsed = JSON.parse(data);
-  const string = Object.keys(parsed).map(key => {
-    return `$${key}: ${parsed[key]};`;
-  }).join('\n');
+  const keys = Object.keys(parsed);
 
-  return string;
+  // SCSS variables (compile-time) — kept for existing `$--token` consumers.
+  const scssVars = keys.map(key => `$${key}: ${parsed[key]};`).join('\n');
+
+  // Runtime CSS custom properties (:root) so tokens are usable in the browser
+  // (e.g. runtime theming / consuming apps). NOTE: tokens.scss is imported
+  // per-component, so this :root block can repeat in compiled output — harmless
+  // (CSS merges :root rules); dedupe into a single import later if desired.
+  const cssVars = keys.map(key => `  ${key}: ${parsed[key]};`).join('\n');
+
+  return `${scssVars}\n\n:root {\n${cssVars}\n}\n`;
 }
 
 /**
