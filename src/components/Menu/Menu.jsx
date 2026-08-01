@@ -54,7 +54,7 @@ class Menu extends React.Component {
             >
               { itemChildren }
             </div>
-            { this.renderItems(item.items, remainingPath, nextPath) }
+            { this.renderItems(item.items, first === i ? remainingPath : [], nextPath) }
 
           </React.Fragment>
         );
