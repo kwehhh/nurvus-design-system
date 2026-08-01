@@ -59,8 +59,8 @@
     "url": "git+https://github.com/UnfocusedDrive/nurvus-design-system.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "John Yagiz",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/UnfocusedDrive/nurvus-design-system/issues"
   },
