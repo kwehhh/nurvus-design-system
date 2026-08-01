@@ -1,5 +1,5 @@
 ```jsx
-import { Layout, Title } from '@nurvus/design-system';
+import { Layout, Title } from '@nurvus/ui';
 
 <Layout>
   <Title level={ 1 }>

@@ -1,5 +1,5 @@
 ```jsx
-import { Button, ButtonGroup, Layout } from '@nurvus/design-system';
+import { Button, ButtonGroup, Layout } from '@nurvus/ui';
 import AddIcon from '@material-ui/icons/Add';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';

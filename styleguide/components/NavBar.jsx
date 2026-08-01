@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Layout, Title } from '@nurvus/design-system';
+import { Button, Layout, Title } from '@nurvus/ui';
 
 // ReactDOM.render(
 //   <div>

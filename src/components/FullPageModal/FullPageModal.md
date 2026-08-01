@@ -1,6 +1,6 @@
 ```jsx
 import React, { useState } from 'react';
-import { Button, FullPageModal, Layout } from '@nurvus/design-system';
+import { Button, FullPageModal, Layout } from '@nurvus/ui';
 
 const MyApp = () => {
   const [visible, setVisible] = useState(false);

@@ -1,22 +1,34 @@
 # NURVUS Design System (NDS)
 
-A React based reusable component library.
+The React component library of the NURVUS Design System, published as **`@nurvus/ui`**.
 
 The NURVUS System (/ˈnərvəs ˌsistəm/) is the network of highly complex interconnected CaaS (Component as a service) for your application design.
 
 ### Installation
-1. CLI Install `npm install https://github.com/UnfocusedDrive/nurvus-design-system.git#main`
-2. Or, Manual Install: Or as alternative, add `"@nurvus/ui": "git+https://github.com/UnfocusedDrive/nurvus-design-system.git#main",` to `package.json` dependencies.
+
+```bash
+npm install @nurvus/ui@alpha
+```
+
+Or pin the range in `package.json`:
+
+```json
+"dependencies": {
+  "@nurvus/ui": "^0.1.0-alpha.1"
+}
+```
+
+> Prereleases publish under the `alpha` dist-tag. Consumers opt in explicitly — `latest` is reserved for the first stable release.
 
 ### Dependencies
-- React ^16.8
+- React ^16.8 (peer dependency)
 
 ### Usage
 Use the following example after installation:
 ```jsx static
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button } from '@nurvus/design-system';
+import { Button } from '@nurvus/ui';
 
 function App() {
   return (

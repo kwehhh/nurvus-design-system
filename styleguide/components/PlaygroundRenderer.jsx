@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
 import ReactDOM from 'react-dom';
-import { Button, Layout } from '@nurvus/design-system';
+import { Button, Layout } from '@nurvus/ui';
 
 // ReactDOM.render(
 //   <div>

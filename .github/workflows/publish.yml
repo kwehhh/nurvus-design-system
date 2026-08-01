@@ -1,5 +1,5 @@
 #
-# Publish @nurvus/design-system to the public npm registry.
+# Publish @nurvus/ui to the public npm registry.
 #
 # ONE action ties Git + GitHub + npm together: publishing a GitHub Release.
 #   1. Bump "version" in package.json (e.g. 0.1.0-alpha.1).
@@ -29,7 +29,7 @@
 #   (OIDC-only by design: no NPM_TOKEN secret is used or needed.)
 #
 # DIST-TAG: prerelease versions (contain "-") publish under `alpha` so they
-#   never take over `latest`. Consumers: npm install @nurvus/design-system@alpha
+#   never take over `latest`. Consumers: npm install @nurvus/ui@alpha
 #
 name: Publish to npm
 

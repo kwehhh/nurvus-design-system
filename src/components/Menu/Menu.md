@@ -1,6 +1,6 @@
 Basic Example
 ```jsx
-import { Menu } from '@nurvus/design-system';
+import { Menu } from '@nurvus/ui';
 
 const initialPath = [1];
 const items = [
@@ -34,7 +34,7 @@ const MyApp = ({initialPath}) => {
 
 Using Sub Menus
 ```jsx
-import { Menu } from '@nurvus/design-system';
+import { Menu } from '@nurvus/ui';
 
 const initialPath = [0, 0, 0];
 const items = [
@@ -80,7 +80,7 @@ Using itemRenderer
 ```jsx
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
-import { Layout, Menu, Text } from '@nurvus/design-system';
+import { Layout, Menu, Text } from '@nurvus/ui';
 
 const itemRenderer = ({ label }) => {
   return (

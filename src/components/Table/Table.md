@@ -1,7 +1,7 @@
 Basic Usage
 ```jsx
 import React from 'react';
-import { Table } from '@nurvus/design-system';
+import { Table } from '@nurvus/ui';
 
 // mock data provided from https://www.mockaroo.com/
 const data = [
@@ -101,7 +101,7 @@ const columns = [
 Custom Column renderer
 ```jsx
 import React from 'react';
-import { Table } from '@nurvus/design-system';
+import { Table } from '@nurvus/ui';
 
 // mock data provided from https://www.mockaroo.com/
 
