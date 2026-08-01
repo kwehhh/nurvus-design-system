@@ -25,19 +25,13 @@ jobs:
           script: |
             cd /home/apps # go to app dir
             rm -rf nurvus-design-system/ # wipe out app for fresh build
-            git clone https://github.com/UnfocusedDrive/nurvus-design-system.git # get latest
+            git clone https://github.com/kwehhh/nurvus-design-system.git # get latest
             cd nurvus-design-system # go to app dir
             npm install # get latest packages
-            npm run styleguide:build #build styleguide
+            npm run styleguide:build # build the styleguide (design system docs)
 
-            # Staging
-            rm -rf /var/www/unstable.memoryleak.ai/nurvus-design-system/ # remove directory to wipe all contents
-            mkdir /var/www/unstable.memoryleak.ai/nurvus-design-system # recreate directory
-            sudo mv -i styleguide/build/* /var/www/unstable.memoryleak.ai/nurvus-design-system/ # move build to serve dir
-            echo 'Successfully deployed to unstable.memoryleak.ai/nurvus-design-system'
-
-            # Production
-            # rm -rf /var/www/nurvus.memoryleak.ai/ # remove directory to wipe all contents
-            # mkdir /var/www/nurvus.memoryleak.ai # recreate directory
-            # sudo mv -i styleguide/build/* /var/www/nurvus.memoryleak.ai/ # move build to serve dir
-            # echo 'Successfully deployed to nurvus.memoryleak.ai'
+            # Deploy the design system to design.nurvus.ai (master deployments)
+            rm -rf /var/www/design.nurvus.ai/ # wipe serve dir
+            mkdir -p /var/www/design.nurvus.ai # recreate
+            sudo mv -i styleguide/build/* /var/www/design.nurvus.ai/ # move build to serve dir
+            echo 'Successfully deployed to design.nurvus.ai'
