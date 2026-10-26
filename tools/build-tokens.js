@@ -11,20 +11,28 @@ const tokensFile = path.join(__dirname, '../src/styles/tokens.scss');
  * @param {object} data - JSON Data
  * @returns {string} of SCSS variables
  */
-function JSON2SCSS(data) {
-  const parsed = JSON.parse(data);
-  const keys = Object.keys(parsed);
+function JSON2SCSS(lightData, darkData) {
+  const light = JSON.parse(lightData);
+  const dark = darkData ? JSON.parse(darkData) : {};
+  const keys = Object.keys(light);
 
-  // SCSS variables (compile-time) — kept for existing `$--token` consumers.
-  const scssVars = keys.map(key => `$${key}: ${parsed[key]};`).join('\n');
+  // SCSS variables now resolve to the RUNTIME custom property of the same name
+  // (`$--x: var(--x)`) instead of a frozen literal, so every existing
+  // `$--token` consumer re-themes at runtime when `:root[data-theme]` changes —
+  // with no component edits. Safe here because tokens are used as plain values,
+  // never inside SCSS color functions (darken()/rgba()), which would need the
+  // literal.
+  const scssVars = keys.map(key => `$${key}: var(${key});`).join('\n');
 
-  // Runtime CSS custom properties (:root) so tokens are usable in the browser
-  // (e.g. runtime theming / consuming apps). NOTE: tokens.scss is imported
-  // per-component, so this :root block can repeat in compiled output — harmless
-  // (CSS merges :root rules); dedupe into a single import later if desired.
-  const cssVars = keys.map(key => `  ${key}: ${parsed[key]};`).join('\n');
+  // Light is the default :root. Dark only lists the keys that differ, scoped to
+  // [data-theme="dark"].
+  const lightRoot = keys.map(key => `  ${key}: ${light[key]};`).join('\n');
+  const darkKeys = Object.keys(dark);
+  const darkRoot = darkKeys.map(key => `  ${key}: ${dark[key]};`).join('\n');
 
-  return `${scssVars}\n\n:root {\n${cssVars}\n}\n`;
+  let out = `${scssVars}\n\n:root {\n${lightRoot}\n}\n`;
+  if (darkKeys.length) out += `\n:root[data-theme="dark"] {\n${darkRoot}\n}\n`;
+  return out;
 }
 
 /**
@@ -57,6 +65,11 @@ function writeFile(data) {
  * Execute
  * Read the variables JSON file and convert to SCSS file to ./styles dir
  */
-readFile(varsFile).then(data => {
-  writeFile(JSON2SCSS(data));
+const darkVarsFile = path.join(__dirname, '/vars.dark.json');
+
+Promise.all([
+  readFile(varsFile),
+  fs.promises.readFile(darkVarsFile, 'utf8').catch(() => null), // optional dark overrides
+]).then(([light, dark]) => {
+  writeFile(JSON2SCSS(light, dark));
 });

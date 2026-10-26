@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+// Load the generated tokens globally so BOTH :root blocks (light default +
+// [data-theme="dark"] overrides) are present on every styleguide page.
+@import '../src/styles/tokens.scss';
 
 * {
   box-sizing: border-box;
@@ -7,10 +10,20 @@
 body {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  background-color: rgba(249, 249, 252, 1);
-
+  background-color: var(--base--50);
+  color: var(--base--1200);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .nurvus {
   font-family: 'Inter', sans-serif;
+}
+
+// Styleguidist renders its OWN chrome (page headings, example descriptions,
+// section names) with a static #333 that ignores our tokens. Route that text
+// through the ink token so it follows the light/dark toggle and stays legible.
+[class*='rsg--heading'],
+[class*='rsg--para'],
+[class*='rsg--sectionName'] {
+  color: var(--base--1200) !important;
 }

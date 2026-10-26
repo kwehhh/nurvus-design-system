@@ -8,7 +8,9 @@
 
   // TYPE
   &[data-type="primary"] {
-    color: $--pure--black;
+    // Ink token (near-black in light, near-white in dark) so Title follows the
+    // theme instead of being frozen pure-black.
+    color: $--base--1200;
   }
 
   &[data-type="secondary"] {

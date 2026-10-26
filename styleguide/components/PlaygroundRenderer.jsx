@@ -37,7 +37,7 @@ function PlaygroundRenderer(props) {
         data-testid="preview-wrapper"
         style={{
           padding: 20,
-          background: 'white',
+          background: 'var(--base--50)',
           borderRadius: 6
         }}
       >
