@@ -18,7 +18,7 @@ Or pin the range in `package.json`:
 }
 ```
 
-> Prereleases publish under the `alpha` dist-tag. Consumers opt in explicitly — `latest` is reserved for the first stable release.
+> Every version publishes under the `alpha` dist-tag, and until a stable 1.0 `latest` follows it, so `npm install @nurvus/ui` and `@nurvus/ui@alpha` give the same newest build.
 
 > **Publishing is automatic.** Every push to `main` that changes the package (`src/`, `tools/`, build config) publishes `0.1.0-alpha.<build number>` from GitHub Actions (`.github/workflows/publish.yml`, npm Trusted Publishing: no token, no 2FA code). Pick up the newest with `npm update @nurvus/ui`.
 

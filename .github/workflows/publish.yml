@@ -17,7 +17,11 @@
 #   Needs `id-token: write` and npm >= 11.5.1. package.json `repository.url`
 #   must name this repo, or npm rejects the provenance.
 #
-# DIST-TAG: prerelease versions publish under `alpha`, never `latest`.
+# DIST-TAGS: each version publishes under `alpha`, then `latest` is moved to
+#   it too. Until there is a stable 1.0 the newest alpha IS the latest, and
+#   otherwise a bare `npm install @nurvus/ui` keeps getting whatever `latest`
+#   pointed at (npm set it to the hand-published alpha.1 and nothing moved it).
+#   The trusted publisher has the dist-tag permission for this.
 #
 name: Publish to npm
 
@@ -72,7 +76,11 @@ jobs:
           BASE=$(node -p "require('./package.json').version.split('-')[0]")
           VERSION="$BASE-alpha.$((GITHUB_RUN_NUMBER + 1))"
           npm version "$VERSION" --no-git-tag-version
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
           echo "Publishing @nurvus/ui@$VERSION"
 
       - name: Publish to npm under the alpha tag (with provenance)
         run: npm publish --tag alpha --provenance
+
+      - name: Point the latest tag at it too (until a stable 1.0)
+        run: npm dist-tag add "@nurvus/ui@$VERSION" latest
