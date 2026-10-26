@@ -56,13 +56,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/UnfocusedDrive/nurvus-design-system.git"
+    "url": "git+https://github.com/kwehhh/nurvus-design-system.git"
   },
   "keywords": [],
   "author": "John Yagiz",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/UnfocusedDrive/nurvus-design-system/issues"
+    "url": "https://github.com/kwehhh/nurvus-design-system/issues"
   },
-  "homepage": "https://github.com/UnfocusedDrive/nurvus-design-system#readme"
+  "homepage": "https://github.com/kwehhh/nurvus-design-system#readme"
 }

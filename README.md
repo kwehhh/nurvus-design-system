@@ -20,6 +20,8 @@ Or pin the range in `package.json`:
 
 > Prereleases publish under the `alpha` dist-tag. Consumers opt in explicitly — `latest` is reserved for the first stable release.
 
+> **Publishing is automatic.** Every push to `main` that changes the package (`src/`, `tools/`, build config) publishes `0.1.0-alpha.<build number>` from GitHub Actions (`.github/workflows/publish.yml`, npm Trusted Publishing: no token, no 2FA code). Pick up the newest with `npm update @nurvus/ui`.
+
 ### Dependencies
 - React ^16.8 (peer dependency)
 

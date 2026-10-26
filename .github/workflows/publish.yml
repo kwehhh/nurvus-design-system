@@ -1,51 +1,54 @@
 #
-# Publish @nurvus/ui to the public npm registry.
+# Publish @nurvus/ui to the public npm registry on every push to main that
+# changes the package (see `paths`). No release step, no version-bump commits.
 #
-# ONE action ties Git + GitHub + npm together: publishing a GitHub Release.
-#   1. Bump "version" in package.json (e.g. 0.1.0-alpha.1).
-#   2. Commit + push.
-#   3. Create a GitHub Release with tag `v<version>` (tick "pre-release" for
-#      any -alpha/-beta). That single step creates the git tag AND fires this
-#      workflow, which builds and publishes the matching npm version.
+# VERSION: the run number becomes the alpha number (GitHub's version of
+#   CircleCI's $CIRCLE_BUILD_NUM). package.json holds the BASE version
+#   (0.1.0-alpha.1 → base 0.1.0); this job sets 0.1.0-alpha.<run_number + 1>
+#   in its own checkout only, then publishes. The +1 skips alpha.1, which was
+#   published by hand on 2026-07-30. Consumers pick up new versions with
+#   `npm update @nurvus/ui` (or install @nurvus/ui@alpha).
 #
-#      package.json 0.1.0-alpha.1  ==  git tag v0.1.0-alpha.1  ==  npm 0.1.0-alpha.1
+# AUTH: npm Trusted Publishing (OIDC). No stored token, no 2FA code.
+#   npmjs.com → @nurvus/ui → Settings → Trusted Publisher → GitHub Actions:
+#   kwehhh / nurvus-design-system / publish.yml (set up 2026-10-25).
+#   GitHub hands this job a short-lived signed identity ("publish.yml in
+#   kwehhh/nurvus-design-system"); npm checks it against that rule.
+#   Needs `id-token: write` and npm >= 11.5.1. package.json `repository.url`
+#   must name this repo, or npm rejects the provenance.
 #
-# AUTH — npm Trusted Publishing (OIDC), no stored NPM_TOKEN:
-#   Needs `id-token: write` (below) + a Trusted Publisher configured for this
-#   package on npmjs.com:
-#     Package -> Settings -> Trusted Publisher -> GitHub Actions
-#       repo:     UnfocusedDrive/nurvus-design-system
-#       workflow: publish.yml
-#   npm authenticates via OIDC at publish time and attaches build provenance
-#   (links the npm release to this commit + workflow run).
-#
-# FIRST-PUBLISH BOOTSTRAP (one time): a brand-new package can't have a Trusted
-#   Publisher configured until the package exists. Do ONE manual publish to
-#   create it, then this workflow handles every release afterward:
-#     cd nurvus-design-system
-#     npm publish --dry-run          # inspect
-#     npm publish --tag alpha        # access:public comes from package.json
-#   Then configure the Trusted Publisher (above) and use Releases from then on.
-#   (OIDC-only by design: no NPM_TOKEN secret is used or needed.)
-#
-# DIST-TAG: prerelease versions (contain "-") publish under `alpha` so they
-#   never take over `latest`. Consumers: npm install @nurvus/ui@alpha
+# DIST-TAG: prerelease versions publish under `alpha`, never `latest`.
 #
 name: Publish to npm
 
 on:
-  release:
-    types: [published]
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/**'
+      - 'tools/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'webpack.config.js'
+      - '.babelrc'
+      - '.github/workflows/publish.yml'
+  # Manual run from the Actions tab, e.g. to re-publish after a failed run.
+  workflow_dispatch:
 
 permissions:
   contents: read
   id-token: write # required for npm OIDC trusted publishing + provenance
 
+# Never run two publishes at once; queue them in push order.
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout released tag
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -54,31 +57,22 @@ jobs:
           node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Use latest npm (trusted publishing + provenance support)
+      - name: Use latest npm (trusted publishing needs >= 11.5.1)
         run: npm install -g npm@latest
 
-      - name: Verify release tag matches package.json version
-        run: |
-          PKG_VERSION=$(node -p "require('./package.json').version")
-          TAG_VERSION="${GITHUB_REF_NAME#v}"
-          echo "package.json=$PKG_VERSION   release tag=$GITHUB_REF_NAME"
-          if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
-            echo "::error::Release tag ($GITHUB_REF_NAME) must match package.json version (v$PKG_VERSION)"
-            exit 1
-          fi
-
+      # `prepare` builds dist/ here (and again inside `npm publish`).
       - name: Install dependencies
         run: npm ci
-
-      - name: Build package (dist/)
-        run: npm run build
 
       - name: Verify build output
         run: test -f dist/index.js || (echo "dist/index.js missing after build" && exit 1)
 
-      - name: Publish to npm (dist-tag from version, with provenance)
+      - name: Set the version from the run number
         run: |
-          VERSION=$(node -p "require('./package.json').version")
-          if [[ "$VERSION" == *-* ]]; then DIST_TAG=alpha; else DIST_TAG=latest; fi
-          echo "Publishing $VERSION under dist-tag: $DIST_TAG"
-          npm publish --tag "$DIST_TAG" --provenance
+          BASE=$(node -p "require('./package.json').version.split('-')[0]")
+          VERSION="$BASE-alpha.$((GITHUB_RUN_NUMBER + 1))"
+          npm version "$VERSION" --no-git-tag-version
+          echo "Publishing @nurvus/ui@$VERSION"
+
+      - name: Publish to npm under the alpha tag (with provenance)
+        run: npm publish --tag alpha --provenance
