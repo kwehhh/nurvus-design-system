@@ -1,36 +1,69 @@
 @import "../../styles/variables.scss";
+@import "../../styles/tokens.scss";
 
 .#{$cls-prefix}.menu {
-  background: #403960;
+  // ---------------------------------------------------------------------------
+  // Indentation is token-driven, not a magic number in JS.
+  // Rows are FLAT siblings in the DOM (see Menu.jsx) — nesting is purely visual,
+  // produced by padding-left. Menu.jsx stamps `--nurvus-menu-depth` per row and
+  // clamps it with the `maxIndentDepth` prop, so a deep tree can never indent
+  // the label out of a narrow panel.
+  // Consumers retune the whole tree by overriding these two on .nurvus.menu.
+  // ---------------------------------------------------------------------------
+  --nurvus-menu-indent-base: #{$--space--8};
+  --nurvus-menu-indent-step: #{$--space--12};
+
+  background: $--base--50;
+  color: $--base--1100;
+  padding: $--space--4;
+
+  // Allow the menu to shrink inside a flex/grid parent instead of forcing its
+  // intrinsic width and pushing the row content out.
+  min-width: 0;
 
   .menu-item {
     position: relative;
-    padding: 10px;
-    color: #e6e6e6;
+    min-width: 0; // ...and let row content ellipsis rather than collapse to 0
+    padding: $--space--8 $--space--12;
+    padding-left: calc(
+      var(--nurvus-menu-indent-base) +
+      var(--nurvus-menu-depth, 0) * var(--nurvus-menu-indent-step)
+    );
+    border-radius: $--radius--4;
+    color: $--base--1100;
     cursor: pointer;
 
-    // Hover / Pressed
-    &:hover,
-    &[data-active="true"] {
-      color: white;
+    &:hover {
+      background: $--base--200;
+      color: $--base--1200;
     }
 
+    // Active row: 2px accent rail + a neon wash. Both sides of the wash are
+    // primary-opacity tokens, which are identical in light and dark — the neon
+    // is the one constant across themes.
     &[data-active="true"] {
+      background: $--primary-opacity--8;
+      color: $--base--1200;
+
       &::before {
         content: '';
-        height: 100%;
-        width: 2px;
         position: absolute;
         left: 0;
         top: 0;
-        background: #48c3f4;
+        height: 100%;
+        width: $--space--2;
+        border-radius: $--radius--2;
+        background: $--primary--500;
       }
-      // border-left: 2px solid #48c3f4;
-      background: linear-gradient(90deg, rgba(72,195,244, 0.5) 0%, rgba(64,57,96,1) 100%);
+
+      &:hover {
+        background: $--primary-opacity--16;
+      }
     }
 
-    > [data-type="group"] {
-      margin-left: 20px;
+    // Nested groups read one step quieter than leaf rows.
+    &[data-type="group"] {
+      color: $--base--700;
     }
   }
 }

@@ -31,7 +31,9 @@ class Menu extends React.Component {
         const isActive = this.isActiveItem(activePath, i);
         const [ first, ...remainingPath ] = activePath;
         const nextPath = [...path, i];
-        const indent = (20 * path.length) + 10;
+        // Clamped so a deep tree cannot indent the label out of a narrow panel.
+        // The px maths lives in Menu.scss against spacing tokens; JS only supplies depth.
+        const depth = Math.min(path.length, this.props.maxIndentDepth);
 
         let itemChildren;
         if (itemRenderer) {
@@ -48,7 +50,7 @@ class Menu extends React.Component {
               data-type={ type }
               onClick={ e => this.handleClick(e, nextPath) }
               style={ {
-                paddingLeft: indent,
+                '--nurvus-menu-depth': String(depth),
                 ...style
               } }
             >
@@ -66,7 +68,7 @@ class Menu extends React.Component {
 
 
   render() {
-    const { activePath, className, children, itemRenderer, items, ...props } = this.props;
+    const { activePath, className, children, itemRenderer, items, maxIndentDepth, ...props } = this.props;
 
     return (
       <div
@@ -103,7 +105,16 @@ Menu.propTypes = {
    * @param {object} event - object
    * @param {array} activePath - of clicked menu item.
    */
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  /**
+   * Maximum nesting depth that still adds indentation. Deeper rows render at the
+   * max indent so the label keeps its room in a narrow panel.
+   */
+  maxIndentDepth: PropTypes.number
+};
+
+Menu.defaultProps = {
+  maxIndentDepth: 6
 };
 
 export default Menu;
