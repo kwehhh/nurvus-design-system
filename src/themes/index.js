@@ -6,12 +6,13 @@ import apolloWhite from './apollo-white.json';
 import dopamine from './dopamine.json';
 import tokyoNeon from './tokyo-neon.json';
 import nether from './nether.json';
+import netherNeon from './nether-neon.json';
 import outworld from './outworld.json';
 import arcane from './arcane.json';
 import roles from './roles.json';
 
 /** All themes, in display order (light first). */
-export const themes = [apolloWhite, dopamine, tokyoNeon, nether, outworld, arcane]
+export const themes = [apolloWhite, dopamine, tokyoNeon, nether, netherNeon, outworld, arcane]
   .sort((a, b) => a.order - b.order);
 
 /** The theme a page gets with no data-theme attribute at all. */
