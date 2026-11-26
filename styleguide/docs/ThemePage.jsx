@@ -1,6 +1,6 @@
 import React from 'react';
 import { getTheme, setTheme, themeRoles, Button, Menu, Progress, Table, Title } from '@nurvus/ui';
-import { checkTheme } from '../../tools/contrast';
+import { checkTheme } from '../../tools/contrast.mjs';
 import { CodeBlock } from './ThemeCollection';
 import './ThemePage.scss';
 

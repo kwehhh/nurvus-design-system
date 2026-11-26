@@ -13,8 +13,14 @@ export default defineConfig({
   base: './',
   plugins: [react(), nurvusDocs({ root })],
   resolve: {
-    // The docs are built from the package's source, like styleguidist was.
-    alias: { '@nurvus/ui': path.join(root, 'src/index.js') },
+    alias: [
+      // The docs are built from the package's source, like styleguidist was.
+      { find: '@nurvus/ui', replacement: path.join(root, 'src/index.js') },
+      // @material-ui/icons/<Name> is CommonJS; its default export arrived as the
+      // whole exports object after Vite re-bundled deps. The package ships an
+      // ES-module copy of every icon: use that, so default imports just work.
+      { find: /^@material-ui\/icons\/(?!esm\/)(.+)$/, replacement: '@material-ui/icons/esm/$1' },
+    ],
     // One React: the components and the docs must share it.
     dedupe: ['react', 'react-dom'],
   },

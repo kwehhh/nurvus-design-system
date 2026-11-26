@@ -44,7 +44,8 @@ export default function nurvusDocs({ root }) {
       });
       return {
         name,
-        description: doc.description || '',
+        // JSDoc tags (@returns …) are for code readers, not the docs page.
+        description: (doc.description || '').replace(/^@\w+.*$/gm, '').trim(),
         props: doc.props || {},
         parseError: doc.parseError || null,
         markdown,

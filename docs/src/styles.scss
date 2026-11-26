@@ -42,7 +42,7 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
   margin-left: auto;
 }
 
-.dx-menu-button {
+.dx-header .dx-menu-button {
   display: none;
   border: 0;
   background: transparent;
@@ -134,7 +134,7 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 // Phone: the sidebar becomes a drawer behind the header menu button.
 @media (max-width: 760px) {
   .dx-header { padding: 0 12px; }
-  .dx-menu-button { display: inline-flex; }
+  .dx-header .dx-menu-button { display: inline-flex; }
   .nv-version-link { display: none; }
   .dx-layout { grid-template-columns: minmax(0, 1fr); }
   .dx-sidebar {
@@ -284,3 +284,73 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
     outline-offset: 2px;
   }
 }
+
+// Component pages: prose, live examples, props.
+.dx-prose {
+  max-width: 76ch;
+  p { margin: 0 0 12px; }
+  code { padding: 1px 5px; border-radius: 4px; background: var(--nv-surface); }
+}
+
+.dx-section-title {
+  margin: 40px 0 12px;
+  font-size: var(--nv-type-title-size);
+  line-height: var(--nv-type-title-line);
+  font-weight: var(--nv-type-title-weight);
+  letter-spacing: var(--nv-type-title-tracking);
+}
+
+.dx-example {
+  margin: 12px 0 28px;
+  overflow: hidden;
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+}
+
+.dx-example-preview {
+  padding: 24px;
+  background: var(--nv-bg);
+  color: var(--nv-text);
+  overflow-x: auto;
+}
+
+.dx-example-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--nv-surface);
+  border-top: 1px solid var(--nv-border);
+}
+
+.dx-example-isolate {
+  margin-left: auto;
+  font-size: 13px;
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}
+
+.dx-editor {
+  border-top: 1px solid var(--nv-border);
+  .cm-editor { max-height: 480px; }
+}
+
+.dx-example[data-mode="static"] .dx-editor { border-top: 0; }
+
+.dx-example-error {
+  margin: 0;
+  padding: 12px 14px;
+  border-left: 3px solid var(--nv-danger);
+  background: color-mix(in srgb, var(--nv-danger) 8%, transparent);
+  color: var(--nv-danger);
+  font: 13px/1.5 var(--nv-font-mono);
+  white-space: pre-wrap;
+}
+
+.dx-table-scroll { overflow-x: auto; }
+.dx-props td { vertical-align: top; }
+
+.dx-isolated { min-height: 100vh; padding: 24px; background: var(--nv-bg); }
+.dx-isolated .dx-example { border: 0; margin: 0; }
+.dx-isolated-back { display: inline-block; margin-bottom: 16px; font-size: 14px; }
