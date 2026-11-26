@@ -9,15 +9,15 @@
 
   // Type
   &[data-type="primary"] {
-    background-color: $--primary--500;
-    color: $--pure--white;
+    background-color: var(--nv-accent-fill);
+    color: var(--nv-on-accent);
 
     &:hover {
-      background-color: $--primary--600;
+      background-color: color-mix(in srgb, var(--nv-accent-fill) 86%, var(--nv-text));
     }
 
     &:active {
-      background-color: $--primary--700;
+      background-color: color-mix(in srgb, var(--nv-accent-fill) 74%, var(--nv-text));
     }
 
     &:disabled {
@@ -27,21 +27,21 @@
       // Disable event styles
       &:hover,
       &:active {
-        background: $--primary--500;
+        background: var(--nv-accent-fill);
       }
     }
   }
 
   &[data-type="secondary"] {
-    background-color: $--base-opacity--8;
-    color: $--base--1000;
+    background-color: color-mix(in srgb, var(--nv-text) 8%, transparent);
+    color: var(--nv-text);
 
     &:hover {
-      background-color: $--base-opacity--24;
+      background-color: color-mix(in srgb, var(--nv-text) 14%, transparent);
     }
 
     &:active {
-      background-color: $--base-opacity--40;
+      background-color: color-mix(in srgb, var(--nv-text) 20%, transparent);
     }
 
     &:disabled {
@@ -51,7 +51,7 @@
       // Disable event styles
       &:hover,
       &:active {
-        background: $--base-opacity--8;
+        background: color-mix(in srgb, var(--nv-text) 8%, transparent);
       }
     }
   }

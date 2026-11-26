@@ -3,7 +3,7 @@
 @import "../../styles/tokens.scss";
 
 .#{$cls-prefix}.progress {
-  background: $--orange-opacity--8;
+  background: var(--nv-surface);
 
   &,
   > .bar {
@@ -27,28 +27,28 @@
     height: 8px;
   }
 
-  // Size
+  // Status
   &[data-status="active"] {
     > .bar {
-      background-color: $--primary--500;
+      background-color: var(--nv-accent-fill);
     }
   }
 
   &[data-status="success"] {
     > .bar {
-      background-color: $--green--500;
+      background-color: var(--nv-success);
     }
   }
 
   &[data-status="warning"] {
     > .bar {
-      background-color: $--yellow--200;
+      background-color: var(--nv-warning);
     }
   }
 
   &[data-status="critical"] {
     > .bar {
-      background-color: $--red--500;
+      background-color: var(--nv-danger);
     }
   }
 }

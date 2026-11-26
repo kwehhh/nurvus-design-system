@@ -37,7 +37,7 @@ Progress.propTypes = {
    */
   percent: PropTypes.number,
   /**
-   * Progress percent.
+   * Bar height.
    */
   size: PropTypes.oneOf([
     'small',
@@ -45,9 +45,9 @@ Progress.propTypes = {
     'large'
   ]),
   /**
-   * Progress status.
+   * Progress status: the bar color (accent, success, warning, danger).
    */
-   size: PropTypes.oneOf([
+  status: PropTypes.oneOf([
     'active',
     'success',
     'warning',

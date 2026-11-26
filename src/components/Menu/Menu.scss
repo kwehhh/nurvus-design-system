@@ -13,8 +13,8 @@
   --nurvus-menu-indent-base: #{$--space--8};
   --nurvus-menu-indent-step: #{$--space--12};
 
-  background: $--base--50;
-  color: $--base--1100;
+  background: var(--nv-bg);
+  color: var(--nv-text);
   padding: $--space--4;
 
   // Allow the menu to shrink inside a flex/grid parent instead of forcing its
@@ -30,20 +30,19 @@
       var(--nurvus-menu-depth, 0) * var(--nurvus-menu-indent-step)
     );
     border-radius: $--radius--4;
-    color: $--base--1100;
+    color: var(--nv-text);
     cursor: pointer;
 
     &:hover {
-      background: $--base--200;
-      color: $--base--1200;
+      background: var(--nv-surface-hover);
+      color: var(--nv-text);
     }
 
-    // Active row: 2px accent rail + a neon wash. Both sides of the wash are
-    // primary-opacity tokens, which are identical in light and dark — the neon
-    // is the one constant across themes.
+    // Active row: 2px accent rail + a tinted wash, both from the theme's
+    // accent, so every theme keeps the same "you are here" language.
     &[data-active="true"] {
-      background: $--primary-opacity--8;
-      color: $--base--1200;
+      background: var(--nv-accent-soft);
+      color: var(--nv-text);
 
       &::before {
         content: '';
@@ -53,17 +52,17 @@
         height: 100%;
         width: $--space--2;
         border-radius: $--radius--2;
-        background: $--primary--500;
+        background: var(--nv-accent);
       }
 
       &:hover {
-        background: $--primary-opacity--16;
+        background: color-mix(in srgb, var(--nv-accent) 22%, transparent);
       }
     }
 
     // Nested groups read one step quieter than leaf rows.
     &[data-type="group"] {
-      color: $--base--700;
+      color: var(--nv-text-muted);
     }
   }
 }

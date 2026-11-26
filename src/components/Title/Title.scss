@@ -8,13 +8,12 @@
 
   // TYPE
   &[data-type="primary"] {
-    // Ink token (near-black in light, near-white in dark) so Title follows the
-    // theme instead of being frozen pure-black.
-    color: $--base--1200;
+    // Theme text color, so Title follows whichever theme is applied.
+    color: var(--nv-text);
   }
 
   &[data-type="secondary"] {
-    color: $--base--600;
+    color: var(--nv-text-muted);
   }
 
   @at-root {

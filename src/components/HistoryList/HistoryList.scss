@@ -1,7 +1,7 @@
 @import "../../styles/variables.scss";
 @import "../../styles/tokens.scss";
 
-// Token-only, so it follows the light/dark theme. The current step uses the
+// Role tokens only (--nv-*), so it follows whichever theme is applied. The current step uses the
 // same accent rail + wash language as Menu's active row.
 .#{$cls-prefix}.history-list {
   list-style: none;
@@ -18,26 +18,26 @@
     padding: $--space--4 $--space--8;
     font: inherit;
     text-align: left;
-    color: $--base--1100;
+    color: var(--nv-text);
     background: transparent;
     border: 1px solid transparent;
     border-radius: $--radius--4;
     cursor: pointer;
 
     &:hover {
-      background: $--primary-opacity--8;
+      background: var(--nv-accent-soft);
     }
 
     &:focus-visible {
-      outline: 2px solid $--primary--500;
+      outline: 2px solid var(--nv-accent);
       outline-offset: 1px;
     }
 
     // Where you are now.
     &[data-current="true"] {
-      border-color: $--primary--500;
-      background: $--primary-opacity--16;
-      color: $--base--1200;
+      border-color: var(--nv-accent);
+      background: color-mix(in srgb, var(--nv-accent) 22%, transparent);
+      color: var(--nv-text);
       cursor: default;
     }
 
@@ -57,8 +57,8 @@
     padding: 1px $--space--4;
     text-align: center;
     font-size: 11px;
-    color: $--base--700;
-    border: 1px solid $--base--300;
+    color: var(--nv-text-muted);
+    border: 1px solid var(--nv-border);
     border-radius: $--radius--4;
   }
 
@@ -78,7 +78,7 @@
 
   .history-list-detail,
   .history-list-time {
-    color: $--base--700;
+    color: var(--nv-text-muted);
     font-size: 11px;
   }
 
