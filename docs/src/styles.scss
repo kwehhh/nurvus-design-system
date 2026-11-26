@@ -113,7 +113,9 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 .dx-page-title {
   margin: 0 0 8px;
   font-size: var(--nv-type-display-size);
-  line-height: var(--nv-type-display-line);
+  // Rounded to a whole pixel: 44px x 1.08 = 47.52px pushed everything below
+  // it half a pixel off the grid (soft edges on cards and swatches).
+  line-height: round(calc(var(--nv-type-display-size) * var(--nv-type-display-line)), 1px);
   font-weight: var(--nv-type-display-weight);
   letter-spacing: var(--nv-type-display-tracking);
 }

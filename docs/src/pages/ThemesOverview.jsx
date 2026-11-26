@@ -1,13 +1,20 @@
 import React from 'react';
-import { themes } from '@nurvus/ui';
-import { href } from '../router';
+import { ThemeCollection, ThemeGrid, ThemeUsage } from '../themes/ThemeCollection';
 
-// Phase 2 placeholder: the real overview moves over in phase 4.
+/** Themes: the collection card, every theme as a card, how an app applies one. */
 export default function ThemesOverview() {
   return (
-    <div className="dx-page">
+    <div className="dx-page dx-themes">
       <h1 className="dx-page-title">Themes</h1>
-      <ul>{ themes.map((t) => <li key={ t.id }><a href={ href('Themes', t.name) }>{ t.name }</a></li>) }</ul>
+      <ThemeCollection />
+      <h2 className="dx-section-title">All themes</h2>
+      <p className="dx-lede">
+        Each theme is a complete palette of its own: the same 27 role tokens, every one with a value.
+        Pick a card to see the theme in use, or switch the whole site with <strong>Theme</strong> at the top right.
+      </p>
+      <ThemeGrid />
+      <h2 className="dx-section-title">Applying a theme</h2>
+      <ThemeUsage />
     </div>
   );
 }

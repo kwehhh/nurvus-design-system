@@ -10,18 +10,22 @@ import ComponentPage, { IsolatedExample } from './pages/ComponentPage';
 import ThemesOverview from './pages/ThemesOverview';
 import ThemePage from './pages/ThemePage';
 
-/** Which page a route shows. */
+/**
+ * Which page a route shows. Each theme and component page has its own key, so
+ * moving between them builds a fresh page (no state or color transitions
+ * carried over from the previous one).
+ */
 function resolve(route) {
   const [section, name, kind, index] = route;
   if (!section || (section === 'Themes' && !name)) return { page: <ThemesOverview />, title: 'Themes', current: href('Themes') };
   if (section === 'Themes' && name && !kind) {
     const theme = themes.find((t) => t.name === name);
-    if (theme) return { page: <ThemePage id={ theme.id } />, title: theme.name, current: href('Themes', name) };
+    if (theme) return { page: <ThemePage key={ theme.id } id={ theme.id } />, title: theme.name, current: href('Themes', name) };
   }
   if (section === 'Components' && !name) return { page: <ComponentsIndex />, title: 'Components', current: href('Components') };
   if (section === 'Components' && name) {
     const component = components.find((c) => c.name === name);
-    if (component && !kind) return { page: <ComponentPage component={ component } />, title: name, current: href('Components', name) };
+    if (component && !kind) return { page: <ComponentPage key={ component.name } component={ component } />, title: name, current: href('Components', name) };
     if (component && kind === 'example' && index !== undefined) return { isolated: <IsolatedExample component={ component } index={ Number(index) } />, title: `${name} example ${index}` };
   }
   return { page: <NotFound path={ route } />, title: 'Not found', current: null };

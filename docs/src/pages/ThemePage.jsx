@@ -1,13 +1,14 @@
 import React from 'react';
 import { getTheme } from '@nurvus/ui';
+import { ThemePage as ThemeDetail } from '../themes/ThemePage';
 
-// Phase 2 placeholder: the real theme page moves over in phase 4.
+/** One theme's page, shown in that theme whatever the site's theme is. */
 export default function ThemePage({ id }) {
   const theme = getTheme(id);
   return (
     <div className="dx-page">
       <h1 className="dx-page-title">{ theme.name }</h1>
-      <p>{ theme.keywords }</p>
+      <ThemeDetail id={ id } />
     </div>
   );
 }
