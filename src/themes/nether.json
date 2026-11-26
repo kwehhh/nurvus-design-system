@@ -1,0 +1,52 @@
+{
+  "id": "nether",
+  "name": "Nether",
+  "mode": "dark",
+  "status": "demo",
+  "order": 4,
+  "keywords": "Deep. Silent. Absolute.",
+  "summary": "Near-black and true greys, with one NURVUS violet accent.",
+  "description": "The world below. Near-black ground and true greys with no tint at all, and a single NURVUS violet that only shows up where you act. Nothing glows unless it has to.",
+  "bestFor": "Focus modes, long sessions, media and canvases where the content should be the only light in the room.",
+  "showcase": {
+    "label": "text-subtle",
+    "title": "text",
+    "tagline": "text-muted",
+    "swatches": [
+      "accent-fill",
+      "accent",
+      "text-muted",
+      "surface-hover",
+      "warning"
+    ]
+  },
+  "colors": {
+    "bg": "#0B0C10",
+    "bg-alt": "#0F1015",
+    "bg-deep": "#08090C",
+    "surface": "#17181F",
+    "surface-hover": "#1F2129",
+    "border": "#22242D",
+    "border-strong": "#5E6272",
+    "text": "#E7E9EE",
+    "text-muted": "#B4B8C4",
+    "text-subtle": "#8B90A0",
+    "accent": "#8A89FA",
+    "accent-fill": "#504FF6",
+    "on-accent": "#FFFFFF",
+    "accent-soft": "rgba(110, 109, 248, 0.16)",
+    "selection": "#26264A",
+    "cursor": "#8A89FA",
+    "success": "#5FD08A",
+    "warning": "#F5B83D",
+    "danger": "#FF6B6B",
+    "info": "#8A89FA",
+    "syntax-comment": "#8B90A0",
+    "syntax-keyword": "#A5A4FB",
+    "syntax-function": "#F5F6F8",
+    "syntax-tag": "#8A89FA",
+    "syntax-attr": "#C9CCD6",
+    "syntax-string": "#B4B8C4",
+    "syntax-number": "#F5B83D"
+  }
+}

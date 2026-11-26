@@ -1,0 +1,52 @@
+{
+  "id": "dopamine",
+  "name": "Dopamine",
+  "mode": "light",
+  "status": "demo",
+  "order": 2,
+  "keywords": "Vivid. Joyful. Addictive.",
+  "summary": "Warm cream paper with saturated pink, purple and blue.",
+  "description": "Named after the brain's reward chemical. Warm cream paper, then color that wants to be clicked: hot pink for action, electric purple for logic, a confident blue for anything that moves. Every interaction should feel like a small win.",
+  "bestFor": "Playful products, onboarding, celebrations, social and anything where delight is the point.",
+  "showcase": {
+    "label": "accent",
+    "title": "accent",
+    "tagline": "text-muted",
+    "swatches": [
+      "accent-fill",
+      "syntax-keyword",
+      "syntax-function",
+      "syntax-number",
+      "syntax-string"
+    ]
+  },
+  "colors": {
+    "bg": "#FFFCF7",
+    "bg-alt": "#FFF5EA",
+    "bg-deep": "#FDEBDB",
+    "surface": "#FFEFE4",
+    "surface-hover": "#FFE3D4",
+    "border": "#F3DACB",
+    "border-strong": "#A67F72",
+    "text": "#2B1B3D",
+    "text-muted": "#55446A",
+    "text-subtle": "#7D6A8F",
+    "accent": "#C8186F",
+    "accent-fill": "#D81B7A",
+    "on-accent": "#FFFFFF",
+    "accent-soft": "rgba(216, 27, 122, 0.10)",
+    "selection": "#FFD6EC",
+    "cursor": "#D81B7A",
+    "success": "#0B7A52",
+    "warning": "#A35200",
+    "danger": "#C71F37",
+    "info": "#1A5FD0",
+    "syntax-comment": "#76658A",
+    "syntax-keyword": "#7B2FF7",
+    "syntax-function": "#1A5FD0",
+    "syntax-tag": "#C8186F",
+    "syntax-attr": "#A35200",
+    "syntax-string": "#0B7A52",
+    "syntax-number": "#B8400A"
+  }
+}

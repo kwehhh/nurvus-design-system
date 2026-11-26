@@ -43,6 +43,18 @@ function App() {
 ReactDOM.render(<App />, document.querySelector('#root'));
 ```
 
+### Themes
+Six themes ship with the package, each a complete palette of the same 27 role tokens (`--nv-bg`, `--nv-text`, `--nv-accent`, `--nv-syntax-keyword`…): **Apollo White** and **Dopamine** (light), **Tokyo Neon**, **Nether**, **Outworld** and **Arcane** (dark). All are `demo` status while the colors mature. Every theme is a `[data-theme="<id>"]` block in the package CSS; with no attribute a page gets Apollo White.
+
+```js static
+import { initTheme, setTheme, themes } from '@nurvus/ui';
+
+initTheme('tokyo-neon');   // at startup: the saved theme, or this default
+setTheme('apollo-white');  // switch, and remember it (localStorage "nurvus.theme")
+```
+
+Themes nest (`<nav data-theme="tokyo-neon">` inside a light page), and your own CSS should use the role tokens, never raw hex. Theme files live in `src/themes/*.json`; `npm run build:tokens` turns them into CSS and checks every theme's WCAG contrast (a failing `stable` theme fails the build). Each theme has its own page in the styleguide.
+
 Not sure yet? Try out the styleguide here:
 http://nurvus.memoryleak.ai/
 

@@ -1,0 +1,52 @@
+{
+  "id": "apollo-white",
+  "name": "Apollo White",
+  "mode": "light",
+  "status": "demo",
+  "order": 1,
+  "keywords": "Bright. Refined. Minimal.",
+  "summary": "Pure white and quiet greys, with color only where it means something.",
+  "description": "Marble in morning light. The chrome steps back into pure white and quiet greys, so color only appears where it means something: blue for what runs, violet for what decides, raspberry for what renders.",
+  "bestFor": "Documentation, forms, long reading, daylight work and anything that gets printed.",
+  "showcase": {
+    "label": "text-subtle",
+    "title": "text",
+    "tagline": "text-subtle",
+    "swatches": [
+      "accent",
+      "syntax-keyword",
+      "syntax-tag",
+      "surface",
+      "syntax-string"
+    ]
+  },
+  "colors": {
+    "bg": "#FFFFFF",
+    "bg-alt": "#F5F6F8",
+    "bg-deep": "#EEF0F4",
+    "surface": "#F0F2F5",
+    "surface-hover": "#E6E9EF",
+    "border": "#E2E5EB",
+    "border-strong": "#868E9E",
+    "text": "#242938",
+    "text-muted": "#4A5163",
+    "text-subtle": "#687080",
+    "accent": "#245CC7",
+    "accent-fill": "#245CC7",
+    "on-accent": "#FFFFFF",
+    "accent-soft": "rgba(36, 92, 199, 0.10)",
+    "selection": "#E5EDFF",
+    "cursor": "#245CC7",
+    "success": "#168367",
+    "warning": "#9A5B00",
+    "danger": "#C42B3B",
+    "info": "#245CC7",
+    "syntax-comment": "#687080",
+    "syntax-keyword": "#8952BD",
+    "syntax-function": "#245CC7",
+    "syntax-tag": "#C44067",
+    "syntax-attr": "#9A5B00",
+    "syntax-string": "#168367",
+    "syntax-number": "#B04A00"
+  }
+}

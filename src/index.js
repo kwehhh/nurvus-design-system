@@ -1,3 +1,9 @@
+// Themes: the primitives + every [data-theme] block, injected once.
+import './styles/theme.scss';
+
+export { themes, DEFAULT_THEME, THEME_STORAGE_KEY, THEME_CHANGE_EVENT, getTheme, currentTheme, setTheme, initTheme } from './theme';
+export { roles as themeRoles } from './themes';
+
 // Components
 export { default as Button } from './components/Button/Button.jsx';
 export { default as ButtonGroup } from './components/ButtonGroup/ButtonGroup.jsx';

@@ -1,0 +1,52 @@
+{
+  "id": "arcane",
+  "name": "Arcane",
+  "mode": "dark",
+  "status": "demo",
+  "order": 6,
+  "keywords": "Mystic. Charged. Forbidden.",
+  "summary": "Deep violet shadows charged with orchid and magenta.",
+  "description": "Knowledge meant for few. Deep violet shadows charged with orchid and magenta, like a spell caught mid-cast. Calm surfaces, then a crackle of color exactly where the power is.",
+  "bestFor": "Music and art apps, creative tools and night modes with personality.",
+  "showcase": {
+    "label": "syntax-keyword",
+    "title": "accent",
+    "tagline": "text-muted",
+    "swatches": [
+      "accent",
+      "syntax-keyword",
+      "accent-fill",
+      "syntax-string",
+      "syntax-number"
+    ]
+  },
+  "colors": {
+    "bg": "#120B1F",
+    "bg-alt": "#0E0818",
+    "bg-deep": "#0A0612",
+    "surface": "#1C1230",
+    "surface-hover": "#26193F",
+    "border": "#2E2147",
+    "border-strong": "#76619F",
+    "text": "#ECE3FF",
+    "text-muted": "#BFAEE3",
+    "text-subtle": "#9381B8",
+    "accent": "#C77DFF",
+    "accent-fill": "#9D4EDD",
+    "on-accent": "#FFFFFF",
+    "accent-soft": "rgba(199, 125, 255, 0.16)",
+    "selection": "#3A2560",
+    "cursor": "#FF4FD8",
+    "success": "#7EE8C6",
+    "warning": "#FFD166",
+    "danger": "#FF4F8B",
+    "info": "#7AA2F7",
+    "syntax-comment": "#9D8CC2",
+    "syntax-keyword": "#FF4FD8",
+    "syntax-function": "#C77DFF",
+    "syntax-tag": "#FF79C6",
+    "syntax-attr": "#E0AAFF",
+    "syntax-string": "#7EE8C6",
+    "syntax-number": "#FFD166"
+  }
+}
