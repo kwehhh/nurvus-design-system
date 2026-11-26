@@ -3,7 +3,7 @@ import NavBar from './NavBar';
 
 function StyleguideRenderer(props) {
   const navHeight = 50;
-  const border = '1px solid var(--base--300)';
+  const border = '1px solid var(--nv-border)';
 
   return (
     <div
@@ -21,7 +21,7 @@ function StyleguideRenderer(props) {
           right: 0,
           left: 0,
           height: navHeight,
-          background: 'var(--base--50)',
+          background: 'var(--nv-bg-alt)',
           zIndex: 1,
           // paddingLeft: 200,
           borderBottom: border
@@ -35,7 +35,7 @@ function StyleguideRenderer(props) {
         bottom: 0,
         left: 0,
         width: 200,
-        background: 'var(--base--50)',
+        background: 'var(--nv-bg-alt)',
         zIndex: 2,
         borderRight: border
       }}
@@ -44,7 +44,7 @@ function StyleguideRenderer(props) {
     </div>
     <div
       style={{
-        background: 'var(--base--100)',
+        background: 'var(--nv-bg)',
         minHeight: '100vh',
         padding: 20
       }}

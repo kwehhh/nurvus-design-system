@@ -1,7 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
-// Load the generated tokens globally so BOTH :root blocks (light default +
-// [data-theme="dark"] overrides) are present on every styleguide page.
-@import '../src/styles/tokens.scss';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+// The primitives + every [data-theme] block, so the styleguide chrome below has
+// its --nv-* tokens before any component loads. (src/index.js imports the same
+// file for package consumers.)
+@import '../src/styles/theme.scss';
 
 * {
   box-sizing: border-box;
@@ -10,8 +11,8 @@
 body {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  background-color: var(--base--50);
-  color: var(--base--1200);
+  background-color: var(--nv-bg);
+  color: var(--nv-text);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -20,10 +21,52 @@ body {
 }
 
 // Styleguidist renders its OWN chrome (page headings, example descriptions,
-// section names) with a static #333 that ignores our tokens. Route that text
-// through the ink token so it follows the light/dark toggle and stays legible.
+// section names, sidebar links) with static colors that ignore our tokens.
+// Route them through the theme so every theme stays legible.
 [class*='rsg--heading'],
 [class*='rsg--para'],
-[class*='rsg--sectionName'] {
-  color: var(--base--1200) !important;
+[class*='rsg--sectionName'],
+[class*='rsg--text'] {
+  color: var(--nv-text) !important;
+}
+
+[class*='rsg--link'] {
+  color: var(--nv-accent) !important;
+}
+
+[class*='rsg--input'] {
+  background: var(--nv-bg) !important;
+  color: var(--nv-text) !important;
+  border-color: var(--nv-border-strong) !important;
+}
+
+// The header's theme picker: looks like a small secondary Button.
+.nv-theme-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--nv-text-muted);
+
+  select {
+    height: 32px;
+    padding: 0 28px 0 12px;
+    border: 1px solid var(--nv-border);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--nv-text) 8%, transparent);
+    color: var(--nv-text);
+    font: 500 14px 'Inter', sans-serif;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid var(--nv-accent);
+      outline-offset: 2px;
+    }
+  }
+
+  option,
+  optgroup {
+    background: var(--nv-bg);
+    color: var(--nv-text);
+  }
 }

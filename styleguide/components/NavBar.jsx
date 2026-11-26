@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Layout, Title } from '@nurvus/ui';
-import ThemeToggle from './ThemeToggle';
+import ThemeSwitcher from './ThemeSwitcher';
 
 // ReactDOM.render(
 //   <div>
@@ -38,7 +38,7 @@ function NavBar(props) {
         <Title level={ 5 } type="secondary">
           v{ props.version }
         </Title>
-        <ThemeToggle />
+        <ThemeSwitcher />
         <Button
           size="small"
           onClick={ () => window.location.href='https://github.com/UnfocusedDrive/nurvus-design-system' }
