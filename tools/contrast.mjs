@@ -1,11 +1,12 @@
 /**
  * WCAG 2 contrast for theme colors. Shared by tools/build-tokens.js (the
  * build-time check) and the styleguide's theme pages (the per-token column).
- * Plain CommonJS so both Node and webpack can load it.
+ * An ES module (.mjs) so Node (build-tokens), webpack (the old styleguide) and
+ * Vite (the docs app) all load the same file.
  */
 
 /** Relative luminance of a #RRGGBB color. */
-function luminance(hex) {
+export function luminance(hex) {
   const n = parseInt(hex.slice(1), 16);
   return [16, 8, 0]
     .map((shift) => ((n >> shift) & 255) / 255)
@@ -14,7 +15,7 @@ function luminance(hex) {
 }
 
 /** Contrast ratio of two #RRGGBB colors, 1 to 21. */
-function contrast(a, b) {
+export function contrast(a, b) {
   const x = luminance(a);
   const y = luminance(b);
   return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
@@ -26,7 +27,7 @@ const isHex = (v) => /^#[0-9a-f]{6}$/i.test(v);
  * Every contrast check a theme must pass, from the `check` entries in
  * src/themes/roles.json. Returns one row per (token, against) pair.
  */
-function checkTheme(theme, roles) {
+export function checkTheme(theme, roles) {
   const rows = [];
   Object.keys(roles).forEach((token) => {
     const rule = roles[token].check;
@@ -42,4 +43,3 @@ function checkTheme(theme, roles) {
   return rows;
 }
 
-module.exports = { luminance, contrast, checkTheme };

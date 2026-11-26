@@ -20,7 +20,6 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { checkTheme } = require('./contrast');
 
 const ROOT = path.join(__dirname, '..');
 const THEMES_DIR = path.join(ROOT, 'src/themes');
@@ -69,19 +68,21 @@ fs.writeFileSync(path.join(ROOT, 'src/styles/tokens.scss'), `${header}${scss}\n`
 fs.writeFileSync(path.join(ROOT, 'src/styles/theme.scss'), `${header}\n${primitiveBlock}\n${typeBlock}\n${themeBlocks}`);
 console.log(`Tokens: ${keys.length} primitives, ${themes.length} themes × ${Object.keys(roles).length} role tokens.`);
 
-// Contrast check (WCAG 2).
-let blocking = 0;
-themes.forEach((t) => {
-  const fails = checkTheme(t, roles).filter((row) => !row.pass);
-  if (!fails.length) {
-    console.log(`  ✓ ${t.name}: every contrast check passes`);
-    return;
+// Contrast check (WCAG 2). contrast.mjs is an ES module, so load it with import().
+import('./contrast.mjs').then(({ checkTheme }) => {
+  let blocking = 0;
+  themes.forEach((t) => {
+    const fails = checkTheme(t, roles).filter((row) => !row.pass);
+    if (!fails.length) {
+      console.log(`  ✓ ${t.name}: every contrast check passes`);
+      return;
+    }
+    const stable = t.status === 'stable';
+    if (stable) blocking += fails.length;
+    console.log(`  ${stable ? '✗' : '!'} ${t.name} (${t.status}): ${fails.map((f) => `${f.token} on ${f.against} ${f.ratio.toFixed(2)}:1 < ${f.min}`).join('; ')}`);
+  });
+  if (blocking) {
+    console.error(`${blocking} contrast failure(s) in stable themes.`);
+    process.exit(1);
   }
-  const stable = t.status === 'stable';
-  if (stable) blocking += fails.length;
-  console.log(`  ${stable ? '✗' : '!'} ${t.name} (${t.status}): ${fails.map((f) => `${f.token} on ${f.against} ${f.ratio.toFixed(2)}:1 < ${f.min}`).join('; ')}`);
 });
-if (blocking) {
-  console.error(`${blocking} contrast failure(s) in stable themes.`);
-  process.exit(1);
-}
