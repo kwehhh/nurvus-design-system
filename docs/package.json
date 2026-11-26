@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "type": "module",
+  "description": "The NURVUS docs site (Vite). Scripts live in the root package.json: npm run docs / docs:build."
+}

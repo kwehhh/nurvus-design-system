@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NURVUS UI</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Apply the saved theme before the first paint; move people off the old
+         2026-08 light/dark toggle's key. -->
+    <script>
+      try {
+        var k = 'nurvus.theme', o = localStorage.getItem('nurvus-theme');
+        if (o !== null) { if (o === 'dark' && !localStorage.getItem(k)) localStorage.setItem(k, 'tokyo-neon'); localStorage.removeItem('nurvus-theme'); }
+        var t = localStorage.getItem(k);
+        if (t) document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { /* storage blocked */ }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./src/main.jsx"></script>
+  </body>
+</html>
