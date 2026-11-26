@@ -1,0 +1,22 @@
+@import "../../styles/variables.scss";
+
+// Type roles: sizes and weights from the --nv-type-* tokens (src/styles/type.json).
+.#{$cls-prefix}.text {
+  @each $role in display, title, body, caption, mono {
+    &[data-variant="#{$role}"] {
+      margin: 0;
+      font-size: var(--nv-type-#{$role}-size);
+      line-height: var(--nv-type-#{$role}-line);
+      font-weight: var(--nv-type-#{$role}-weight);
+      letter-spacing: var(--nv-type-#{$role}-tracking);
+    }
+  }
+
+  &[data-variant="mono"] {
+    font-family: var(--nv-font-mono);
+  }
+
+  &[data-tone="default"] { color: var(--nv-text); }
+  &[data-tone="muted"] { color: var(--nv-text-muted); }
+  &[data-tone="subtle"] { color: var(--nv-text-subtle); }
+}

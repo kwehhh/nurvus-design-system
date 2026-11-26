@@ -246,6 +246,31 @@
   --shadow---3-xl: 0px 32px 64px rgba(16, 24, 40, 0.14);
 }
 
+:root {
+  --nv-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --nv-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --nv-type-display-size: clamp(30px, 4vw, 44px);
+  --nv-type-display-line: 1.08;
+  --nv-type-display-weight: 600;
+  --nv-type-display-tracking: -0.02em;
+  --nv-type-title-size: 22px;
+  --nv-type-title-line: 1.3;
+  --nv-type-title-weight: 600;
+  --nv-type-title-tracking: -0.01em;
+  --nv-type-body-size: 16px;
+  --nv-type-body-line: 1.55;
+  --nv-type-body-weight: 400;
+  --nv-type-body-tracking: 0;
+  --nv-type-caption-size: 14px;
+  --nv-type-caption-line: 1.45;
+  --nv-type-caption-weight: 400;
+  --nv-type-caption-tracking: 0;
+  --nv-type-mono-size: 13px;
+  --nv-type-mono-line: 1.5;
+  --nv-type-mono-weight: 400;
+  --nv-type-mono-tracking: 0;
+}
+
 /* Apollo White: Bright. Refined. Minimal. (light, demo) */
 :root,
 [data-theme="apollo-white"] {
