@@ -10,8 +10,8 @@
     "build": "rimraf dist && npm run build:tokens && cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --mode=production --json > stats.json",
     "build:tokens": "node ./tools/build-tokens.js",
     "prepare": "npm run build",
-    "styleguide": "npm run build:tokens && styleguidist server --config styleguide.config.js",
-    "styleguide:build": "rimraf styleguide/build && npm run build:tokens && styleguidist build --config styleguide.config.js",
+    "styleguide": "npm run docs",
+    "styleguide:build": "npm run docs:build",
     "docs": "npm run build:tokens && vite --config docs/vite.config.js",
     "docs:build": "npm run build:tokens && vite build --config docs/vite.config.js"
   },
@@ -54,7 +54,6 @@
     "react": "^16.8.0",
     "react-docgen": "^8.0.4",
     "react-dom": "^16.8.0",
-    "react-styleguidist": "^11.1.7",
     "resolve-url-loader": "^5.0.0",
     "rimraf": "^3.0.2",
     "sass": "^1.77.8",

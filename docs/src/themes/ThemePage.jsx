@@ -185,7 +185,7 @@ export function ThemePage({ id }) {
         <div className="tp-swatches">
           { theme.showcase.swatches.map((role) => <span key={ role } style={ { background: `var(--nv-${role})` } } title={ `${role} ${theme.colors[role]}` } />) }
         </div>
-        <button type="button" className="tp-use" onClick={ () => setTheme(theme.id) }>Use { theme.name } for the whole styleguide</button>
+        <button type="button" className="tp-use" onClick={ () => setTheme(theme.id) }>Use { theme.name } for the whole site</button>
       </header>
 
       <section className="tp-section">
