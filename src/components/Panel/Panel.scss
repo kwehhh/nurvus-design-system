@@ -1,0 +1,33 @@
+@import "../../styles/variables.scss";
+@import "../../styles/tokens.scss";
+
+.#{$cls-prefix}.panel {
+  overflow: hidden;
+  background: var(--nv-surface);
+  color: var(--nv-text);
+  border: 1px solid var(--nv-border);
+  border-radius: $--radius--12;
+
+  .panel-body {
+    padding: $--space--16;
+  }
+
+  &[data-padding="small"] .panel-body { padding: $--space--12; }
+  &[data-padding="none"] .panel-body { padding: 0; }
+
+  .panel-title {
+    margin: 0 0 $--space--8;
+    font-size: var(--nv-type-title-size);
+    line-height: var(--nv-type-title-line);
+    font-weight: var(--nv-type-title-weight);
+    letter-spacing: var(--nv-type-title-tracking);
+  }
+
+  .panel-caption {
+    padding: $--space--12 $--space--16;
+    border-top: 1px solid var(--nv-border);
+    color: var(--nv-text-muted);
+    font-size: var(--nv-type-caption-size);
+    line-height: var(--nv-type-caption-line);
+  }
+}

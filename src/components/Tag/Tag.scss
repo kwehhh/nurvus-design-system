@@ -1,0 +1,23 @@
+@import "../../styles/variables.scss";
+@import "../../styles/tokens.scss";
+
+.#{$cls-prefix}.tag {
+  --tag-color: var(--nv-text-muted);
+  display: inline-flex;
+  align-items: center;
+  padding: 1px $--space--8;
+  border: 1px solid color-mix(in srgb, var(--tag-color) 45%, transparent);
+  border-radius: $--radius--full;
+  background: color-mix(in srgb, var(--tag-color) 10%, transparent);
+  color: var(--tag-color);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  white-space: nowrap;
+
+  &[data-tone="accent"] { --tag-color: var(--nv-accent); }
+  &[data-tone="success"] { --tag-color: var(--nv-success); }
+  &[data-tone="warning"] { --tag-color: var(--nv-warning); }
+  &[data-tone="danger"] { --tag-color: var(--nv-danger); }
+  &[data-tone="info"] { --tag-color: var(--nv-info); }
+}
