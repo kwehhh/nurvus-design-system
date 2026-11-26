@@ -9,7 +9,8 @@ class Table extends React.Component {
     const { columns } = this.props;
 
     return columns.map((columnProps, i) => {
-      const { dataKey, render, ...props } = columnProps;
+      // title and render describe the column; they are not <td> attributes.
+      const { dataKey, render, title, ...props } = columnProps;
       const value = rowProps[columnProps.dataKey];
 
       let children = value;
@@ -29,7 +30,8 @@ class Table extends React.Component {
     const { columns } = this.props;
 
     return columns.map((columnProps, i) => {
-      const { dataKey, title, ...props } = columnProps;
+      // render formats cells; passing it on to <th> made React warn.
+      const { dataKey, title, render, ...props } = columnProps;
 
       return (
         <th key={ dataKey || i } { ...props }>

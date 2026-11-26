@@ -2,62 +2,36 @@
 @import "../../styles/variables.scss";
 @import "../../styles/tokens.scss";
 
+// A light table: one hairline frame with 12px corners, sentence-case headers on
+// a tinted row, hairline rows, no boxed cells. Role tokens only (--nv-*).
 .#{$cls-prefix}.table {
   width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 1px solid var(--nv-border);
+  border-radius: $--radius--12;
   background-color: var(--nv-bg);
   color: var(--nv-text);
-  border-spacing: 0;
+  font-size: var(--nv-type-caption-size);
+  line-height: var(--nv-type-caption-line);
 
-  thead {
-    tr {
-      background-color: var(--nv-surface);
-      color: var(--nv-text-muted);
-
-      th {
-        border-top: 1px solid var(--nv-border);
-        border-bottom: 1px solid var(--nv-border);
-
-        &:first-child {
-          border-left: 1px solid var(--nv-border);
-        }
-
-        &:last-child {
-          border-right: 1px solid var(--nv-border);
-        }
-      }
-    }
-  }
-
-  tr {
-    background-color: var(--nv-bg);
-    color: var(--nv-text);
-  }
-
-  th, td {
-    box-sizing: border-box;
-    padding: 10px;
-  }
-
-  th {
-    text-align: left;
-    text-align: left;
-    text-transform: uppercase;
-    font-size: 11px;
-    min-height: 34px;
-    height: 34px;
-  }
-
+  th,
   td {
-    min-height: 40px;
-    height: 40px;
+    box-sizing: border-box;
+    padding: 10px $--space--12;
+    text-align: left;
+    vertical-align: middle;
     border-bottom: 1px solid var(--nv-border);
+  }
 
-    &:first-child {
-      border-left: 1px solid var(--nv-border);
-    }
+  thead th {
+    background-color: var(--nv-surface);
+    color: var(--nv-text-muted);
+    font-weight: 600;
+  }
 
-    &:last-child {
-      border-right: 1px solid var(--nv-border);
-    }
+  tbody tr:last-child td {
+    border-bottom: 0;
   }
 }
