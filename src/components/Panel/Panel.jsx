@@ -8,16 +8,14 @@ import './Panel.scss';
  * A card: the theme's surface, a hairline border and 12px corners, with an
  * optional title and a caption footer. Use it to group related content.
  */
-export default function Panel(props) {
-  const {
-    title,
-    caption,
-    padding = 'medium',
-    children,
-    className,
-    ...restProps
-  } = props;
-
+export default function Panel({
+  title,
+  caption,
+  padding = 'medium',
+  children,
+  className,
+  ...restProps
+}) {
   return (
     <section
       className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'panel', className) }

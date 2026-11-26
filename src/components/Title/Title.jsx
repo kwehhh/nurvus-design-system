@@ -30,15 +30,13 @@ function getTag(level) {
  * Title component.
  * @returns {ReactElement} of Title component.
  */
-export default function Title(props) {
-    const {
-      children,
-      className,
-      level = 1,
-      type = "primary",
-      ...restProps
-    } = props;
-
+export default function Title({
+  children,
+  className,
+  level = 1,
+  type = "primary",
+  ...restProps
+}) {
     return React.createElement(
       getTag(level),
       {

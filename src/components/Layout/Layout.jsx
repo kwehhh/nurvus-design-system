@@ -3,18 +3,16 @@ import classNames  from 'classnames';
 import CONSTANT from '../../constants.js';
 import './Layout.scss';
 
-export default function Layout(props) {
-  const {
-    alignItems,
-    className,
-    display = 'block',
-    flexDirection,
-    justifyContent,
-    itemDisplay,
-    itemSpacing = 20,
-    ...restProps
-  } = props;
-
+export default function Layout({
+  alignItems,
+  className,
+  display = 'block',
+  flexDirection,
+  justifyContent,
+  itemDisplay,
+  itemSpacing = 20,
+  ...restProps
+}) {
   return (
     <div
       className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'layout', className) }

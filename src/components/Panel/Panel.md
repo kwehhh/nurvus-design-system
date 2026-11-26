@@ -1,4 +1,4 @@
-A card for grouping content: the theme's surface, a hairline border and 12px corners. Give it a `title`, a `caption` footer, or both.
+Give it a `title`, a `caption` footer, or both.
 ```jsx
 import { Panel, Tag, Text } from '@nurvus/ui';
 

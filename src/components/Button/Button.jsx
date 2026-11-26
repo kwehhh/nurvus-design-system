@@ -8,15 +8,13 @@ import './Button.scss';
  * Button component.
  * @returns {ReactElement} of Button component.
  */
-const Button = React.forwardRef(function Button(props, ref) {
-  const {
-    className,
-    children,
-    size = 'medium',
-    type = 'primary',
-    ...restProps
-  } = props;
-
+const Button = React.forwardRef(function Button({
+  className,
+  children,
+  size = 'medium',
+  type = 'primary',
+  ...restProps
+}, ref) {
   return (
     <button
       className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'button', className) }

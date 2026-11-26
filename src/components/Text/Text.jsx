@@ -9,16 +9,14 @@ import './Text.scss';
  * sizes come from the `--nv-type-*` tokens, so every NURVUS page uses the same
  * scale. Without a `variant` it inherits its parent's type, as before.
  */
-export default function Text(props) {
-  const {
-    as: Element = 'span',
-    variant,
-    tone,
-    children,
-    className,
-    ...restProps
-  } = props;
-
+export default function Text({
+  as: Element = 'span',
+  variant,
+  tone,
+  children,
+  className,
+  ...restProps
+}) {
   return (
     <Element
       className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'text', className) }

@@ -8,14 +8,12 @@ import './Tag.scss';
  * A small pill for a status or label ("new", "preview", "demo"). The text and
  * the border take the tone's theme color; the fill is a faint tint of it.
  */
-export default function Tag(props) {
-  const {
-    tone = 'neutral',
-    children,
-    className,
-    ...restProps
-  } = props;
-
+export default function Tag({
+  tone = 'neutral',
+  children,
+  className,
+  ...restProps
+}) {
   return (
     <span
       className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'tag', className) }

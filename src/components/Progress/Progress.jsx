@@ -8,14 +8,12 @@ import './Progress.scss';
  * Progress component. Use it to track progress!
  * @returns {ReactElement} of Progress component.
  */
-function Progress(props) {
-  const {
-    className,
-    percent = 0,
-    size = 'medium',
-    status = 'active'
-} = props;
-
+function Progress({
+  className,
+  percent = 0,
+  size = 'medium',
+  status = 'active'
+}) {
   return (
     <div
       className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'progress', className) }

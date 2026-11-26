@@ -9,15 +9,13 @@ import './FullPageModal.scss';
 /**
  * The FullPageModal shows additonal content overlayed on the screen.
  */
-function FullPageModal(props) {
-  const {
-    children,
-    headerActions,
-    title,
-    visible = false,
-    ...restProps
-  } = props;
-
+function FullPageModal({
+  children,
+  headerActions,
+  title,
+  visible = false,
+  ...restProps
+}) {
   function getAnimationState() {
     if (visible) {
       return 'reveal-in';
