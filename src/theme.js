@@ -45,4 +45,20 @@ export function initTheme(fallback = DEFAULT_THEME, options = {}) {
   return setTheme(getTheme(saved) ? saved : fallback, { persist: false, ...options });
 }
 
+/**
+ * Runs once, when the package is imported: brings back the visitor's saved
+ * theme (whatever setTheme saved last time), so an app needs no theme code at
+ * all. Nothing saved: nothing changes, and the page shows its own data-theme,
+ * or Apollo White when it has none (the CSS default). Skipped outside a
+ * browser (server rendering).
+ */
+function restoreSavedTheme() {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
+  let saved = null;
+  try { saved = window.localStorage.getItem(THEME_STORAGE_KEY); } catch (e) { return; /* storage blocked */ }
+  if (getTheme(saved)) document.documentElement.setAttribute('data-theme', saved);
+}
+
+restoreSavedTheme();
+
 export { themes, DEFAULT_THEME };
