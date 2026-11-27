@@ -24,6 +24,8 @@ export { default as Layout } from './components/Layout/Layout';
 export type { LayoutProps, Spacing, LegacySpacing } from './components/Layout/Layout';
 export { default as Menu } from './components/Menu/Menu';
 export type { MenuProps, MenuItem } from './components/Menu/Menu';
+export { default as NavList } from './components/NavList/NavList';
+export type { NavListProps, NavListItem, NavListSection } from './components/NavList/NavList';
 export { default as FullPageModal } from './components/FullPageModal/FullPageModal';
 export type { FullPageModalProps } from './components/FullPageModal/FullPageModal';
 export { default as HistoryList } from './components/HistoryList/HistoryList';

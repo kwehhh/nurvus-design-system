@@ -8,6 +8,7 @@ import './components/HistoryList/HistoryList.scss';
 import './components/Layout/Layout.scss';
 import './components/Link/Link.scss';
 import './components/Menu/Menu.scss';
+import './components/NavList/NavList.scss';
 import './components/Panel/Panel.scss';
 import './components/Progress/Progress.scss';
 import './components/Table/Table.scss';
