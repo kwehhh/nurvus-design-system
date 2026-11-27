@@ -1,0 +1,39 @@
+// "Without React (Respawn)": each demo is a live box with its code under it,
+// joined into one frame like the live examples. Theme roles only.
+
+.rg-demo { margin: 28px 0 0; }
+.rg-demo > p { margin: 0 0 8px; color: var(--nv-text-muted); max-width: 72ch; }
+
+.rg-h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+
+  a { color: var(--nv-text); text-decoration: none; }
+  a:hover { color: var(--nv-accent); text-decoration: underline; }
+}
+
+.rg-frame {
+  overflow: hidden;
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+
+  .dx-example { margin: 0; border: 0; border-top: 1px solid var(--nv-border); border-radius: 0; }
+  .dx-example-error { border-top: 1px solid var(--nv-border); }
+}
+
+.rg-preview {
+  padding: 24px;
+  background: var(--nv-bg);
+  color: var(--nv-text);
+  overflow-x: auto;
+}
+
+.rg-scroll { overflow-x: auto; }
+.rg-api td:nth-child(2) code { white-space: nowrap; }
+
+@media (max-width: 760px) {
+  .rg-preview { padding: 16px; }
+  .rg-api td:nth-child(2) code { white-space: normal; overflow-wrap: anywhere; }
+}
