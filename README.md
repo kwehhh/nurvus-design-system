@@ -23,7 +23,9 @@ Or pin the range in `package.json`:
 > **Publishing is automatic.** Every push to `main` that changes the package (`src/`, `tools/`, build config) publishes `0.1.0-alpha.<build number>` from GitHub Actions (`.github/workflows/publish.yml`, npm Trusted Publishing: no token, no 2FA code). Pick up the newest with `npm update @nurvus/ui`.
 
 ### Dependencies
-- React ^16.8 (peer dependency)
+- React 16.8+, 17, 18 or 19, and the same React DOM (peer dependencies). Tested on 16.14, 18.3 and 19.3.
+- One runtime dependency: `classnames`.
+- TypeScript types are included (`import type { TagProps } from '@nurvus/ui'`).
 
 ### Usage
 Use the following example after installation:
@@ -33,20 +35,23 @@ import ReactDOM from 'react-dom';
 import { Button } from '@nurvus/ui';
 
 function App() {
-  return (
-    <Button>
-      This button is lit yo!
-    </Button>
-  );
+  return <Button type="primary">Hello, world!</Button>;
 }
 
 ReactDOM.render(<App />, document.querySelector('#root'));
 ```
 
 ### Themes
-Seven themes ship with the package, each a complete palette of the same 27 role tokens (`--nv-bg`, `--nv-text`, `--nv-accent`, `--nv-syntax-keyword`…): **Apollo White** and **Dopamine** (light), **Tokyo Neon**, **Nether**, **Nether Neon**, **Outworld** and **Arcane** (dark). All are `demo` status while the colors mature. Every theme is a `[data-theme="<id>"]` block in the package CSS; with no attribute a page gets Apollo White.
+Seven themes ship with the package, each a complete palette of the same 27 role tokens (`--nv-bg`, `--nv-text`, `--nv-accent`, `--nv-syntax-keyword`…): **Apollo White** and **Dopamine** (light), **Tokyo Neon**, **Nether**, **Nether Neon**, **Outworld** and **Arcane** (dark). All are `demo` status while the colors mature.
 
-No setup: import any component and the page is Apollo White. A visitor's saved choice comes back by itself when the package loads. For another default, put it on the page: `<html data-theme="tokyo-neon">`.
+No setup: import any component and the page is Apollo White, the only theme in the core CSS. **Every other theme is its own small file (about 1 KB) that an app loads only if it offers it:**
+
+```js static
+import '@nurvus/ui/themes/tokyo-neon.css';   // one theme
+import '@nurvus/ui/themes/all.css';          // or every theme, for a full theme menu
+```
+
+A visitor's saved choice comes back by itself when the package loads. For another default, put it on the page: `<html data-theme="tokyo-neon">`. `setTheme` warns in the console when a theme's file isn't loaded, and names the file.
 
 ```js static
 import { setTheme, themes } from '@nurvus/ui';
@@ -55,9 +60,15 @@ setTheme('tokyo-neon');    // switch, and remember it (localStorage "nurvus.them
 themes.map((t) => t.name); // every theme, for a picker
 ```
 
-Step by step (default, theme menu, no flash on reload, nesting, your own CSS): **Applying a theme** on the docs site (https://design.nurvus.ai/#/Guides/Applying%20a%20theme).
+Step by step (default, theme menu, no flash on reload, nesting, your own CSS): **Applying a theme** on the docs site (https://design.nurvus.ai/#/Themes/Applying%20a%20theme).
 
 Themes nest (`<nav data-theme="tokyo-neon">` inside a light page), and your own CSS should use the role tokens, never raw hex. Theme files live in `src/themes/*.json`; `npm run build:tokens` turns them into CSS and checks every theme's WCAG contrast (a failing `stable` theme fails the build). Each theme has its own page on the docs site.
+
+### Without React
+- **Respawn, or plain DOM:** `import { Button, setTheme } from '@nurvus/ui/respawn'`: the same components as plain DOM elements, styles included. Or `<script src="…/dist/respawn.js">` (`window.nurvusRespawn`).
+- **Just the CSS:** link `@nurvus/ui/nurvus.css` (core + Apollo White + every component's styles) and the theme files you want; `@nurvus/ui/theme` (`dist/theme.js`) is the theme API alone.
+- **Colors as data** (React Native, native apps, design tools): `@nurvus/ui/themes/<id>.json`, the same files the CSS is built from, plus `roles.json` (what each color is for).
+- Guide: **Without React (Respawn)** on the docs site.
 
 ### Docs
 Every component and theme, with live examples you can edit and each component's props: **https://design.nurvus.ai/**

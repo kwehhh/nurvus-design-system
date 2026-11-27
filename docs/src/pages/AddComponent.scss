@@ -15,7 +15,7 @@
 
   .ac-new, .ac-jsx, .ac-scss, .ac-md, .ac-index { font-weight: 600; }
   .ac-dim { color: var(--nv-text-muted); }
-  .ac-note { color: var(--nv-text-subtle); font-style: italic; }
+  .ac-note { color: var(--nv-text-muted); font-style: italic; }
   .ac-jsx { color: var(--nv-syntax-function); }
   .ac-scss { color: var(--nv-syntax-number); }
   .ac-md { color: var(--nv-syntax-string); }

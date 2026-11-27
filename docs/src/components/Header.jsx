@@ -3,6 +3,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import MenuIcon from '@material-ui/icons/Menu';
 import ThemeSwitcher from './ThemeSwitcher';
+import Search from './Search';
 import pkg from '../../../package.json';
 
 const REPO_URL = 'https://github.com/kwehhh/nurvus-design-system';
@@ -26,21 +27,29 @@ function useLatestVersion() {
   return version;
 }
 
-export default function Header({ onMenu, menuOpen }) {
+/**
+ * The site header: menu button, brand, search (center), version, theme menu,
+ * GitHub. `navShown`: whether the navigation is showing (the sidebar on a
+ * desktop, the drawer on a phone); the button toggles it.
+ */
+export default function Header({ onMenu, navShown }) {
   const version = useLatestVersion();
   return (
     <header className="dx-header">
-      <button
-        type="button"
-        className="dx-menu-button nv-icon-link"
-        onClick={ onMenu }
-        aria-label={ menuOpen ? 'Close navigation' : 'Open navigation' }
-        aria-expanded={ menuOpen }
-        aria-controls="dx-sidebar"
-      >
-        <MenuIcon fontSize="small" />
-      </button>
-      <a className="dx-brand" href="#/">NURVUS UI</a>
+      <div className="dx-header-start">
+        <button
+          type="button"
+          className="dx-menu-button nv-icon-link"
+          onClick={ onMenu }
+          aria-label={ navShown ? 'Hide navigation' : 'Show navigation' }
+          aria-expanded={ navShown }
+          aria-controls="dx-sidebar"
+        >
+          <MenuIcon fontSize="small" />
+        </button>
+        <a className="dx-brand" href="#/">NURVUS UI</a>
+      </div>
+      <Search id="dx-search" shortcut className="dx-search-header" />
       <div className="dx-header-tools">
         { version && (
           <a className="nv-version-link" href={ NPM_URL } target="_blank" rel="noopener noreferrer" title="Latest @nurvus/ui on npm">

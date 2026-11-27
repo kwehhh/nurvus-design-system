@@ -9,6 +9,10 @@ import Home from './pages/Home';
 import AddComponent from './pages/AddComponent';
 import ApplyingTheme from './pages/ApplyingTheme';
 import Spacing from './pages/Spacing';
+import Typography from './pages/Typography';
+import ThemeStudio from './pages/ThemeStudio';
+import AccessibilityReport from './pages/AccessibilityReport';
+import RespawnGuide from './pages/RespawnGuide';
 import ComponentsIndex from './pages/ComponentsIndex';
 import ComponentPage, { IsolatedExample } from './pages/ComponentPage';
 import ThemesOverview from './pages/ThemesOverview';
@@ -22,8 +26,13 @@ import ThemePage from './pages/ThemePage';
 function resolve(route) {
   const [section, name, kind, index] = route;
   if (!section) return { page: <Home />, title: 'Overview', current: href() };
-  if (section === 'Guides' && name === 'Applying a theme' && !kind) return { page: <ApplyingTheme />, title: name, current: href('Guides', name) };
+  // Guides that live under Themes. #/Guides/Applying a theme was the first address.
+  if ((section === 'Themes' || section === 'Guides') && name === 'Applying a theme' && !kind) return { page: <ApplyingTheme />, title: name, current: href('Themes', name) };
+  if (section === 'Themes' && name === 'Theme Studio' && !kind) return { page: <ThemeStudio />, title: name, current: href('Themes', name) };
+  if (section === 'Themes' && name === 'Accessibility report' && !kind) return { page: <AccessibilityReport />, title: name, current: href('Themes', name) };
   if (section === 'Foundations' && name === 'Spacing' && !kind) return { page: <Spacing />, title: name, current: href('Foundations', name) };
+  if (section === 'Foundations' && name === 'Typography' && !kind) return { page: <Typography />, title: name, current: href('Foundations', name) };
+  if (section === 'Guides' && name === 'Respawn' && !kind) return { page: <RespawnGuide />, title: 'Without React (Respawn)', current: href('Guides', name) };
   // Contributing (for people building the library). #/Guides/Add a component was its first address.
   if ((section === 'Contributing' || section === 'Guides') && name === 'Add a component' && !kind) {
     return { page: <AddComponent />, title: name, current: href('Contributing', name) };
@@ -42,9 +51,36 @@ function resolve(route) {
   return { page: <NotFound path={ route } />, title: 'Not found', current: null };
 }
 
+const PHONE = '(max-width: 760px)';
+const NAV_KEY = 'nurvus.docs.nav';
+
+/** True while the window is phone-width (the sidebar is a drawer). */
+function usePhone() {
+  const [phone, setPhone] = React.useState(() => window.matchMedia(PHONE).matches);
+  React.useEffect(() => {
+    const mq = window.matchMedia(PHONE);
+    const onChange = () => setPhone(mq.matches);
+    mq.addListener(onChange); // addListener: Safari < 14 has no addEventListener here
+    return () => mq.removeListener(onChange);
+  }, []);
+  return phone;
+}
+
 export default function App() {
   const route = useRoute();
+  const phone = usePhone();
   const [menuOpen, setMenuOpen] = React.useState(false);
+  // Desktop: the sidebar can be collapsed so the page gets the full width. Remembered.
+  const [collapsed, setCollapsed] = React.useState(() => {
+    try { return window.localStorage.getItem(NAV_KEY) === 'collapsed'; } catch (e) { return false; }
+  });
+  const toggleNav = () => {
+    if (phone) { setMenuOpen((open) => !open); return; }
+    setCollapsed((was) => {
+      try { window.localStorage.setItem(NAV_KEY, was ? 'shown' : 'collapsed'); } catch (e) { /* storage blocked */ }
+      return !was;
+    });
+  };
   const { page, isolated, title, current } = resolve(route);
 
   React.useEffect(() => {
@@ -57,8 +93,8 @@ export default function App() {
 
   return (
     <>
-      <Header menuOpen={ menuOpen } onMenu={ () => setMenuOpen((open) => !open) } />
-      <div className="dx-layout">
+      <Header navShown={ phone ? menuOpen : !collapsed } onMenu={ toggleNav } />
+      <div className="dx-layout" data-nav={ collapsed ? 'collapsed' : 'shown' }>
         <Sidebar current={ current } open={ menuOpen } onNavigate={ () => setMenuOpen(false) } />
         <div className="dx-scrim" data-open={ menuOpen } onClick={ () => setMenuOpen(false) } />
         <main className="dx-main">{ page }</main>

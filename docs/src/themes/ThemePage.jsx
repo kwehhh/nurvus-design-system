@@ -212,11 +212,17 @@ export function ThemePage({ id }) {
 
       <section className="tp-section">
         <h3>Use it</h3>
-        <CodeBlock>{ `import { setTheme } from '@nurvus/ui';
+        <CodeBlock>{ theme.id === 'apollo-white'
+          ? `// Apollo White is the default: it's in the core CSS, nothing to load.
+import { setTheme } from '@nurvus/ui';
+
+setTheme('apollo-white');   // back to it from another theme`
+          : `import '@nurvus/ui/themes/${theme.id}.css';   // load this theme (about 1 KB)
+import { setTheme } from '@nurvus/ui';
 
 setTheme('${theme.id}');
 
-// or, in HTML:
+// or make it the page's default, in HTML:
 <html data-theme="${theme.id}">` }</CodeBlock>
       </section>
     </div>

@@ -1,0 +1,94 @@
+// Typography page. Theme roles only.
+
+.ty-faces {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.ty-face {
+  padding: 16px;
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+  background: var(--nv-surface);
+
+  h3 { margin: 8px 0 4px; font-size: 16px; }
+  p { margin: 0 0 8px; color: var(--nv-text-muted); font-size: 14px; line-height: 20px; }
+}
+
+.ty-face-sample {
+  display: block;
+  font-size: 48px;
+  line-height: 56px;
+  font-weight: 600;
+}
+
+.ty-face-mono .ty-face-sample,
+.ty-face-mono .ty-alphabet { font-family: var(--nv-font-mono); font-variant-ligatures: none; }
+.ty-alphabet { color: var(--nv-text) !important; overflow-wrap: anywhere; }
+
+.ty-roles {
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ty-role {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 4px 16px;
+  align-items: baseline;
+  padding: 16px;
+
+  & + & { border-top: 1px solid var(--nv-border); }
+}
+
+.ty-role-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  grid-row: span 2;
+  align-self: start;
+  color: var(--nv-text-muted);
+  font: 13px/20px var(--nv-font-mono);
+}
+
+.ty-role-sample { margin: 0; overflow-wrap: anywhere; }
+.ty-role-use { color: var(--nv-text-muted); font-size: 14px; }
+
+.ty-compare {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+
+  > div { display: flex; align-items: baseline; gap: 16px; }
+}
+
+.ty-compare-label { width: 260px; flex: none; color: var(--nv-text-muted); font-size: 13px; }
+.ty-14 { font-size: 14px; line-height: 20px; }
+.ty-13 { font: 13px/20px var(--nv-font-mono); font-variant-ligatures: none; }
+.ty-13-as-14 { font-size: 14px; }
+
+// Faint 4px rows behind a paragraph, to show the lines landing on the grid.
+.ty-grid {
+  padding: 0 16px;
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0 3px,
+    color-mix(in srgb, var(--nv-accent) 18%, transparent) 3px 4px
+  );
+
+  p { margin: 0; max-width: 60ch; }
+}
+
+@media (max-width: 760px) {
+  .ty-faces { grid-template-columns: minmax(0, 1fr); }
+  .ty-role { grid-template-columns: minmax(0, 1fr); }
+  .ty-role-meta { grid-row: auto; }
+  .ty-compare > div { flex-direction: column; gap: 0; }
+  .ty-compare-label { width: auto; }
+}

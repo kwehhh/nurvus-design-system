@@ -42,13 +42,13 @@ export default function Spacing() {
       <h1 className="dx-page-title">Spacing</h1>
       <p className="dx-lede">
         One scale for every gap, margin and padding: a <strong>4px base</strong> with an <strong>8px rhythm</strong>,
-        plus one 2px half-step. Spacing is the same in every theme.
+        plus one 2px half-step. Spacing is the same in every theme. In rem (1rem = 16px, the browser default) the steps are 0.25rem apart.
       </p>
 
       <h2 className="gd-h2">The scale</h2>
       <table className="gd-scale">
         <thead>
-          <tr><th>Token</th><th>Value</th><th aria-label="Size" /><th>Use it for</th></tr>
+          <tr><th>Token</th><th>Value</th><th>rem</th><th aria-label="Size" /><th>Use it for</th></tr>
         </thead>
         <tbody>
           { SPACE.map(({ n, use }) => {
@@ -57,6 +57,7 @@ export default function Spacing() {
               <tr key={ n }>
                 <td><code>--space--{ n }</code></td>
                 <td className="gd-value">{ value }</td>
+                <td className="gd-value">{ n ? `${n / 16}rem` : '0' }</td>
                 <td><span className="gd-bar" style={ { width: `var(--space--${n})` } } /></td>
                 <td className="gd-use">{ use }</td>
               </tr>
@@ -92,8 +93,8 @@ export default function Spacing() {
       <h2 className="gd-h2">Using it</h2>
       <Example owner="Guide" code={ CODE } mode="static" lang="text" />
       <p className="gd-note">
-        One exception today: <code>Layout</code>'s <code>itemSpacing</code> (10, 13, 20, 30, 40) predates this scale.
-        Moving it onto the grid is planned.
+        <code>Layout</code>'s <code>itemSpacing</code> takes these steps too. Its old values (10, 13, 20, 30, 40) still work:
+        each snaps to the nearest step (ties go down: 20 → 16, 40 → 32) with a console warning that names the step to use.
       </p>
     </div>
   );

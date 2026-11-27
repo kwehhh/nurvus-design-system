@@ -11,7 +11,13 @@ import { Button } from '@nurvus/ui';
 // No theme code: the page is Apollo White.
 ReactDOM.render(<Button>Hello, world!</Button>, document.getElementById('root'));`;
 
-const DEFAULT_HTML = `<!-- index.html: this app starts in Tokyo Neon instead -->
+const LOAD = `import '@nurvus/ui/themes/tokyo-neon.css';   // one theme, about 1 KB
+import '@nurvus/ui/themes/all.css';          // or every theme, for a full theme menu`;
+
+const DEFAULT_HTML = `// In your app's entry file: load the theme.
+import '@nurvus/ui/themes/tokyo-neon.css';
+
+<!-- index.html: and make it the page's default -->
 <html data-theme="tokyo-neon">`;
 
 const PICKER = `import React from 'react';
@@ -87,29 +93,40 @@ export default function ApplyingTheme() {
     <div className="dx-page gd">
       <h1 className="dx-page-title">Applying a theme</h1>
       <p className="dx-lede">
-        Themes need no setup. Import any component and the page is Apollo White. Everything below is optional:
-        a different default, a theme picker, a dark part of a light page.
+        Themes need no setup. Import any component and the page is Apollo White. Other themes load only if you
+        ask for them, one small file each. Everything below is optional: more themes, a different default, a theme
+        picker, a dark part of a light page.
       </p>
 
       <Step n={ 1 } title="Zero setup">
-        <p>The package's CSS carries every theme. With no <code>data-theme</code> anywhere, the page gets Apollo White.</p>
+        <p>The package's core CSS carries one theme, Apollo White. With no <code>data-theme</code> anywhere, that's what the page gets.</p>
         <Example owner="Guide" code={ ZERO } mode="static" />
       </Step>
 
-      <Step n={ 2 } title="A different default">
-        <p>Put the attribute on <code>&lt;html&gt;</code>. No JavaScript needed.</p>
+      <Step n={ 2 } title="Load the themes you offer">
+        <p>
+          Every other theme is its own file, about 1 KB. Import the ones your app offers, or <code>all.css</code> for a
+          full theme menu. A theme you don't import never reaches your users. If you switch to a theme whose file isn't
+          loaded, <code>setTheme</code> says so in the console and names the file.
+        </p>
+        <Example owner="Guide" code={ LOAD } mode="static" />
+      </Step>
+
+      <Step n={ 3 } title="A different default">
+        <p>Load that theme's file and put its name on <code>&lt;html&gt;</code>. No theme code needed.</p>
         <Example owner="Guide" code={ DEFAULT_HTML } mode="static" />
       </Step>
 
-      <Step n={ 3 } title="Let people switch">
+      <Step n={ 4 } title="Let people switch">
         <p>
           <code>setTheme(id)</code> applies a theme and saves it. On the next visit the package brings the saved
-          theme back by itself when it loads: no code for that either. This picker is live; it switches this site.
+          theme back by itself when it loads: no code for that either. A picker can only offer the themes you loaded
+          (this site loads all of them). This one is live; it switches this site.
         </p>
         <Example owner="Guide" code={ PICKER } />
       </Step>
 
-      <Step n={ 4 } title="No flash on reload">
+      <Step n={ 5 } title="No flash on reload">
         <p>
           The package restores the saved theme when your JavaScript loads, a moment after the first paint. To have it
           on from the very first frame, add this to <code>&lt;head&gt;</code>.
@@ -117,12 +134,12 @@ export default function ApplyingTheme() {
         <Example owner="Guide" code={ NO_FLASH } mode="static" />
       </Step>
 
-      <Step n={ 5 } title="Theme one part of a page">
+      <Step n={ 6 } title="Theme one part of a page">
         <p>Themes nest: any element can carry its own, like a dark sidebar in a light app.</p>
         <Example owner="Guide" code={ NESTED } mode="static" />
       </Step>
 
-      <Step n={ 6 } title="Use the colors in your own CSS">
+      <Step n={ 7 } title="Use the colors in your own CSS">
         <p>
           Style your own UI with the role tokens, never raw hex. They mean the same thing in every theme, so your
           screens follow the theme too. <a href={ href('Themes', 'Apollo White') }>Each theme's page</a> lists all of them.
@@ -130,7 +147,7 @@ export default function ApplyingTheme() {
         <Example owner="Guide" code={ OWN_CSS } mode="static" lang="text" />
       </Step>
 
-      <Step n={ 7 } title="React to a change">
+      <Step n={ 8 } title="React to a change">
         <Example owner="Guide" code={ LISTEN } mode="static" />
       </Step>
 

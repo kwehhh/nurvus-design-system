@@ -24,7 +24,7 @@ function HeroSample() {
   return (
     <Panel title="Deployments" caption="Every color here is a theme token. Switch the theme at the top right.">
       <Table columns={ columns } data={ DEPLOYS } />
-      <Layout display="flex" alignItems="center" itemSpacing={ 10 } className="hm-sample-actions">
+      <Layout display="flex" alignItems="center" itemSpacing={ 8 } className="hm-sample-actions">
         <Button type="primary" size="small">Deploy</Button>
         <Button type="secondary" size="small">View logs</Button>
       </Layout>
@@ -56,13 +56,13 @@ function InstallLine() {
 function ThemeTile({ theme }) {
   return (
     <div className="hm-theme" data-theme={ theme.id }>
-      <Layout itemSpacing={ 10 }>
+      <Layout itemSpacing={ 8 }>
         <Layout display="flex" alignItems="center" justifyContent="space-between">
           <Title level={ 4 }>{ theme.name }</Title>
           <Tag tone={ theme.mode === 'dark' ? 'accent' : 'neutral' }>{ theme.mode }</Tag>
         </Layout>
         <Text as="p" variant="caption" tone="muted">{ theme.keywords }</Text>
-        <Layout display="flex" alignItems="center" itemSpacing={ 10 }>
+        <Layout display="flex" alignItems="center" itemSpacing={ 8 }>
           <Button type="primary" size="mini" onClick={ () => setTheme(theme.id) }>Use this theme</Button>
           <a className="hm-theme-link" href={ href('Themes', theme.name) }>Details</a>
         </Layout>
@@ -101,12 +101,12 @@ const STEPS = [
 ];
 
 const STACK = [
-  { name: 'React 16', text: 'Function components and hooks, for React 16.8 and newer in the 16 line (16.14 is what we test on). React and ReactDOM are peer dependencies, so you bring your own.' },
+  { name: 'React 16 to 19', text: 'Function components and hooks, for React 16.8 through 19 (tested on 16.14, 18.3 and 19.3). React and ReactDOM are peer dependencies, so you bring your own.' },
   { name: 'CSS custom properties', text: 'Each theme is a set of CSS variables on [data-theme]. Your own CSS can use the same --nv-* roles, so your screens follow the theme too.' },
   { name: 'Sass', text: 'Component styles are written in Sass and compiled into the package. Nothing extra to set up.' },
-  { name: 'PropTypes and docblocks', text: 'Every prop is typed and described in the code. The API tables on this site are generated from them.' },
+  { name: 'TypeScript', text: 'Written in TypeScript, and the types ship with the package: editors autocomplete every prop and catch a wrong value. The API tables on this site come from the same types.' },
   { name: 'npm with provenance', text: 'Each change on main is published from GitHub Actions through npm Trusted Publishing, with provenance: no tokens, no hand-made builds.' },
-  { name: '≈ 18 KB gzipped', text: 'The whole library with its styles and themes, React not included.' },
+  { name: '≈ 16 KB gzipped', text: 'Every component with its styles and the default theme, React not included. Each extra theme is a separate file of about half a KB, loaded only if you import it.' },
 ];
 
 const why = (light, dark) => [
@@ -143,8 +143,9 @@ export default function Home() {
     <div className="dx-page hm">
       <section className="hm-hero">
         <div className="hm-hero-copy">
-          <Layout display="flex" alignItems="center" itemSpacing={ 10 } className="hm-badges">
+          <Layout display="flex" alignItems="center" itemSpacing={ 8 } className="hm-badges">
             <Tag tone="accent">React</Tag>
+            <Tag tone="accent">TypeScript</Tag>
             <Tag>v0.1 alpha</Tag>
             <Tag>MIT</Tag>
           </Layout>
@@ -240,7 +241,7 @@ export default function Home() {
         <Example owner="Home" code={ HELLO_WORLD } mode="static" />
         <p className="dx-lede">
           That's all: no theme setup. The page is Apollo White, and a visitor's saved theme comes back by itself.
-          To pick another default or add a theme menu, see <a href={ href('Guides', 'Applying a theme') }>Applying a theme</a>.
+          To pick another default or add a theme menu, see <a href={ href('Themes', 'Applying a theme') }>Applying a theme</a>.
         </p>
         <p className="hm-contrib">
           Building the library itself? <a href={ href('Contributing', 'Add a component') }>Add a component</a> is in

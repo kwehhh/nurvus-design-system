@@ -12,7 +12,7 @@ export default function ThemesOverview() {
       <p className="dx-lede">
         Each theme is a complete palette of its own: the same 27 role tokens, every one with a value.
         Pick a card to see the theme in use, or switch the whole site with <strong>Theme</strong> at the top right.
-        To use them in your app, see <a href={ href('Guides', 'Applying a theme') }>Applying a theme</a>.
+        To use them in your app, see <a href={ href('Themes', 'Applying a theme') }>Applying a theme</a>.
       </p>
       <ThemeGrid />
     </div>

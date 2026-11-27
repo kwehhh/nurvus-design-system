@@ -22,7 +22,7 @@ const highlight = HighlightStyle.define([
 const look = EditorView.theme({
   '&': { backgroundColor: 'var(--nv-bg)', color: 'var(--nv-text)', fontSize: '13px' },
   '.cm-content': { fontFamily: 'var(--nv-font-mono)', caretColor: 'var(--nv-cursor)', padding: '10px 0' },
-  '.cm-scroller': { fontFamily: 'var(--nv-font-mono)', lineHeight: '1.6' },
+  '.cm-scroller': { fontFamily: 'var(--nv-font-mono)', lineHeight: '1.6', fontVariantLigatures: 'none' },
   '.cm-cursor, .cm-dropCursor': { borderLeftColor: 'var(--nv-cursor)', borderLeftWidth: '2px' },
   '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection': { backgroundColor: 'var(--nv-selection)' },
   '.cm-gutters': { backgroundColor: 'var(--nv-bg-alt)', color: 'var(--nv-text-subtle)', border: 'none', borderRight: '1px solid var(--nv-border)' },

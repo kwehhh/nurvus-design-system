@@ -12,14 +12,18 @@ body {
 }
 
 a { color: var(--nv-accent); }
+// No ligatures in code: JetBrains Mono would draw "<!--" and "->" as arrows.
+code, pre, kbd, samp { font-variant-ligatures: none; }
 code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 
 // Header
+// Three columns so the search sits at the true center: start | search | tools.
 .dx-header {
   position: sticky;
   top: 0;
   z-index: 20;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 480px) minmax(0, 1fr);
   align-items: center;
   gap: 12px;
   height: 56px;
@@ -35,24 +39,117 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
   text-decoration: none;
 }
 
+.dx-header-start {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
 .dx-header-tools {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 10px;
-  margin-left: auto;
 }
 
+// Desktop: collapses the sidebar. Phone: opens the drawer.
 .dx-header .dx-menu-button {
-  display: none;
+  display: inline-flex;
   border: 0;
   background: transparent;
   cursor: pointer;
 }
 
+// Search: a combobox in the middle of the header.
+.dx-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.dx-search-header { width: 100%; }
+
+.dx-search-icon {
+  position: absolute;
+  left: 10px;
+  width: 16px;
+  height: 16px;
+  color: var(--nv-text-subtle);
+  pointer-events: none;
+}
+
+.dx-search-input {
+  width: 100%;
+  height: 36px;
+  padding: 0 44px 0 34px;
+  border: 1px solid var(--nv-border-strong);
+  border-radius: 8px;
+  background: var(--nv-bg);
+  color: var(--nv-text);
+  font: 14px var(--nv-font-sans);
+
+  &::placeholder { color: var(--nv-text-muted); }
+  &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 1px; }
+}
+
+.dx-search-kbd {
+  position: absolute;
+  right: 8px;
+  padding: 1px 6px;
+  border: 1px solid var(--nv-border);
+  border-radius: 4px;
+  color: var(--nv-text-muted);
+  font: 12px var(--nv-font-sans);
+  pointer-events: none;
+}
+
+.dx-search-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 40;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  border: 1px solid var(--nv-border);
+  border-radius: 8px;
+  background: var(--nv-bg);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+
+  &[hidden] { display: none; }
+}
+
+.dx-search-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: var(--nv-text);
+  font-size: 14px;
+  cursor: pointer;
+
+  &[aria-selected="true"] { background: var(--nv-accent-soft); }
+  mark { background: none; color: var(--nv-accent); font-weight: 600; }
+}
+
+.dx-search-group { color: var(--nv-text-muted); font-size: 12px; white-space: nowrap; }
+.dx-search-empty { padding: 8px 10px; color: var(--nv-text-muted); font-size: 14px; }
+.dx-search-drawer { display: none; margin-bottom: 14px; }
+
 // Layout
 .dx-layout {
   display: grid;
   grid-template-columns: 240px minmax(0, 1fr);
+}
+
+// Desktop, collapsed: the page reflows to the full width.
+@media (min-width: 761px) {
+  .dx-layout[data-nav="collapsed"] { grid-template-columns: minmax(0, 1fr); }
+  .dx-layout[data-nav="collapsed"] .dx-sidebar { display: none; }
 }
 
 .dx-sidebar {
@@ -105,23 +202,10 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 
 .dx-nav-section-link { font-weight: 600; color: var(--nv-text) !important; }
 .dx-nav-heading { display: block; padding: 4px 10px; font-size: 14px; }
+.dx-sidebar li[data-divider] { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--nv-border); }
 // Contributing is for people building the library: set apart at the bottom.
 .dx-nav-section[data-section="Contributing"] { margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--nv-border); }
 
-.dx-filter {
-  width: 100%;
-  margin-bottom: 14px;
-  padding: 7px 10px;
-  border: 1px solid var(--nv-border-strong);
-  border-radius: 8px;
-  background: var(--nv-bg);
-  color: var(--nv-text);
-  font: 14px var(--nv-font-sans);
-
-  &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 1px; }
-}
-
-.dx-nav-empty { color: var(--nv-text-subtle); font-size: 14px; padding: 0 10px; }
 
 .dx-main {
   min-width: 0;
@@ -155,8 +239,10 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 
 // Phone: the sidebar becomes a drawer behind the header menu button.
 @media (max-width: 760px) {
-  .dx-header { padding: 0 12px; }
-  .dx-header .dx-menu-button { display: inline-flex; }
+  .dx-header { padding: 0 12px; display: flex; }
+  .dx-header-tools { margin-left: auto; }
+  .dx-search-header { display: none; }
+  .dx-search-drawer { display: flex; }
   .nv-version-link { display: none; }
   .dx-layout { grid-template-columns: minmax(0, 1fr); }
   .dx-sidebar {
