@@ -44,7 +44,7 @@ ReactDOM.render(<App />, document.querySelector('#root'));
 ```
 
 ### Themes
-Six themes ship with the package, each a complete palette of the same 27 role tokens (`--nv-bg`, `--nv-text`, `--nv-accent`, `--nv-syntax-keyword`…): **Apollo White** and **Dopamine** (light), **Tokyo Neon**, **Nether**, **Outworld** and **Arcane** (dark). All are `demo` status while the colors mature. Every theme is a `[data-theme="<id>"]` block in the package CSS; with no attribute a page gets Apollo White.
+Seven themes ship with the package, each a complete palette of the same 27 role tokens (`--nv-bg`, `--nv-text`, `--nv-accent`, `--nv-syntax-keyword`…): **Apollo White** and **Dopamine** (light), **Tokyo Neon**, **Nether**, **Nether Neon**, **Outworld** and **Arcane** (dark). All are `demo` status while the colors mature. Every theme is a `[data-theme="<id>"]` block in the package CSS; with no attribute a page gets Apollo White.
 
 ```js static
 import { initTheme, setTheme, themes } from '@nurvus/ui';
@@ -65,8 +65,8 @@ Run/Dev
 2. `npm run docs` (or `npm run styleguide`) to run the docs site with hot reload
 3. Go to `http://localhost:6061/`
 
-The docs site lives in `docs/` (Vite). Component pages come from each component's `<Name>.md` (examples in ```jsx blocks: imports work, every @nurvus/ui component is in scope, the last JSX renders) and its PropTypes + docblocks (the props table).
+The docs site lives in `docs/` (Vite). Component pages come from each component's `<Name>.md` (examples in ```jsx blocks: imports work, every @nurvus/ui component is in scope, the last JSX renders) and its PropTypes + docblocks (the props table). Step by step, with the files: **Add a component** on the docs site (https://design.nurvus.ai/#/Guides/Add%20a%20component).
 
 Build
-1. `npm run build` to generate components package to `./dist`.
+1. `npm run build` to generate components package to `./dist` (webpack 5; runs on current Node with no OpenSSL flag).
 2. `npm run docs:build` to build the docs site to `./docs/dist/` (what design.nurvus.ai serves; CI deploys it on every push to `main`).
