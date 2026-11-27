@@ -1,135 +1,41 @@
-Basic Example
+Sections open and close with the chevron (or the whole heading, when it isn't a link). The current page is marked with a bar beside it, and its section opens by itself.
+
+By keyboard: Tab goes link by link as usual, and inside the menu ↑ ↓ move between rows (going round at the ends), Home and End jump to the first and last, → opens a section and ← closes it.
 ```jsx
 import { Menu } from '@nurvus/ui';
 
-const initialPath = [1];
-const items = [
-  {
-    label: 'Item 1',
-  },
-  {
-    label: 'Item 2'
-  },
-  {
-    label: 'Item 3'
-  },
-  {
-    label: 'Item 4'
-  }
-];
-
-const MyApp = ({initialPath}) => {
-  const [activePath, setActivePath] = React.useState(initialPath);
-
-  return (
-    <Menu
-      activePath={ activePath }
-      items={ items }
-      onClick={ (e, path) => setActivePath(path) }
-    />
-  );
-}
-<MyApp initialPath={ initialPath } />
+<div style={ { maxWidth: 260 } }>
+  <Menu
+    current="#/settings/billing"
+    onNavigate={ (href, event) => event.preventDefault() }
+    sections={ [
+      { title: 'Account', href: '#/account', items: [
+        { label: 'Profile', href: '#/account/profile' },
+        { label: 'Security', href: '#/account/security' },
+      ] },
+      { title: 'Settings', items: [
+        { label: 'General', href: '#/settings/general' },
+        { label: 'Billing', href: '#/settings/billing' },
+        { label: 'Danger zone', href: '#/settings/danger', divider: true },
+      ] },
+    ] }
+  />
+</div>
 ```
 
-Using Sub Menus
+Start with some sections closed: `defaultOpen` takes a map of section ids (the title as a slug, or the section's own `id`).
 ```jsx
 import { Menu } from '@nurvus/ui';
 
-const initialPath = [0, 0, 0];
-const items = [
-  {
-    label: 'Item 1',
-    items: [
-      {
-        label: 'Sub 1',
-        items: [
-          {
-            label: 'Sub Item 1'
-          },
-          {
-            label: 'Sub Item 2'
-          }
-        ]
-      },
-      {
-        label: 'Sub 2'
-      }
-    ]
-  },
-  {
-    label: 'Item 2'
-  }
-];
-
-const MyApp = ({initialPath}) => {
-  const [activePath, setActivePath] = React.useState(initialPath);
-
-  return (
-    <Menu
-      activePath={ activePath }
-      items={ items }
-      onClick={ (e, path) => setActivePath(path) }
-    />
-  );
-}
-<MyApp initialPath={ initialPath } />
-```
-
-Using itemRenderer
-```jsx
-import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-import { Layout, Menu, Text } from '@nurvus/ui';
-
-const itemRenderer = ({ label }) => {
-  return (
-    <Layout display="flex" alignItems="center" justifyContent="space-between">
-      <Text>{ label }</Text>
-      <Layout display="flex" alignItems="center" justifyContent="space-between">
-        <RemoveRedEyeIcon />
-        <LockOpenIcon />
-      </Layout>
-    </Layout>
-  );
-};
-const initialPath = [0, 0, 0];
-const items = [
-  {
-    label: 'Item 1',
-    items: [
-      {
-        label: 'Sub 1',
-        items: [
-          {
-            label: 'Sub Item 1'
-          },
-          {
-            label: 'Sub Item 2'
-          }
-        ]
-      },
-      {
-        label: 'Sub 2'
-      }
-    ]
-  },
-  {
-    label: 'Item 2'
-  }
-];
-
-const MyApp = ({initialPath}) => {
-  const [activePath, setActivePath] = React.useState(initialPath);
-
-  return (
-    <Menu
-      activePath={ activePath }
-      items={ items }
-      itemRenderer={ itemRenderer }
-      onClick={ (e, path) => setActivePath(path) }
-    />
-  );
-}
-<MyApp initialPath={ initialPath } />
+<div style={ { maxWidth: 260 } }>
+  <Menu
+    id="closed-example"
+    defaultOpen={ { reports: false } }
+    onNavigate={ (href, event) => event.preventDefault() }
+    sections={ [
+      { title: 'Projects', items: [{ label: 'Website', href: '#/p/web' }, { label: 'App', href: '#/p/app' }] },
+      { title: 'Reports', items: [{ label: 'Weekly', href: '#/r/week' }, { label: 'Monthly', href: '#/r/month' }] },
+    ] }
+  />
+</div>
 ```

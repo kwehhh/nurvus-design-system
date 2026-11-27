@@ -1,0 +1,170 @@
+@import "../../styles/variables.scss";
+
+// Pick one value: a button and the list it opens. The list stays in the page
+// (the button's aria-controls points at it) and fades and slides in.
+$select-speed: 0.12s;
+
+.#{$cls-prefix}.select {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+
+  .select-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space--8);
+    max-width: 100%;
+    min-height: 32px;
+    padding: var(--space--4) var(--space--8) var(--space--4) var(--space--12);
+    border: 1px solid var(--nv-border-strong);
+    border-radius: 8px;
+    background: var(--nv-surface);
+    color: var(--nv-text);
+    cursor: pointer;
+    user-select: none;
+
+    &:hover { background: var(--nv-surface-hover); }
+    &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 2px; }
+  }
+
+  &[data-disabled] .select-trigger { opacity: 0.5; cursor: not-allowed; }
+
+  .select-value {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space--8);
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    &[data-placeholder] { color: var(--nv-text-muted); }
+  }
+
+  // The same turned-corner chevron as Menu: down when closed, up when open.
+  .select-chevron {
+    display: inline-flex;
+    flex: none;
+    width: 16px;
+    justify-content: center;
+
+    &::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: translateY(-2px) rotate(45deg);
+      transition: transform $select-speed ease;
+    }
+  }
+
+  &[data-open="true"] .select-chevron::after { transform: translateY(2px) rotate(225deg); }
+
+  .select-list {
+    position: absolute;
+    z-index: 1000;
+    top: calc(100% + var(--space--4));
+    left: 0;
+    min-width: 100%;
+    max-height: 360px;
+    overflow: auto;
+    padding: var(--space--4);
+    border: 1px solid var(--nv-border);
+    border-radius: 10px;
+    background: var(--nv-surface);
+    color: var(--nv-text);
+    box-shadow: 0 12px 32px rgb(0 0 0 / 0.24);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px) scale(0.98);
+    transform-origin: top left;
+    transition: opacity $select-speed ease, transform $select-speed ease, visibility 0s $select-speed;
+  }
+
+  &[data-align="end"] .select-list { left: auto; right: 0; transform-origin: top right; }
+
+  &[data-open="true"] .select-list {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity $select-speed ease, transform $select-speed ease, visibility 0s 0s;
+  }
+
+  .select-group + .select-group,
+  .select-option + .select-group {
+    margin-top: var(--space--4);
+    padding-top: var(--space--4);
+    border-top: 1px solid var(--nv-border);
+  }
+
+  .select-group-label {
+    padding: var(--space--4) var(--space--8);
+    color: var(--nv-text-muted);
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .select-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space--8);
+    padding: 6px 32px 6px var(--space--8); // room on the right for the check
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+
+    // Where the keys (or the pointer) are: a wash and an accent bar, so it
+    // reads as focus even though focus stays on the button.
+    &[data-active="true"] {
+      background: var(--nv-surface-hover);
+      box-shadow: inset 2px 0 0 var(--nv-accent);
+    }
+
+    // The picked value: tinted, with a check.
+    &[aria-selected="true"] {
+      background: var(--nv-accent-soft);
+      font-weight: 500;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        width: 5px;
+        height: 10px;
+        border-right: 2px solid var(--nv-accent);
+        border-bottom: 2px solid var(--nv-accent);
+        transform: translateY(-60%) rotate(45deg);
+      }
+    }
+
+    &[aria-selected="true"][data-active="true"] { background: color-mix(in srgb, var(--nv-accent) 22%, transparent); }
+    &[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
+  }
+
+  .select-option-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .select-option-description {
+    color: var(--nv-text-muted);
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .select-list,
+    .select-chevron::after,
+    &[data-open="true"] .select-list { transition: none; }
+  }
+}

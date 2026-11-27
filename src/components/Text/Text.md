@@ -33,7 +33,7 @@ Using Text Overflow
 ```jsx
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
 import AddIcon from '@material-ui/icons/Add';
-import { Button, Layout, Menu, Text } from '@nurvus/ui';
+import { Button, Layout, Text } from '@nurvus/ui';
 
 const overflowStyle = {
   textOverflow: 'ellipsis',

@@ -1,68 +1,150 @@
 @import "../../styles/variables.scss";
-@import "../../styles/tokens.scss";
+
+// Site navigation. Sections open and close by animating the list's row
+// (grid-template-rows 1fr <-> 0fr): smooth, no height measuring, any length.
+$menu-speed: 0.2s;
 
 .#{$cls-prefix}.menu {
-  // ---------------------------------------------------------------------------
-  // Indentation is token-driven, not a magic number in JS.
-  // Rows are FLAT siblings in the DOM (see Menu.jsx) — nesting is purely visual,
-  // produced by padding-left. Menu.jsx stamps `--nurvus-menu-depth` per row and
-  // clamps it with the `maxIndentDepth` prop, so a deep tree can never indent
-  // the label out of a narrow panel.
-  // Consumers retune the whole tree by overriding these two on .nurvus.menu.
-  // ---------------------------------------------------------------------------
-  --nurvus-menu-indent-base: #{$--space--8};
-  --nurvus-menu-indent-step: #{$--space--12};
+  font-size: 14px;
+  line-height: 20px;
 
-  background: var(--nv-bg);
-  color: var(--nv-text);
-  padding: $--space--4;
+  .menu-section + .menu-section { margin-top: var(--space--8); }
 
-  // Allow the menu to shrink inside a flex/grid parent instead of forcing its
-  // intrinsic width and pushing the row content out.
-  min-width: 0;
+  .menu-heading {
+    display: flex;
+    align-items: center;
+    gap: var(--space--4);
+  }
+
+  .menu-title {
+    flex: 1;
+    min-width: 0;
+    padding: var(--space--4) 10px;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: var(--nv-text);
+    font: inherit;
+    font-weight: 600;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover { background: var(--nv-surface-hover); }
+    &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: -2px; }
+    &[data-active="true"] { background: var(--nv-accent-soft); }
+  }
+
+  // The chevron: a turned corner. Down when the section is closed (there is
+  // more below), up when it is open; it turns half a circle between the two.
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      margin: 0 var(--space--4);
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: translateY(2px) rotate(225deg);
+      transition: transform $menu-speed ease;
+    }
+  }
+
+  // The icon-only toggle beside a heading that is a link.
+  .menu-toggle:not(.menu-title) {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: var(--nv-text-muted);
+    cursor: pointer;
+
+    &::after { margin: 0; }
+    &:hover { background: var(--nv-surface-hover); color: var(--nv-text); }
+    &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: -2px; }
+  }
+
+  // A heading with no page of its own: the whole row is the toggle.
+  .menu-title.menu-toggle { justify-content: space-between; }
+
+  .menu-section[data-open="false"] .menu-toggle::after { transform: translateY(-2px) rotate(45deg); }
+
+  .menu-items {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows $menu-speed ease;
+  }
+
+  .menu-section[data-open="false"] .menu-items { grid-template-rows: 0fr; }
+
+  ul {
+    min-height: 0;
+    overflow: hidden;
+    // Room on the left for the current-page bar, which sits outside the item.
+    margin: 0 0 0 -12px;
+    padding: 0 0 0 12px; // no vertical padding: it would stay when the row closes to 0
+    list-style: none;
+  }
+
+  li:first-child { margin-top: 2px; }
+  li:last-child { margin-bottom: var(--space--8); }
+
+  // Closed: out of sight and out of the tab order once the animation ends.
+  .menu-section[data-open="false"] ul {
+    visibility: hidden;
+    transition: visibility 0s $menu-speed;
+  }
+
+  li + li { margin-top: 2px; }
+
+  li[data-divider] {
+    margin-top: var(--space--8);
+    padding-top: var(--space--8);
+    border-top: 1px solid var(--nv-border);
+  }
 
   .menu-item {
     position: relative;
-    min-width: 0; // ...and let row content ellipsis rather than collapse to 0
-    padding: $--space--8 $--space--12;
-    padding-left: calc(
-      var(--nurvus-menu-indent-base) +
-      var(--nurvus-menu-depth, 0) * var(--nurvus-menu-indent-step)
-    );
-    border-radius: $--radius--4;
-    color: var(--nv-text);
-    cursor: pointer;
+    display: block;
+    padding: var(--space--4) 10px var(--space--4) 20px;
+    border-radius: 6px;
+    color: var(--nv-text-muted);
+    text-decoration: none;
 
-    &:hover {
-      background: var(--nv-surface-hover);
-      color: var(--nv-text);
-    }
+    &:hover { background: var(--nv-surface-hover); color: var(--nv-text); }
+    &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: -2px; }
 
-    // Active row: 2px accent rail + a tinted wash, both from the theme's
-    // accent, so every theme keeps the same "you are here" language.
     &[data-active="true"] {
       background: var(--nv-accent-soft);
       color: var(--nv-text);
-
-      &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100%;
-        width: $--space--2;
-        border-radius: $--radius--2;
-        background: var(--nv-accent);
-      }
-
-      &:hover {
-        background: color-mix(in srgb, var(--nv-accent) 22%, transparent);
-      }
+      font-weight: 500;
     }
 
-    // Nested groups read one step quieter than leaf rows.
-    &[data-type="group"] {
-      color: var(--nv-text-muted);
+    // The current page's marker: its own small rounded bar beside the item
+    // (as GitHub Primer's NavList draws it), not a border on the rounded item.
+    &[data-active="true"]::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -8px;
+      width: 4px;
+      height: 18px;
+      border-radius: 2px;
+      background: var(--nv-accent);
+      transform: translateY(-50%);
     }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .menu-items,
+    .menu-toggle::after,
+    .menu-section[data-open="false"] ul { transition: none; }
   }
 }

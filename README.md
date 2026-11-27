@@ -70,6 +70,11 @@ Themes nest (`<nav data-theme="tokyo-neon">` inside a light page), and your own 
 - **Colors as data** (React Native, native apps, design tools): `@nurvus/ui/themes/<id>.json`, the same files the CSS is built from, plus `roles.json` (what each color is for).
 - Guide: **Without React (Respawn)** on the docs site.
 
+### Renamed in 0.1.0-alpha.14
+- **`Menu`** is site navigation now (sections of links that open and close, with arrow keys): it was `NavList` in alpha.13.
+- **`Tree`** is the nested, selectable list that `Menu` used to be (a layers panel), now with keyboard support. `Menu` given the old props (`items`, `activePath`) still draws a `Tree` and warns once, so old code keeps working until you rename it.
+- New: **`Select`**, pick one value from a list (the WAI-ARIA select-only combobox).
+
 ### Docs
 Every component and theme, with live examples you can edit and each component's props: **https://design.nurvus.ai/**
 

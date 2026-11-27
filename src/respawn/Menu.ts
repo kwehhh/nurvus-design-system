@@ -1,86 +1,137 @@
 import classNames from 'classnames';
 import CONSTANT from '../constants';
-import { spawn, Child, ElementProps, Style } from './spawn';
+import { sectionId, startsOpen, menuKeydown, warnOldMenuProps } from '../menu';
+import Tree from './Tree';
+import { spawn, Child, ElementProps } from './spawn';
 import { updatable, NurvusElement } from './update';
 import '../components/Menu/Menu.scss';
 
 export interface MenuItem {
-  /** What the row shows (unless itemRenderer draws it). */
-  label?: Child;
-  /** Child rows, shown indented under this one. */
-  items?: MenuItem[];
-  /** Custom class name for this row. */
-  className?: string;
-  /** Inline style for this row. */
-  style?: Style;
-  /** Anything else your itemRenderer needs. */
-  [key: string]: any;
+  /** What the link says. */
+  label: Child;
+  /** Where it goes. The item whose href equals `current` is marked as the current page. */
+  href: string;
+  /** Draws a hairline above this item, to split a section into groups. */
+  divider?: boolean;
+}
+
+export interface MenuSection {
+  /** Stable id: names the section's open state and links its toggle to its list. Defaults to the title. */
+  id?: string;
+  /** The section heading. */
+  title: string;
+  /** Makes the heading a link too (e.g. to the section's overview page). */
+  href?: string;
+  /** The section's links. */
+  items: MenuItem[];
 }
 
 export interface MenuProps extends ElementProps {
-  /** The rows to render; each can have child `items`. */
-  items?: MenuItem[];
-  /** The active row as a path of indexes, e.g. [2, 0] = the first child of the third row. */
-  activePath?: number[];
-  /** Draws a row's content instead of its label. */
-  itemRenderer?: (item: MenuItem) => Child;
-  /** Called on a row click with the event and that row's path, after the row is marked active. */
-  onClick?: (event: MouseEvent, path: number[]) => void;
-  /** Deepest level that still indents. Deeper rows stay at that indent. */
-  maxIndentDepth?: number;
+  /** The sections, in order. */
+  sections: MenuSection[];
+  /** The href of the page being shown: its link is marked, and its section opens. */
+  current?: string;
+  /** Which sections start open: true (all), false (none) or a map of section id -> open. Defaults to all. */
+  defaultOpen?: boolean | Record<string, boolean>;
+  /** Called when a section opens or closes (e.g. to remember it). */
+  onToggle?: (id: string, open: boolean) => void;
+  /** Called when any link is clicked, with its href (e.g. to close a drawer). */
+  onNavigate?: (href: string, event: MouseEvent) => void;
+  /** Accessible name of the navigation landmark. */
+  label?: string;
+  /** Prefix for the ids that link each toggle to its list. Defaults to "menu". */
+  id?: string;
 }
 
 /**
- * A nested list of rows, like a layers panel. Rows indent by depth and the
- * active one is highlighted. A click marks that row active (in place: the
- * element stays the same) and calls onClick(event, path). To set the active
- * row from code: menu.update({ activePath: [1] }).
+ * Site navigation: sections of links that open and close (an accordion, with
+ * a smooth animation), and the current page marked by a bar beside it. A
+ * click on a toggle opens or closes its section in place (the element stays
+ * the same); update({ current }) marks another page and opens its section.
  */
-export default function Menu(props: MenuProps = {}): NurvusElement<HTMLDivElement, MenuProps> {
+export default function Menu(props: MenuProps = { sections: [] }): NurvusElement<HTMLElement, MenuProps> {
+  // The props Menu took before it was navigation (Tree's) still draw a Tree, with a warning.
+  if (warnOldMenuProps(props || {})) return Tree(props as any) as any;
   return updatable(({
-    activePath = [], className, itemRenderer, items, maxIndentDepth = 6, onClick, children: _children, ...rest
+    sections = [], current, defaultOpen = true, onToggle, onNavigate, label = 'Pages', id = 'menu', className, ...rest
   }: MenuProps, keep) => {
-    const rows: { el: HTMLElement; path: string }[] = [];
-    const markActive = (path: number[]) => {
-      const key = path.join();
-      rows.forEach((row) => row.el.setAttribute('data-active', String(row.path === key)));
-    };
+    const open: Record<string, boolean> = Object.fromEntries(sections.map((s) => [sectionId(s), startsOpen(defaultOpen, sectionId(s))]));
+    // The current page's section always starts open, as in React.
+    const home = sections.find((s) => s.items.some((item) => item.href === current));
+    if (home) open[sectionId(home)] = true;
 
-    const renderItems = (list: MenuItem[] | undefined, active: number[], path: number[] = []): HTMLElement[] => {
-      if (!list) return [];
-      return list.flatMap((item, i) => {
-        const { className: itemClassName, label, style } = item;
-        const type = path.length > 1 ? 'group' : '';
-        const isActive = active.length === 1 && active[0] === i;
-        const [first, ...remainingPath] = active;
-        const nextPath = [...path, i];
-        // Clamped so a deep tree cannot indent the label out of a narrow panel (see Menu.scss).
-        const depth = Math.min(path.length, maxIndentDepth);
-        const el = spawn({
-          className: classNames(itemClassName, 'menu-item', CONSTANT.CLASS_PREFIX),
-          'data-active': isActive,
-          'data-type': type,
-          style: { '--nurvus-menu-depth': String(depth), ...style },
-          events: {
-            click: (event) => {
-              event.stopPropagation();
-              keep({ activePath: nextPath });
-              markActive(nextPath);
-              if (onClick) onClick(event, nextPath);
-            },
-          },
-          children: itemRenderer ? itemRenderer(item) : label,
+    const navigate = (href: string) => ({ click: (event: MouseEvent) => { if (onNavigate) onNavigate(href, event); } });
+
+    const renderSection = (section: MenuSection): HTMLElement => {
+      const sid = sectionId(section);
+      const listId = `${id}-${sid}`;
+      const toggles: HTMLElement[] = [];
+      const toggle = () => {
+        open[sid] = !open[sid];
+        keep({ defaultOpen: { ...open } });
+        el.setAttribute('data-open', String(open[sid]));
+        toggles.forEach((t) => {
+          t.setAttribute('aria-expanded', String(open[sid]));
+          if (t.hasAttribute('aria-label')) t.setAttribute('aria-label', `${open[sid] ? 'Hide' : 'Show'} ${section.title}`);
         });
-        rows.push({ el, path: nextPath.join() });
-        return [el, ...renderItems(item.items, first === i ? remainingPath : [], nextPath)];
+        if (onToggle) onToggle(sid, open[sid]);
+      };
+      const toggleProps = (extra: Record<string, unknown>) => ({
+        tag: 'button', type: 'button', 'aria-expanded': open[sid], 'aria-controls': listId, events: { click: toggle }, ...extra,
       });
+      const heading = section.href
+        ? [
+          spawn({ tag: 'a', className: 'menu-title', href: section.href, 'data-active': current === section.href, events: navigate(section.href), children: section.title }),
+          spawn(toggleProps({ className: 'menu-toggle', 'aria-label': `${open[sid] ? 'Hide' : 'Show'} ${section.title}` })),
+        ]
+        : [spawn(toggleProps({ className: 'menu-title menu-toggle', children: section.title }))];
+      heading.forEach((h) => { if (h.tagName === 'BUTTON') toggles.push(h); });
+
+      const el: HTMLElement = spawn({
+        className: 'menu-section',
+        'data-section': sid,
+        'data-open': open[sid],
+        children: [
+          spawn({ className: 'menu-heading', children: heading }),
+          spawn({
+            className: 'menu-items',
+            id: listId,
+            children: spawn({
+              tag: 'ul',
+              children: section.items.map((item) => spawn({
+                tag: 'li',
+                'data-divider': item.divider || undefined,
+                children: spawn({
+                  tag: 'a',
+                  className: 'menu-item',
+                  href: item.href,
+                  'data-active': current === item.href,
+                  'aria-current': current === item.href ? 'page' : undefined,
+                  events: navigate(item.href),
+                  children: item.label,
+                }),
+              })),
+            }),
+          }),
+        ],
+      });
+      return el;
     };
 
-    return spawn<HTMLDivElement>({
+    const { events, ...others } = rest;
+    return spawn<HTMLElement>({
+      tag: 'nav',
       className: classNames(className, 'menu', CONSTANT.CLASS_PREFIX),
-      ...rest,
-      tag: 'div',
-      children: renderItems(items, activePath),
+      'aria-label': label,
+      ...others,
+      events: {
+        ...events,
+        keydown: (event: KeyboardEvent, el: HTMLElement) => {
+          menuKeydown(event, el);
+          if (events && events.keydown) events.keydown(event, el);
+        },
+      },
+      children: sections.map(renderSection),
     });
   }, props);
 }
