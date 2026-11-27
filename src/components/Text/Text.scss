@@ -19,4 +19,10 @@
   &[data-tone="default"] { color: var(--nv-text); }
   &[data-tone="muted"] { color: var(--nv-text-muted); }
   &[data-tone="subtle"] { color: var(--nv-text-subtle); }
+
+  // Weight overrides the role's own (after the variants, so it wins).
+  &[data-weight="regular"] { font-weight: 400; }
+  &[data-weight="medium"] { font-weight: 500; }
+  &[data-weight="semibold"] { font-weight: 600; }
+  &[data-weight="bold"] { font-weight: 700; }
 }

@@ -8,7 +8,7 @@
   "border-strong": { "group": "Surfaces", "use": "Edges that define a control, like an input box.", "check": { "against": ["bg"], "min": 3 } },
   "text": { "group": "Text", "use": "Body copy and headings.", "check": { "against": ["bg", "surface"], "min": 4.5 } },
   "text-muted": { "group": "Text", "use": "Secondary text: labels, captions, meta.", "check": { "against": ["bg", "surface"], "min": 4.5 } },
-  "text-subtle": { "group": "Text", "use": "Placeholders, disabled and hints. Never for anything the reader must read.", "check": { "against": ["bg"], "min": 3 } },
+  "text-subtle": { "group": "Text", "use": "Disabled controls, large text and decoration. Not for text people need to read: WCAG asks 4.5:1 for normal-size text, and this role only has to reach 3:1.", "check": { "against": ["bg"], "min": 3 } },
   "accent": { "group": "Accent", "use": "Links, focus rings, active marks and icons.", "check": { "against": ["bg", "surface"], "min": 4.5 } },
   "accent-fill": { "group": "Accent", "use": "Solid fill of primary buttons and active pills.", "check": { "against": ["bg"], "min": 3 } },
   "on-accent": { "group": "Accent", "use": "Text and icons on accent-fill.", "check": { "against": ["accent-fill"], "min": 4.5 } },

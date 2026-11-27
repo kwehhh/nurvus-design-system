@@ -1,66 +1,33 @@
 @import "../../styles/variables.scss";
 
+// Spacing between children comes from the 4px grid (--space--N, see the
+// Spacing page). Stacked layouts (block, or a flex column) space with
+// margin-top; a flex row with margin-left.
+$layout-steps: 0, 2, 4, 8, 12, 16, 24, 32, 48, 64;
+
 .#{$cls-prefix}.layout {
   &[data-display="block"] {
     display: block;
   }
 
-  // Vertical Item Stacking
-  &[data-display="block"],
-  &[data-flex-direction="column"] {
-    &[data-item-spacing="10"] {
-      >  * + * {
-        margin-top: $spacing-10;
-      }
-    }
-
-    &[data-item-spacing="13"] {
-      >  * + * {
-        margin-top: 13px;
-      }
-    }
-
-    &[data-item-spacing="20"] {
-      >  * + * {
-        margin-top: $spacing-medium;
-      }
-    }
-
-    &[data-item-spacing="30"] {
-      >  * + * {
-        margin-top: $spacing-extra-medium;
-      }
-    }
-
-    &[data-item-spacing="40"] {
-      >  * + * {
-        margin-top: $spacing-40;
-      }
-    }
-  }
-
   &[data-display="flex"] {
     display: flex;
+  }
 
-    &[data-item-spacing="10"] {
-      >  * + * {
-        margin-left: 10px;
+  @each $n in $layout-steps {
+    &[data-display="block"][data-item-spacing="#{$n}"],
+    &[data-flex-direction="column"][data-item-spacing="#{$n}"] {
+      > * + * {
+        margin-top: var(--space--#{$n});
       }
     }
 
-    &[data-item-spacing="20"] {
-      >  * + * {
-        margin-left: $spacing-medium;
-      }
-    }
-
-    &[data-item-spacing="40"] {
-      >  * + * {
-        margin-left: 40px;
+    &[data-display="flex"]:not([data-flex-direction="column"])[data-item-spacing="#{$n}"] {
+      > * + * {
+        margin-left: var(--space--#{$n});
       }
     }
   }
-
 
   // Align Items
   &[data-align-items="flex-start"] {

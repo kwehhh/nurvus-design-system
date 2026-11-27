@@ -57,7 +57,8 @@
     right: 0;
     bottom: 0;
     z-index: $modal-z-index;
-    background-color: rgb(64 57 96 / 50%);
+    // A dimmed page behind the modal, in every theme.
+    background-color: color-mix(in srgb, var(--nv-bg-deep) 60%, transparent);
     transition: all 0.3s ease;
 
     &[data-animate="reveal-in"] {
@@ -78,12 +79,15 @@
     right: 0;
     bottom: 0;
     z-index: $modal-z-index;
-    background-color: #403960;
+    // Theme roles (it had fixed purples, so its title was dark on dark in light themes).
+    background-color: var(--nv-bg);
+    color: var(--nv-text);
 
     .header {
-      background-color: rgb(46, 36, 66);
-      color: $white;
-      padding: 10px;
+      padding: var(--space--12) var(--space--16);
+      border-bottom: 1px solid var(--nv-border);
+      background-color: var(--nv-bg-alt);
+      color: var(--nv-text);
     }
 
     &[data-animate="reveal-in"] {

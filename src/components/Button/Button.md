@@ -3,14 +3,14 @@ Basic Example
 import React from 'react';
 import { Button, Layout } from '@nurvus/ui';
 
-<Layout display="flex" itemSpacing={ 40 }>
+<Layout display="flex" itemSpacing={ 32 }>
   <Layout display="flex">
     <Layout
       display="flex"
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      itemSpacing={ 13 }
+      itemSpacing={ 12 }
     >
       <Button type="primary" size="extra-large">Hello</Button>
       <Button type="primary" size="large">Hello</Button>
@@ -23,7 +23,7 @@ import { Button, Layout } from '@nurvus/ui';
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      itemSpacing={ 13 }
+      itemSpacing={ 12 }
     >
       <Button type="primary" disabled={ true } size="extra-large">Hello</Button>
       <Button type="primary" disabled={ true } size="large">Hello</Button>
@@ -38,7 +38,7 @@ import { Button, Layout } from '@nurvus/ui';
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      itemSpacing={ 13 }
+      itemSpacing={ 12 }
     >
       <Button type="secondary" size="extra-large">Hello</Button>
       <Button type="secondary" size="large">Hello</Button>
@@ -51,7 +51,7 @@ import { Button, Layout } from '@nurvus/ui';
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      itemSpacing={ 13 }
+      itemSpacing={ 12 }
     >
       <Button type="secondary" disabled={ true } size="extra-large">Hello</Button>
       <Button type="secondary" disabled={ true } size="large">Hello</Button>

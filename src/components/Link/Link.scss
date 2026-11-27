@@ -1,18 +1,18 @@
 @import "../../styles/variables.scss";
 
+// The theme's accent, so links follow every theme (it was a fixed #47c3f3).
 .#{$cls-prefix}.link {
-  color:  #47c3f3;
+  color: var(--nv-accent);
   cursor: pointer;
+  text-underline-offset: 2px;
 
   &:hover {
-    color: #0e9fd8;
+    color: color-mix(in srgb, var(--nv-accent) 80%, var(--nv-text));
   }
 
-  &:active {
-    color: #0a7199;
+  &:focus-visible {
+    outline: 2px solid var(--nv-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
   }
-
-  // &:disabled {
-      // background: $green-1;
-  // }
 }

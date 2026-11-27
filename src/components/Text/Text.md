@@ -16,6 +16,19 @@ Basic Usage
 <Text>Hi</Text>
 ```
 
+Weight: `weight` overrides the role's own. For words that matter inside a sentence, use `<strong>` instead (screen readers know it). More on the **Typography** page.
+```jsx
+import { Text } from '@nurvus/ui';
+
+<div style={ { display: 'grid', gap: 4 } }>
+  <Text as="p" variant="body" weight="regular">Regular, 400</Text>
+  <Text as="p" variant="body" weight="medium">Medium, 500</Text>
+  <Text as="p" variant="body" weight="semibold">Semibold, 600</Text>
+  <Text as="p" variant="body" weight="bold">Bold, 700</Text>
+  <Text as="p" variant="body">A paragraph with <strong>one strong phrase</strong> and an <em>emphasised</em> one.</Text>
+</div>
+```
+
 Using Text Overflow
 ```jsx
 import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
