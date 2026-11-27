@@ -7,6 +7,8 @@ import Sidebar from './components/Sidebar';
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
 import AddComponent from './pages/AddComponent';
+import ApplyingTheme from './pages/ApplyingTheme';
+import Spacing from './pages/Spacing';
 import ComponentsIndex from './pages/ComponentsIndex';
 import ComponentPage, { IsolatedExample } from './pages/ComponentPage';
 import ThemesOverview from './pages/ThemesOverview';
@@ -20,7 +22,12 @@ import ThemePage from './pages/ThemePage';
 function resolve(route) {
   const [section, name, kind, index] = route;
   if (!section) return { page: <Home />, title: 'Overview', current: href() };
-  if (section === 'Guides' && name === 'Add a component' && !kind) return { page: <AddComponent />, title: name, current: href('Guides', name) };
+  if (section === 'Guides' && name === 'Applying a theme' && !kind) return { page: <ApplyingTheme />, title: name, current: href('Guides', name) };
+  if (section === 'Foundations' && name === 'Spacing' && !kind) return { page: <Spacing />, title: name, current: href('Foundations', name) };
+  // Contributing (for people building the library). #/Guides/Add a component was its first address.
+  if ((section === 'Contributing' || section === 'Guides') && name === 'Add a component' && !kind) {
+    return { page: <AddComponent />, title: name, current: href('Contributing', name) };
+  }
   if (section === 'Themes' && !name) return { page: <ThemesOverview />, title: 'Themes', current: href('Themes') };
   if (section === 'Themes' && name && !kind) {
     const theme = themes.find((t) => t.name === name);

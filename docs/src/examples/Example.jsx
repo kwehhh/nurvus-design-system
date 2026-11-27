@@ -38,7 +38,7 @@ function compile(code, owner) {
  * the preview (after a short pause); a broken edit shows the error instead.
  * Toolbar: show / hide code, copy, reset, open isolated.
  */
-export default function Example({ owner, index, code: original, mode = 'live', isolated = false }) {
+export default function Example({ owner, index, code: original, mode = 'live', isolated = false, lang = 'jsx' }) {
   const [code, setCode] = React.useState(original);
   const [result, setResult] = React.useState(() => compile(original, owner));
   const [run, setRun] = React.useState(0);
@@ -64,7 +64,7 @@ export default function Example({ owner, index, code: original, mode = 'live', i
   };
 
   if (mode === 'static') {
-    return <div className="dx-example" data-mode="static"><CodeEditor value={ original } readOnly label="Code" /></div>;
+    return <div className="dx-example" data-mode="static"><CodeEditor value={ original } readOnly label="Code" lang={ lang } /></div>;
   }
 
   const { Component, error } = result;

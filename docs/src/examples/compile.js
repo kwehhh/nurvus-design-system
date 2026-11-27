@@ -10,7 +10,9 @@ import * as Nurvus from '@nurvus/ui';
 import { modules } from 'virtual:nurvus-docs';
 
 const IMPORT_RE = /^import\s[\s\S]*?from\s+['"][^'"]+['"];?[ \t]*$/gm;
-const BASE = { react: React, 'react-dom': ReactDOM, '@nurvus/ui': Nurvus };
+// Module-shaped (a default export plus the named ones), so both `import React from 'react'`
+// and `import { useState } from 'react'` work in examples that belong to no component.
+const BASE = { react: { default: React, ...React }, 'react-dom': { default: ReactDOM, ...ReactDOM }, '@nurvus/ui': Nurvus };
 const nurvusNames = Object.keys(Nurvus).filter((k) => /^[A-Z]/.test(k));
 
 /**

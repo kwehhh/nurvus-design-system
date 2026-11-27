@@ -67,33 +67,4 @@ export function CodeBlock({ children }) {
   return <pre className="tg-code">{ children }</pre>;
 }
 
-/** How an app applies a theme. */
-export function ThemeUsage() {
-  return (
-    <div className="tg-usage">
-      <p>1. Import the package once. Its CSS carries every theme as a <code>[data-theme]</code> block.</p>
-      <CodeBlock>{ `import { setTheme, initTheme, themes } from '@nurvus/ui';
-
-initTheme('tokyo-neon');   // at startup: the saved theme, or this default
-setTheme('apollo-white');  // switch (and remember it)
-themes.map((t) => t.name); // every theme, for a picker` }</CodeBlock>
-      <p>2. Or set the attribute yourself. With none, the page gets Apollo White.</p>
-      <CodeBlock>{ `<html data-theme="tokyo-neon">` }</CodeBlock>
-      <p>3. Themes nest: any element can carry its own theme, like a dark sidebar in a light app.</p>
-      <CodeBlock>{ `<body data-theme="apollo-white">
-  <nav data-theme="tokyo-neon">…</nav>
-</body>
-
-setTheme('tokyo-neon', { root: navElement, persist: false });` }</CodeBlock>
-      <p>4. Style your own UI with the role tokens, never raw hex. They mean the same thing in every theme.</p>
-      <CodeBlock>{ `.card {
-  background: var(--nv-surface);
-  color: var(--nv-text);
-  border: 1px solid var(--nv-border);
-}
-.card a { color: var(--nv-accent); }` }</CodeBlock>
-    </div>
-  );
-}
-
 export default ThemeCollection;

@@ -46,12 +46,16 @@ ReactDOM.render(<App />, document.querySelector('#root'));
 ### Themes
 Seven themes ship with the package, each a complete palette of the same 27 role tokens (`--nv-bg`, `--nv-text`, `--nv-accent`, `--nv-syntax-keyword`…): **Apollo White** and **Dopamine** (light), **Tokyo Neon**, **Nether**, **Nether Neon**, **Outworld** and **Arcane** (dark). All are `demo` status while the colors mature. Every theme is a `[data-theme="<id>"]` block in the package CSS; with no attribute a page gets Apollo White.
 
-```js static
-import { initTheme, setTheme, themes } from '@nurvus/ui';
+No setup: import any component and the page is Apollo White. A visitor's saved choice comes back by itself when the package loads. For another default, put it on the page: `<html data-theme="tokyo-neon">`.
 
-initTheme('tokyo-neon');   // at startup: the saved theme, or this default
-setTheme('apollo-white');  // switch, and remember it (localStorage "nurvus.theme")
+```js static
+import { setTheme, themes } from '@nurvus/ui';
+
+setTheme('tokyo-neon');    // switch, and remember it (localStorage "nurvus.theme")
+themes.map((t) => t.name); // every theme, for a picker
 ```
+
+Step by step (default, theme menu, no flash on reload, nesting, your own CSS): **Applying a theme** on the docs site (https://design.nurvus.ai/#/Guides/Applying%20a%20theme).
 
 Themes nest (`<nav data-theme="tokyo-neon">` inside a light page), and your own CSS should use the role tokens, never raw hex. Theme files live in `src/themes/*.json`; `npm run build:tokens` turns them into CSS and checks every theme's WCAG contrast (a failing `stable` theme fails the build). Each theme has its own page on the docs site.
 
@@ -65,7 +69,7 @@ Run/Dev
 2. `npm run docs` (or `npm run styleguide`) to run the docs site with hot reload
 3. Go to `http://localhost:6061/`
 
-The docs site lives in `docs/` (Vite). Component pages come from each component's `<Name>.md` (examples in ```jsx blocks: imports work, every @nurvus/ui component is in scope, the last JSX renders) and its PropTypes + docblocks (the props table). Step by step, with the files: **Add a component** on the docs site (https://design.nurvus.ai/#/Guides/Add%20a%20component).
+The docs site lives in `docs/` (Vite). Component pages come from each component's `<Name>.md` (examples in ```jsx blocks: imports work, every @nurvus/ui component is in scope, the last JSX renders) and its PropTypes + docblocks (the props table). Step by step, with the files: **Add a component** on the docs site (https://design.nurvus.ai/#/Contributing/Add%20a%20component).
 
 Build
 1. `npm run build` to generate components package to `./dist` (webpack 5; runs on current Node with no OpenSSL flag).

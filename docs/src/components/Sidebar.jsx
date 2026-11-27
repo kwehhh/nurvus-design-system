@@ -23,10 +23,12 @@ export default function Sidebar({ current, open, onNavigate }) {
         onChange={ (e) => setQuery(e.target.value) }
       />
       { visible.map((section) => (
-        <div key={ section.name } className="dx-nav-section">
-          <a className="dx-nav-section-link" href={ section.href } data-active={ current === section.href } onClick={ onNavigate }>
-            { section.name }
-          </a>
+        <div key={ section.name } className="dx-nav-section" data-section={ section.name }>
+          { section.href ? (
+            <a className="dx-nav-section-link" href={ section.href } data-active={ current === section.href } onClick={ onNavigate }>
+              { section.name }
+            </a>
+          ) : <span className="dx-nav-section-link dx-nav-heading">{ section.name }</span> }
           <ul>
             { section.items.map((item) => (
               <li key={ item.href }>

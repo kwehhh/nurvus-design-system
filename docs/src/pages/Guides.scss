@@ -1,0 +1,125 @@
+// Guide and foundation pages (Applying a theme, Spacing). Theme roles only.
+
+.gd p { max-width: 72ch; }
+
+.gd-h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 40px 0 8px;
+  font-size: var(--nv-type-title-size);
+  line-height: var(--nv-type-title-line);
+  font-weight: var(--nv-type-title-weight);
+}
+
+.gd-n {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--nv-accent-soft);
+  color: var(--nv-accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.gd-step p { margin: 0 0 8px; color: var(--nv-text-muted); }
+.gd-step .dx-example { margin: 8px 0 12px; }
+.gd-step select {
+  margin-left: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--nv-border-strong);
+  border-radius: 8px;
+  background: var(--nv-bg);
+  color: var(--nv-text);
+  font: 14px var(--nv-font-sans);
+}
+
+.gd-api { width: 100%; }
+.gd-api code { white-space: nowrap; }
+
+// Spacing: the scale as a table with a bar per step.
+.gd-scale {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 14px;
+
+  th {
+    padding: 10px 12px;
+    background: var(--nv-surface);
+    color: var(--nv-text-muted);
+    font-weight: 600;
+    text-align: left;
+  }
+
+  td {
+    padding: 10px 12px;
+    border-top: 1px solid var(--nv-border);
+    vertical-align: middle;
+  }
+
+  td:nth-child(3) { width: 90px; }
+}
+
+.gd-value { font-family: var(--nv-font-mono); color: var(--nv-text-muted); white-space: nowrap; }
+.gd-use { color: var(--nv-text-muted); }
+
+.gd-bar {
+  display: block;
+  min-width: 1px;
+  height: 16px;
+  border-radius: 2px;
+  background: var(--nv-accent);
+}
+
+.gd-list {
+  max-width: 72ch;
+  padding-left: 20px;
+  color: var(--nv-text-muted);
+
+  li + li { margin-top: 6px; }
+  strong { color: var(--nv-text); }
+}
+
+.gd-radii {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.gd-radius {
+  margin: 0;
+
+  figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 8px;
+    font-size: 13px;
+
+    span { color: var(--nv-text-muted); }
+  }
+}
+
+.gd-shape {
+  display: block;
+  height: 72px;
+  border: 2px solid var(--nv-accent);
+  background: var(--nv-accent-soft);
+}
+
+.gd-p { color: var(--nv-text-muted); }
+.gd-note { margin-top: 12px; color: var(--nv-text-subtle); font-size: 14px; }
+
+@media (max-width: 760px) {
+  .gd-api code { white-space: normal; overflow-wrap: anywhere; }
+  .gd-scale td:nth-child(3) { width: 70px; }
+  .gd-scale .gd-use { display: none; }
+  .gd-scale th:last-child { display: none; }
+}

@@ -14,13 +14,33 @@
 .hm-badges { margin-bottom: 18px; }
 
 .hm-title {
-  margin: 0 0 16px;
+  margin: 0 0 8px;
   font-size: var(--nv-type-display-size);
   line-height: round(calc(var(--nv-type-display-size) * var(--nv-type-display-line)), 1px);
   font-weight: var(--nv-type-display-weight);
   letter-spacing: var(--nv-type-display-tracking);
   text-wrap: balance;
 }
+
+.hm-about {
+  margin: 0 0 20px;
+  max-width: 60ch;
+  color: var(--nv-text-muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.hm-tagline {
+  margin: 0 0 10px;
+  font-size: 24px;
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.hm-h3 { margin: 20px 0 0; font-size: 16px; }
+.hm-contrib { margin-top: 20px; color: var(--nv-text-subtle); font-size: 14px; }
 
 .hm-lede {
   margin: 0 0 24px;

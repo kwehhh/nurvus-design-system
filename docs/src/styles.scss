@@ -104,6 +104,9 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 }
 
 .dx-nav-section-link { font-weight: 600; color: var(--nv-text) !important; }
+.dx-nav-heading { display: block; padding: 4px 10px; font-size: 14px; }
+// Contributing is for people building the library: set apart at the bottom.
+.dx-nav-section[data-section="Contributing"] { margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--nv-border); }
 
 .dx-filter {
   width: 100%;

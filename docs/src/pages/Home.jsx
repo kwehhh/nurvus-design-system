@@ -101,8 +101,8 @@ const STEPS = [
 ];
 
 const STACK = [
-  { name: 'React 16.8+', text: 'Function components and hooks. React and ReactDOM are peer dependencies, so you bring your own.' },
-  { name: 'CSS custom properties', text: 'The themes are plain CSS variables, so the colors work in any stack: Vue, Svelte, Rails or static HTML.' },
+  { name: 'React 16', text: 'Function components and hooks, for React 16.8 and newer in the 16 line (16.14 is what we test on). React and ReactDOM are peer dependencies, so you bring your own.' },
+  { name: 'CSS custom properties', text: 'Each theme is a set of CSS variables on [data-theme]. Your own CSS can use the same --nv-* roles, so your screens follow the theme too.' },
   { name: 'Sass', text: 'Component styles are written in Sass and compiled into the package. Nothing extra to set up.' },
   { name: 'PropTypes and docblocks', text: 'Every prop is typed and described in the code. The API tables on this site are generated from them.' },
   { name: 'npm with provenance', text: 'Each change on main is published from GitHub Actions through npm Trusted Publishing, with provenance: no tokens, no hand-made builds.' },
@@ -123,18 +123,17 @@ const TRY = `<Panel title="Try it" caption="Edit the code below. The preview upd
   </Layout>
 </Panel>`;
 
-const QUICK_START = `import { Button, Panel, initTheme } from '@nurvus/ui';
+const INSTALL_STEP = `npm install @nurvus/ui`;
 
-// At startup: the visitor's saved theme, or this default.
-initTheme('apollo-white');
+const HELLO_WORLD = `import React from 'react';
+import ReactDOM from 'react-dom';
+import { Button } from '@nurvus/ui';
 
-export default function Settings() {
-  return (
-    <Panel title="Settings">
-      <Button type="primary">Save changes</Button>
-    </Panel>
-  );
-}`;
+function App() {
+  return <Button type="primary">Hello, world!</Button>;
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));`;
 
 /** The front page: what NURVUS UI is, how theming works, and where to start. */
 export default function Home() {
@@ -149,7 +148,12 @@ export default function Home() {
             <Tag>v0.1 alpha</Tag>
             <Tag>MIT</Tag>
           </Layout>
-          <h1 className="hm-title">Build the interface once. Ship it in every theme.</h1>
+          <h1 className="hm-title">NURVUS UI</h1>
+          <p className="hm-about">
+            The NURVUS System (/ˈnərvəs ˌsistəm/) is the network of highly complex interconnected CaaS
+            (Component as a service) for your application design.
+          </p>
+          <p className="hm-tagline">Build the interface once. Ship it in every theme.</p>
           <p className="hm-lede">
             NURVUS UI is a React component library where every color is a theme token.
             { ` ${themes.length} themes` } ship in the box, each checked for contrast before it builds,
@@ -230,10 +234,17 @@ export default function Home() {
 
       <section className="hm-section">
         <h2 className="hm-h2">Quick start</h2>
-        <Example owner="Home" code={ QUICK_START } mode="static" />
+        <h3 className="hm-h3">1. Install</h3>
+        <Example owner="Home" code={ INSTALL_STEP } mode="static" lang="text" />
+        <h3 className="hm-h3">2. Hello, world</h3>
+        <Example owner="Home" code={ HELLO_WORLD } mode="static" />
         <p className="dx-lede">
-          Building the library itself? <a href={ href('Guides', 'Add a component') }>Add a component</a> shows the
-          three files a component needs and how this site picks them up.
+          That's all: no theme setup. The page is Apollo White, and a visitor's saved theme comes back by itself.
+          To pick another default or add a theme menu, see <a href={ href('Guides', 'Applying a theme') }>Applying a theme</a>.
+        </p>
+        <p className="hm-contrib">
+          Building the library itself? <a href={ href('Contributing', 'Add a component') }>Add a component</a> is in
+          Contributing.
         </p>
       </section>
     </div>
