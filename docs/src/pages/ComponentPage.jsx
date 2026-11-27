@@ -2,6 +2,7 @@ import React from 'react';
 import { Panel, Text } from '@nurvus/ui';
 import Example from '../examples/Example';
 import PropsTable from '../examples/PropsTable';
+import ComponentSwitch from '../components/ComponentSwitch';
 import { parseExamples, blockMarkdown } from '../examples/markdown';
 import { href } from '../router';
 
@@ -14,6 +15,7 @@ export default function ComponentPage({ component }) {
 
   return (
     <div className="dx-page" data-component={ component.name }>
+      <ComponentSwitch name={ component.name } current="react" />
       <h1 className="dx-page-title">{ component.name }</h1>
       { component.description && <div className="dx-prose dx-lede" dangerouslySetInnerHTML={ { __html: blockMarkdown(component.description) } } /> }
 

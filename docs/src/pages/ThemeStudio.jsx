@@ -10,7 +10,7 @@ import { formatRatio } from '../lib/contrastLevels';
 import { downloadText, useCopy } from '../lib/fileActions';
 import './ThemeStudio.scss';
 
-const START = { name: 'Acme', mode: 'light', brand: '#0D9488' };
+const START = { name: 'Your brand', mode: 'light', brand: '#0D9488' };
 const NEXT_ORDER = Math.max(...themes.map((t) => t.order)) + 1;
 const MUST_BE_HEX = rolesInChecks(themeRoles);
 

@@ -13,6 +13,8 @@ import Typography from './pages/Typography';
 import ThemeStudio from './pages/ThemeStudio';
 import AccessibilityReport from './pages/AccessibilityReport';
 import RespawnGuide from './pages/RespawnGuide';
+import RespawnComponent from './pages/RespawnComponent';
+import SupportedLibraries from './pages/SupportedLibraries';
 import ComponentsIndex from './pages/ComponentsIndex';
 import ComponentPage, { IsolatedExample } from './pages/ComponentPage';
 import ThemesOverview from './pages/ThemesOverview';
@@ -32,7 +34,13 @@ function resolve(route) {
   if (section === 'Themes' && name === 'Accessibility report' && !kind) return { page: <AccessibilityReport />, title: name, current: href('Themes', name) };
   if (section === 'Foundations' && name === 'Spacing' && !kind) return { page: <Spacing />, title: name, current: href('Foundations', name) };
   if (section === 'Foundations' && name === 'Typography' && !kind) return { page: <Typography />, title: name, current: href('Foundations', name) };
-  if (section === 'Guides' && name === 'Respawn' && !kind) return { page: <RespawnGuide />, title: 'Without React (Respawn)', current: href('Guides', name) };
+  if (section === 'Guides' && name === 'Supported libraries' && !kind) return { page: <SupportedLibraries />, title: name, current: href('Guides', name) };
+  // Respawn: the guide, then one page per component. #/Guides/Respawn was its first address.
+  if ((section === 'Respawn' && !name) || (section === 'Guides' && name === 'Respawn' && !kind)) return { page: <RespawnGuide />, title: 'Respawn', current: href('Respawn') };
+  if (section === 'Respawn' && name && !kind) {
+    const component = components.find((c) => c.name === name);
+    if (component) return { page: <RespawnComponent key={ `respawn-${name}` } component={ component } />, title: `${name} (Respawn)`, current: href('Respawn', name) };
+  }
   // Contributing (for people building the library). #/Guides/Add a component was its first address.
   if ((section === 'Contributing' || section === 'Guides') && name === 'Add a component' && !kind) {
     return { page: <AddComponent />, title: name, current: href('Contributing', name) };
@@ -42,7 +50,7 @@ function resolve(route) {
     const theme = themes.find((t) => t.name === name);
     if (theme) return { page: <ThemePage key={ theme.id } id={ theme.id } />, title: theme.name, current: href('Themes', name) };
   }
-  if (section === 'Components' && !name) return { page: <ComponentsIndex />, title: 'Components', current: href('Components') };
+  if (section === 'Components' && !name) return { page: <ComponentsIndex />, title: 'React components', current: href('Components') };
   if (section === 'Components' && name) {
     const component = components.find((c) => c.name === name);
     if (component && !kind) return { page: <ComponentPage key={ component.name } component={ component } />, title: name, current: href('Components', name) };

@@ -67,7 +67,7 @@ bar = bar.update({ percent: 100, status: 'success' });`;
 
 // Each demo's code is what runs: the import line names what it uses, and
 // `app` is the element it renders into.
-const DEMOS = [
+export const DEMOS = [
   {
     name: 'Button',
     about: 'A <button>. onClick, disabled and any other attribute go on it.',
@@ -193,6 +193,30 @@ const menu = Menu({
 app.append(menu, status);`,
   },
   {
+    name: 'NavList',
+    about: 'Site navigation: sections that open and close, the current page marked. A toggle opens or closes its section in place.',
+    code: `import { NavList, Text } from '@nurvus/ui/respawn';
+
+const status = Text({ variant: 'caption', tone: 'muted', children: 'Click a link or a chevron' });
+
+app.append(NavList({
+  id: 'respawn-demo-nav',
+  current: '#/billing',
+  onNavigate: (href, event) => { event.preventDefault(); status.textContent = 'Go to ' + href; },
+  onToggle: (id, open) => { status.textContent = id + (open ? ' opened' : ' closed'); },
+  sections: [
+    { title: 'Account', href: '#/account', items: [
+      { label: 'Profile', href: '#/profile' },
+      { label: 'Security', href: '#/security' },
+    ] },
+    { title: 'Settings', items: [
+      { label: 'General', href: '#/general' },
+      { label: 'Billing', href: '#/billing' },
+    ] },
+  ],
+}), status);`,
+  },
+  {
     name: 'Panel',
     about: 'A card with an optional title and caption.',
     code: `import { Panel, Text } from '@nurvus/ui/respawn';
@@ -288,14 +312,15 @@ app.append(Layout({
   },
 ];
 
-const RETURNS = {
+export const RETURNS = {
   Button: '<button>', ButtonGroup: '<div>', FullPageModal: '<div class="portal">', HistoryList: '<ol>', Layout: '<div>', Link: '<a>',
-  Menu: '<div>', Panel: '<section>', Progress: '<div>', Table: '<table>', Tag: '<span>', Text: '<span> (or as)', Title: '<h1> to <h6>',
+  Menu: '<div>', NavList: '<nav>', Panel: '<section>', Progress: '<div>', Table: '<table>', Tag: '<span>', Text: '<span> (or as)', Title: '<h1> to <h6>',
 };
-const NOTES = {
+export const NOTES = {
   FullPageModal: 'Mount it on document.body. update({ visible }) animates it in or out and keeps the same element.',
   HistoryList: 'A click calls onJump(step). Move the current step with update({ index }).',
   Menu: 'A click marks the row active (same element), then calls onClick(event, path).',
+  NavList: 'A toggle opens or closes its section in place, then calls onToggle(id, open). update({ current }) marks another page.',
 };
 
 const IMPORT_RE = /^import\s[\s\S]*?from\s+['"][^'"]+['"];?[ \t]*$/gm;
@@ -313,7 +338,7 @@ function run(code, app) {
 }
 
 /** One component: the Respawn version running in a box, then its code. */
-function Demo({ name, about, code }) {
+export function Demo({ name, about, code, heading = true }) {
   const host = React.useRef(null);
   const [error, setError] = React.useState(null);
   React.useEffect(() => {
@@ -326,7 +351,7 @@ function Demo({ name, about, code }) {
   }, [code]);
   return (
     <section className="rg-demo" data-demo={ name }>
-      <h3 className="rg-h3"><a href={ href('Components', name) }>{ name }</a></h3>
+      { heading && <h3 className="rg-h3"><a href={ href('Respawn', name) }>{ name }</a></h3> }
       <p>{ about }</p>
       <div className="rg-frame">
         <div className="rg-preview" ref={ host } />
@@ -357,9 +382,11 @@ export default function RespawnGuide() {
   const api = DEMOS.map(({ name }) => ({ key: name, name, returns: RETURNS[name], notes: NOTES[name] || 'Rebuilt by update(changes).' }));
   return (
     <div className="dx-page gd rg">
-      <h1 className="dx-page-title">Without React (Respawn)</h1>
+      <h1 className="dx-page-title">Respawn</h1>
       <p className="dx-lede">
-        The NURVUS components and themes, as plain DOM elements. Use them with Respawn, or on any page without React.
+        The NURVUS components and themes as plain DOM elements, for Respawn or any page without React. Every React
+        component has a Respawn version with the same props and the same markup; each one also has its own page in the
+        Respawn section of the menu.
       </p>
 
       <Step n={ 1 } title="What it is">

@@ -145,20 +145,21 @@ export default function Home() {
         <div className="hm-hero-copy">
           <Layout display="flex" alignItems="center" itemSpacing={ 8 } className="hm-badges">
             <Tag tone="accent">React</Tag>
+            <Tag tone="accent">Respawn</Tag>
             <Tag tone="accent">TypeScript</Tag>
             <Tag>v0.1 alpha</Tag>
             <Tag>MIT</Tag>
           </Layout>
           <h1 className="hm-title">NURVUS UI</h1>
+          <p className="hm-pulse-line"><span className="hm-pulse" aria-hidden="true" />Every pixel has a pulse.</p>
           <p className="hm-about">
             The NURVUS System (/ˈnərvəs ˌsistəm/) is the network of highly complex interconnected CaaS
             (Component as a service) for your application design.
           </p>
-          <p className="hm-tagline">Build the interface once. Ship it in every theme.</p>
           <p className="hm-lede">
-            NURVUS UI is a React component library where every color is a theme token.
-            { ` ${themes.length} themes` } ship in the box, each checked for contrast before it builds,
-            and one call switches your whole product between them.
+            Build the interface once, ship it in every theme. NURVUS UI is a component library for React and
+            Respawn where every color is a theme token. { `${themes.length} themes` } ship in the box, each checked
+            for contrast before it builds, and one call switches your whole product between them.
           </p>
           <div className="hm-actions">
             <a className="hm-cta hm-cta-primary" href={ href('Components') }>Browse components</a>
@@ -170,6 +171,17 @@ export default function Home() {
           <HeroSample />
         </div>
       </section>
+
+      <div className="hm-works">
+        <span className="hm-works-label">Works with</span>
+        <Tag tone="success">React 16.8 to 19</Tag>
+        <Tag tone="success">Respawn</Tag>
+        <Tag tone="success">Plain HTML</Tag>
+        <Tag tone="success">TypeScript</Tag>
+        <Tag tone="info">Vue, Svelte, Angular: themes and CSS</Tag>
+        <Tag tone="info">React Native: colors</Tag>
+        <a href={ href('Guides', 'Supported libraries') }>Supported libraries</a>
+      </div>
 
       <dl className="hm-stats">
         <div><dt>Components</dt><dd>{ components.length }</dd></div>
@@ -248,6 +260,7 @@ export default function Home() {
           Contributing.
         </p>
       </section>
+      <p className="hm-signoff">The Highway of the Electronic Butterfly.</p>
     </div>
   );
 }
