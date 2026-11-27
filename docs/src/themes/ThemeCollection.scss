@@ -40,7 +40,8 @@ $tc-text: #ededed;
 
 .tc-edition {
   margin: 0;
-  font-size: 14px;
+  font-size: 12px;
+  letter-spacing: 0.06em; // same as the theme cards' "LIGHT THEME · DEMO"
   line-height: normal;
 }
 

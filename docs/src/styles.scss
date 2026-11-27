@@ -67,6 +67,7 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
   ul { margin: 2px 0 16px; padding: 0; list-style: none; }
 
   a {
+    position: relative;
     display: block;
     padding: 4px 10px;
     border-radius: 6px;
@@ -79,10 +80,26 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
     &[data-active="true"] {
       background: var(--nv-accent-soft);
       color: var(--nv-text);
-      box-shadow: inset 2px 0 0 var(--nv-accent);
+      font-weight: 500;
+    }
+    // The current page's marker: its own small rounded bar in the gutter
+    // (GitHub Primer's NavList does the same), not a border on the rounded
+    // item, which bent around the corners like a bracket.
+    &[data-active="true"]::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -8px;
+      width: 4px;
+      height: 18px;
+      border-radius: 2px;
+      background: var(--nv-accent);
+      transform: translateY(-50%);
     }
   }
 
+  // A hairline of space, so a hovered row never merges into the current one.
+  li + li { margin-top: 2px; }
   li a { padding-left: 20px; }
 }
 
