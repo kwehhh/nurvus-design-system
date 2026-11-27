@@ -5,6 +5,8 @@ import { useRoute, href } from './router';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import NotFound from './pages/NotFound';
+import Home from './pages/Home';
+import AddComponent from './pages/AddComponent';
 import ComponentsIndex from './pages/ComponentsIndex';
 import ComponentPage, { IsolatedExample } from './pages/ComponentPage';
 import ThemesOverview from './pages/ThemesOverview';
@@ -17,7 +19,9 @@ import ThemePage from './pages/ThemePage';
  */
 function resolve(route) {
   const [section, name, kind, index] = route;
-  if (!section || (section === 'Themes' && !name)) return { page: <ThemesOverview />, title: 'Themes', current: href('Themes') };
+  if (!section) return { page: <Home />, title: 'Overview', current: href() };
+  if (section === 'Guides' && name === 'Add a component' && !kind) return { page: <AddComponent />, title: name, current: href('Guides', name) };
+  if (section === 'Themes' && !name) return { page: <ThemesOverview />, title: 'Themes', current: href('Themes') };
   if (section === 'Themes' && name && !kind) {
     const theme = themes.find((t) => t.name === name);
     if (theme) return { page: <ThemePage key={ theme.id } id={ theme.id } />, title: theme.name, current: href('Themes', name) };

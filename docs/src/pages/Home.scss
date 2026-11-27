@@ -1,0 +1,258 @@
+// The front page. Theme roles only (--nv-*), so it follows the Theme menu.
+
+.hm { max-width: 1140px; }
+
+// Hero: the pitch on the left, a live product sample on the right.
+.hm-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: center;
+  padding: 12px 0 8px;
+}
+
+.hm-badges { margin-bottom: 18px; }
+
+.hm-title {
+  margin: 0 0 16px;
+  font-size: var(--nv-type-display-size);
+  line-height: round(calc(var(--nv-type-display-size) * var(--nv-type-display-line)), 1px);
+  font-weight: var(--nv-type-display-weight);
+  letter-spacing: var(--nv-type-display-tracking);
+  text-wrap: balance;
+}
+
+.hm-lede {
+  margin: 0 0 24px;
+  max-width: 56ch;
+  color: var(--nv-text-muted);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.hm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.hm-cta {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 18px;
+  border: 1px solid var(--nv-border-strong);
+  border-radius: 8px;
+  background: var(--nv-surface);
+  color: var(--nv-text);
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover { background: var(--nv-surface-hover); }
+  &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 2px; }
+}
+
+.hm-cta-primary {
+  border-color: transparent;
+  background: var(--nv-accent-fill);
+  color: var(--nv-on-accent);
+
+  &:hover { background: var(--nv-accent-fill); filter: brightness(1.08); }
+}
+
+.hm-install {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 100%;
+  padding: 6px 6px 6px 14px;
+  border: 1px solid var(--nv-border);
+  border-radius: 8px;
+  background: var(--nv-bg-alt);
+
+  code { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  span { color: var(--nv-text-subtle); }
+}
+
+.hm-install-copy {
+  padding: 4px 10px;
+  border: 1px solid var(--nv-border);
+  border-radius: 6px;
+  background: var(--nv-surface);
+  color: var(--nv-text-muted);
+  font: 500 12px var(--nv-font-sans);
+  cursor: pointer;
+
+  &:hover { color: var(--nv-text); background: var(--nv-surface-hover); }
+  &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 1px; }
+}
+
+.hm-hero-sample {
+  min-width: 0;
+  .nurvus.table { width: 100%; }
+}
+
+.hm-sample-actions { margin-top: 14px; }
+
+// The numbers strip.
+.hm-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 40px 0 0;
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+  background: var(--nv-surface);
+
+  > div { padding: 16px 20px; }
+  > div + div { border-left: 1px solid var(--nv-border); }
+
+  dt {
+    color: var(--nv-text-muted);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  dd {
+    margin: 4px 0 0;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+
+    span { color: var(--nv-text-muted); font-size: 14px; font-weight: 400; letter-spacing: 0; }
+  }
+}
+
+.hm-section { margin-top: 56px; }
+
+.hm-h2 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+// One tile per theme, each drawn in its own theme.
+.hm-themes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 14px;
+}
+
+.hm-theme {
+  padding: 16px;
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+  background: var(--nv-bg);
+  color: var(--nv-text);
+
+  .nurvus.title { font-size: 17px; }
+  p { margin: 0; min-height: 40px; }
+}
+
+.hm-theme-link {
+  color: var(--nv-accent);
+  font-size: 13px;
+}
+
+// How it works: four steps with arrows between them.
+.hm-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hm-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+  background: var(--nv-surface);
+
+  h3 { margin: 10px 0 6px; font-size: 16px; }
+  p { flex: 1; margin: 0 0 14px; color: var(--nv-text-muted); font-size: 14px; line-height: 1.5; }
+
+  code {
+    display: block;
+    padding: 8px 10px;
+    overflow-x: auto;
+    border-radius: 6px;
+    background: var(--nv-bg-deep);
+    color: var(--nv-syntax-string);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  // The arrow to the next step.
+  & + &::before {
+    content: '→';
+    position: absolute;
+    top: 50%;
+    left: -22px;
+    color: var(--nv-text-subtle);
+    font-size: 18px;
+    transform: translateY(-50%);
+  }
+}
+
+.hm-step-n {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--nv-accent-soft);
+  color: var(--nv-accent);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.hm-grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.hm-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.hm-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.hm-grid .nurvus.panel p { margin: 0; }
+.hm-grid .nurvus.panel .panel-title { font-size: 17px; }
+
+.hm-stack {
+  padding-top: 14px;
+  border-top: 2px solid var(--nv-border);
+
+  h3 { margin: 0 0 6px; font-size: 16px; }
+  p { margin: 0; color: var(--nv-text-muted); font-size: 14px; line-height: 1.5; }
+}
+
+@media (max-width: 1100px) {
+  .hm-hero { grid-template-columns: minmax(0, 1fr); }
+  .hm-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hm-step:nth-child(odd)::before { display: none; } // no arrow at the start of a row
+  .hm-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .hm-lede { font-size: 16px; }
+  .hm-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hm-stats > div:nth-child(3) { border-left: 0; }
+  .hm-stats > div:nth-child(n + 3) { border-top: 1px solid var(--nv-border); }
+  .hm-flow { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .hm-step + .hm-step::before {
+    display: block;
+    content: '↓';
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .hm-grid-2, .hm-grid-3 { grid-template-columns: minmax(0, 1fr); }
+}

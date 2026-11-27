@@ -2,8 +2,13 @@ import { themes } from '@nurvus/ui';
 import { components } from 'virtual:nurvus-docs';
 import { href } from './router';
 
-/** The sidebar: Themes (overview + one page per theme), then Components. */
+/** The sidebar: Overview (+ guides), Themes (overview + one page per theme), then Components. */
 export const sections = [
+  {
+    name: 'Overview',
+    href: href(),
+    items: [{ name: 'Add a component', href: href('Guides', 'Add a component'), hint: 'The files a component needs' }],
+  },
   {
     name: 'Themes',
     href: href('Themes'),

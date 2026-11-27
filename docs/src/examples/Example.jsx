@@ -93,10 +93,14 @@ export default function Example({ owner, index, code: original, mode = 'live', i
               <Tag tone="accent">edited</Tag>
             </>
           ) }
-          <a className="dx-example-isolate" href={ href('Components', owner, 'example', String(index)) }>Open isolated</a>
+          { index !== undefined && (
+            <a className="dx-example-isolate" href={ href('Components', owner, 'example', String(index)) }>Open isolated</a>
+          ) }
         </div>
       ) }
-      { mode === 'live' && showCode && <CodeEditor value={ code } onChange={ setCode } label={ `${owner} example ${index + 1} code` } /> }
+      { mode === 'live' && showCode && (
+        <CodeEditor value={ code } onChange={ setCode } label={ index !== undefined ? `${owner} example ${index + 1} code` : 'Example code' } />
+      ) }
     </div>
   );
 }

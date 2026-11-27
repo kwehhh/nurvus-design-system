@@ -40,7 +40,7 @@ export default function Header({ onMenu, menuOpen }) {
       >
         <MenuIcon fontSize="small" />
       </button>
-      <a className="dx-brand" href="#/Themes">NURVUS UI</a>
+      <a className="dx-brand" href="#/">NURVUS UI</a>
       <div className="dx-header-tools">
         { version && (
           <a className="nv-version-link" href={ NPM_URL } target="_blank" rel="noopener noreferrer" title="Latest @nurvus/ui on npm">

@@ -34,8 +34,9 @@ const look = EditorView.theme({
 /**
  * A CodeMirror 6 editor for JSX. `value` is the starting text (and what a
  * Reset puts back); `onChange` gets every edit. readOnly shows code only.
+ * `lang`: "jsx" (colored) or "text" (plain).
  */
-export default function CodeEditor({ value, onChange, readOnly = false, label = 'Example code' }) {
+export default function CodeEditor({ value, onChange, readOnly = false, label = 'Example code', lang = 'jsx' }) {
   const host = React.useRef(null);
   const view = React.useRef(null);
   const changed = React.useRef(onChange);
@@ -51,8 +52,8 @@ export default function CodeEditor({ value, onChange, readOnly = false, label = 
           history(),
           drawSelection(),
           highlightActiveLine(),
-          javascript({ jsx: true }),
-          syntaxHighlighting(highlight),
+          // lang="text" (Markdown, SCSS): plain text, no JavaScript colors.
+          ...(lang === 'jsx' ? [javascript({ jsx: true }), syntaxHighlighting(highlight)] : []),
           look,
           EditorView.lineWrapping,
           keymap.of([...defaultKeymap, ...historyKeymap, indentWithTab]),
