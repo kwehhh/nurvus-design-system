@@ -1,0 +1,195 @@
+// Accessibility report. Theme roles only; the swatches get their colors inline.
+
+.ar p { max-width: 72ch; }
+
+.ar-h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-size: var(--nv-type-title-size);
+  line-height: var(--nv-type-title-line);
+  font-weight: var(--nv-type-title-weight);
+}
+
+.ar-scope {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ar-list {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--nv-text-muted);
+  font-size: 15px;
+
+  li + li { margin-top: 6px; }
+  strong { color: var(--nv-text); font-weight: 600; }
+  code { overflow-wrap: anywhere; }
+}
+
+.ar-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.ar-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--nv-text-muted);
+  font-size: 14px;
+  font-weight: 500;
+
+  select {
+    height: 32px;
+    padding: 0 10px;
+    border: 1px solid var(--nv-border-strong);
+    border-radius: 8px;
+    background: var(--nv-bg);
+    color: var(--nv-text);
+    font: 14px var(--nv-font-sans);
+
+    &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 1px; }
+  }
+}
+
+.ar-total {
+  margin: 0 0 32px;
+  font-size: 18px;
+  font-weight: 600;
+
+  &[data-pass="true"] { color: var(--nv-success); }
+  &[data-pass="false"] { color: var(--nv-danger); }
+}
+
+.ar-theme { margin-bottom: 40px; }
+
+.ar-summary {
+  margin: 0 0 12px;
+  color: var(--nv-text-muted);
+
+  strong { color: var(--nv-text); }
+}
+
+.ar-scroll { overflow-x: auto; }
+.ar-table { min-width: 720px; }
+.ar-table td { padding-top: 8px; padding-bottom: 8px; }
+
+.ar-color {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ar-swatch {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--nv-border-strong);
+  border-radius: 4px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.ar-color-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+
+  code { font-size: 12.5px; }
+}
+
+.ar-hex,
+.ar-num {
+  font-family: var(--nv-font-mono);
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+.ar-hex { color: var(--nv-text-muted); }
+
+.ar-required {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.ar-sc { color: var(--nv-text-muted); font-size: 12px; white-space: nowrap; }
+
+.ar-method { margin-top: 48px; }
+
+.ar-date {
+  margin-top: 16px;
+  color: var(--nv-text-subtle);
+  font-size: 14px;
+}
+
+// Phone: each row becomes a small card (two columns, each cell labelled from
+// its column's data-label), so no column hides behind a sideways scroll.
+@media screen and (max-width: 760px) {
+  // .nurvus.table: beats the component's own cell padding and borders.
+  .ar-scroll .ar-table.nurvus.table {
+    display: block;
+    min-width: 0;
+
+    thead { display: none; }
+    tbody { display: block; }
+
+    tbody tr {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 10px 12px;
+      padding: 12px;
+      border-bottom: 1px solid var(--nv-border);
+    }
+    tbody tr:last-child { border-bottom: 0; }
+
+    td { padding: 0; border: 0; }
+    td::before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: 2px;
+      color: var(--nv-text-muted);
+      font-size: 12px;
+    }
+  }
+}
+
+// Print / Save as PDF: only the report. The header and sidebar go, and so do
+// the controls; tables keep their rows whole and repeat their headers.
+// Scoped with :has() so other docs pages print as before.
+@media print {
+  // The page itself prints on plain paper; the report carries Apollo White
+  // (set on .ar before printing, see AccessibilityReport.jsx).
+  body:has(.ar) {
+    background: transparent;
+
+    .dx-header,
+    .dx-sidebar,
+    .dx-scrim { display: none !important; }
+    .dx-layout { display: block; }
+    .dx-main { padding: 0; }
+  }
+
+  .ar {
+    max-width: none;
+    background: var(--nv-bg);
+    color: var(--nv-text);
+    font-size: 11pt;
+  }
+
+  .ar-controls { display: none; }
+  .ar-scope { grid-template-columns: 1fr 1fr; }
+  .ar-scroll { overflow: visible; }
+  .ar-table { min-width: 0; font-size: 9pt; }
+  .ar-table thead { display: table-header-group; }
+  .ar-table tr { break-inside: avoid; }
+  .ar-theme { break-inside: auto; }
+  .ar-h2 { break-after: avoid; }
+  .ar .nurvus.tag { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

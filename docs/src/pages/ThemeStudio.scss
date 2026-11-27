@@ -1,0 +1,409 @@
+// Theme Studio. Theme roles only: the generated colors live inline on the
+// preview wrapper (.ts-preview), never in this file.
+
+.ts p { max-width: 72ch; }
+
+.ts-h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-size: var(--nv-type-title-size);
+  line-height: var(--nv-type-title-line);
+  font-weight: var(--nv-type-title-weight);
+}
+
+.ts-section { margin-top: 48px; }
+.ts-p { margin: 0 0 12px; color: var(--nv-text-muted); }
+.ts-note { margin: 10px 0 32px; color: var(--nv-text-subtle); font-size: 14px; }
+
+// Inputs: name, mode, brand color, start from a theme.
+.ts-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  align-items: end;
+  padding: 16px;
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+  background: var(--nv-surface);
+}
+
+.ts-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  > span:first-child,
+  > legend {
+    padding: 0;
+    margin-bottom: 6px;
+    color: var(--nv-text-muted);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  > span:first-child { margin-bottom: 0; }
+}
+
+.ts-input,
+.ts-hex {
+  min-width: 0;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--nv-border-strong);
+  border-radius: 8px;
+  background: var(--nv-bg);
+  color: var(--nv-text);
+  font: 14px var(--nv-font-sans);
+
+  &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 1px; }
+}
+
+.ts-hex {
+  width: auto;
+  padding: 0 8px;
+  font: 13px var(--nv-font-mono);
+  font-variant-ligatures: none;
+
+  &[aria-invalid="true"] {
+    border-color: var(--nv-danger);
+    outline-color: var(--nv-danger);
+  }
+}
+
+.ts-color {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ts-swatch {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--nv-border-strong);
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+
+  &::-webkit-color-swatch-wrapper { padding: 3px; }
+  &::-webkit-color-swatch { border: 0; border-radius: 5px; }
+  &::-moz-color-swatch { border: 0; border-radius: 5px; }
+  &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 1px; }
+}
+
+// Light / Dark as one segmented control (real radio buttons inside).
+.ts-seg {
+  display: inline-flex;
+  align-self: flex-start;
+  overflow: hidden;
+  border: 1px solid var(--nv-border-strong);
+  border-radius: 8px;
+  background: var(--nv-bg);
+
+  label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    height: 34px;
+    padding: 0 18px;
+    color: var(--nv-text-muted);
+    font-size: 14px;
+    cursor: pointer;
+  }
+  label + label { border-left: 1px solid var(--nv-border-strong); }
+  label[data-checked="true"] { background: var(--nv-accent-fill); color: var(--nv-on-accent); font-weight: 500; }
+  label:focus-within { outline: 2px solid var(--nv-accent); outline-offset: -2px; }
+
+  input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+// Colors on the left, the preview on the right (kept in view while scrolling).
+.ts-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.ts-sticky {
+  position: sticky;
+  top: 72px;
+}
+
+.ts-group {
+  h3 {
+    margin: 20px 0 6px;
+    color: var(--nv-text-muted);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  &:first-of-type h3 { margin-top: 0; }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid var(--nv-border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+}
+
+// One role: picker | name + Fails tag | value, then what it is for.
+.ts-role {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: center;
+  padding: 8px 12px;
+
+  & + & { border-top: 1px solid var(--nv-border); }
+  &[data-fail="true"] { background: color-mix(in srgb, var(--nv-danger) 7%, transparent); }
+
+  .ts-swatch { grid-column: 1; grid-row: 1 / span 2; align-self: start; }
+  .ts-hex { grid-column: 3; grid-row: 1; justify-self: end; height: 30px; }
+}
+
+.ts-role-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+
+  code { font-size: 13px; }
+}
+
+.ts-role-use {
+  grid-column: 2 / span 2;
+  grid-row: 2;
+  color: var(--nv-text-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+// The preview: every --nv-* variable is set inline on this element, so the
+// real components inside it draw in the theme being made.
+.ts-preview {
+  overflow: hidden;
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+  background: var(--nv-bg);
+  color: var(--nv-text);
+  font-family: var(--nv-font-sans);
+
+  ::selection { background: var(--nv-selection); color: var(--nv-text); }
+}
+
+.ts-pv-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--nv-border);
+  background: var(--nv-bg-alt);
+
+  strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+
+.ts-pv-search {
+  width: 170px;
+  min-width: 0;
+  height: 32px;
+  margin-left: auto;
+  padding: 0 10px;
+  border: 1px solid var(--nv-border-strong);
+  border-radius: 8px;
+  background: var(--nv-bg);
+  color: var(--nv-text);
+  caret-color: var(--nv-cursor);
+  font: 13px var(--nv-font-sans);
+
+  &::placeholder { color: var(--nv-text-subtle); }
+  &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 1px; }
+}
+
+.ts-pv-main {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+}
+
+.ts-pv-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 8px;
+  border-right: 1px solid var(--nv-border);
+  background: var(--nv-bg-alt);
+
+  span {
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: var(--nv-text-muted);
+    font-size: 13px;
+    cursor: default;
+
+    &:hover { background: var(--nv-surface-hover); color: var(--nv-text); }
+    &[data-active="true"] { background: var(--nv-accent-soft); color: var(--nv-text); font-weight: 500; }
+  }
+}
+
+.ts-pv-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px;
+
+  p { margin: 0; }
+}
+
+.ts-pv-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ts-pv-table { font-size: 13px; }
+
+.ts-pv-code {
+  margin: 0;
+  padding: 12px 14px;
+  overflow-x: auto;
+  border: 1px solid var(--nv-border);
+  border-radius: 8px;
+  background: var(--nv-bg);
+  font: 12.5px/1.6 var(--nv-font-mono);
+  white-space: pre;
+}
+
+.ts-pv-selected { background: var(--nv-selection); color: var(--nv-text); }
+
+.ts-pv-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.15em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: var(--nv-cursor);
+}
+
+// Contrast
+.ts-headline {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+
+  &[data-pass="true"] { color: var(--nv-success); }
+  &[data-pass="false"] { color: var(--nv-danger); }
+}
+
+.ts-fix {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 16px;
+  color: var(--nv-text-muted);
+  font-size: 14px;
+}
+
+.ts-scroll { overflow-x: auto; }
+.ts-checks { min-width: 460px; }
+.ts-checks code { font-size: 12.5px; }
+
+.ts-sample {
+  display: inline-block;
+  min-width: 36px;
+  padding: 2px 8px;
+  border: 1px solid var(--nv-border);
+  border-radius: 4px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.ts-num { font-family: var(--nv-font-mono); white-space: nowrap; }
+
+// Export
+.ts-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 8px;
+}
+
+.ts-section .dx-example { margin-bottom: 20px; }
+.ts-add { margin-top: 8px; }
+.ts-add code { overflow-wrap: anywhere; }
+
+// Narrow: one column, the preview before the color list.
+@media (max-width: 1100px) {
+  .ts-grid { grid-template-columns: minmax(0, 1fr); }
+  .ts-side { order: -1; }
+  .ts-sticky { position: static; }
+}
+
+@media (max-width: 760px) {
+  .ts-inputs { grid-template-columns: minmax(0, 1fr); }
+  .ts-pv-main { grid-template-columns: minmax(0, 1fr); }
+  .ts-pv-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-right: 0;
+    border-bottom: 1px solid var(--nv-border);
+  }
+  .ts-pv-search { width: 130px; }
+
+  // The contrast table: one card per row, the pair on top, then the numbers.
+  // .nurvus.table: beats the component's own cell padding and borders.
+  .ts-scroll .ts-checks.nurvus.table {
+    display: block;
+    min-width: 0;
+
+    thead { display: none; }
+    tbody { display: block; }
+
+    tbody tr {
+      display: grid;
+      grid-template-columns: repeat(4, auto);
+      justify-content: space-between;
+      gap: 8px 12px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--nv-border);
+    }
+    tbody tr:last-child { border-bottom: 0; }
+
+    td { padding: 0; border: 0; }
+    td:first-child { grid-column: 1 / -1; }
+    td[data-label]::before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: 2px;
+      color: var(--nv-text-muted);
+      font-size: 12px;
+    }
+  }
+
+  // A long value (rgba) gets its own line, so the role name never wraps.
+  .ts-role[data-long="true"] {
+    .ts-swatch { grid-row: 1 / span 3; }
+    .ts-hex { grid-column: 2 / span 2; grid-row: 2; justify-self: start; margin: 4px 0; }
+    .ts-role-use { grid-row: 3; }
+  }
+}
