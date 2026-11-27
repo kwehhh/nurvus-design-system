@@ -18,7 +18,7 @@ export default function Panel({
 }) {
   return (
     <section
-      className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'panel', className) }
+      className={ classNames(className, 'panel', CONSTANT.CLASS_PREFIX) }
       data-padding={ padding }
       { ...restProps }
     >

@@ -11,7 +11,7 @@ import './ButtonGroup.scss';
 export default function ButtonGroup({ className, ...restProps }) {
   return (
     <div
-      className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'button-group', className) }
+      className={ classNames(className, 'button-group', CONSTANT.CLASS_PREFIX) }
       { ...restProps } />
   );
 }

@@ -16,7 +16,7 @@ export default function Tag({
 }) {
   return (
     <span
-      className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'tag', className) }
+      className={ classNames(className, 'tag', CONSTANT.CLASS_PREFIX) }
       data-tone={ tone }
       { ...restProps }
     >

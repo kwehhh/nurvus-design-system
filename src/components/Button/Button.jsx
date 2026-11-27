@@ -17,7 +17,7 @@ const Button = React.forwardRef(function Button({
 }, ref) {
   return (
     <button
-      className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'button', className) }
+      className={ classNames(className, 'button', CONSTANT.CLASS_PREFIX) }
       data-size={ size }
       data-type={ type }
       ref={ ref }

@@ -52,10 +52,10 @@ function FullPageModal({
   const modalMask = isVisible ? <div className="mask" data-animate={ animationState } /> : null;
 
   const modalEl = (
-    <div className={`${CONSTANT.CLASS_PREFIX} portal`} data-visible={ visible }>
+    <div className={ `portal ${CONSTANT.CLASS_PREFIX}` } data-visible={ visible }>
       { modalMask }
       <div
-        className={`${CONSTANT.CLASS_PREFIX} modal`}
+        className={ `modal ${CONSTANT.CLASS_PREFIX}` }
         data-visible={ isVisible }
         data-animate={ animationState }
         onAnimationEnd={ clearAnimation }

@@ -61,7 +61,7 @@ class Table extends React.Component {
     const { className } = this.props;
     return (
       <table
-        className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'table', className) }
+        className={ classNames(className, 'table', CONSTANT.CLASS_PREFIX) }
       >
         <thead>
           <tr>

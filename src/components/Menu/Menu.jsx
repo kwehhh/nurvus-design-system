@@ -45,7 +45,7 @@ class Menu extends React.Component {
         return (
           <React.Fragment key={ i }>
             <div
-              className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'menu-item', className) }
+              className={ classNames(className, 'menu-item', CONSTANT.CLASS_PREFIX) }
               data-active={ isActive }
               data-type={ type }
               onClick={ e => this.handleClick(e, nextPath) }
@@ -72,7 +72,7 @@ class Menu extends React.Component {
 
     return (
       <div
-        className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'menu', className) }
+        className={ classNames(className, 'menu', CONSTANT.CLASS_PREFIX) }
         { ...props }
       >
         { this.renderItems(items, activePath) }

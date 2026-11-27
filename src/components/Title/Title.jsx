@@ -20,7 +20,7 @@ export default function Title({
   return React.createElement(
     TAGS[level] || 'h6',
     {
-      className: classNames(`${CONSTANT.CLASS_PREFIX}`, 'title', className),
+      className: classNames(className, 'title', CONSTANT.CLASS_PREFIX),
       ['data-type']: type,
       ...restProps
     },

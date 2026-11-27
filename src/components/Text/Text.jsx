@@ -19,7 +19,7 @@ export default function Text({
 }) {
   return (
     <Element
-      className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'text', className) }
+      className={ classNames(className, 'text', CONSTANT.CLASS_PREFIX) }
       data-variant={ variant }
       data-tone={ tone }
       { ...restProps }

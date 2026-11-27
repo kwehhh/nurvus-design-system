@@ -20,7 +20,7 @@ export default function Layout({
 }) {
   return (
     <div
-      className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'layout', className) }
+      className={ classNames(className, 'layout', CONSTANT.CLASS_PREFIX) }
       data-align-items={ alignItems }
       data-display={ display }
       data-flex-direction={ flexDirection }

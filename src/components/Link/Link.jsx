@@ -17,7 +17,7 @@ function Link(props) {
 
   return (
     <a
-      className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'link', className) }
+      className={ classNames(className, 'link', CONSTANT.CLASS_PREFIX) }
       { ...restProps }
     >
       { children }

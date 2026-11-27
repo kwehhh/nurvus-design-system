@@ -69,7 +69,7 @@ export default function HistoryList(props) {
 
   return (
     <ol
-      className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'history-list', className) }
+      className={ classNames(className, 'history-list', CONSTANT.CLASS_PREFIX) }
       aria-label="History, newest first"
       { ...restProps }
     >

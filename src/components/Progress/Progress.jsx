@@ -16,7 +16,7 @@ function Progress({
 }) {
   return (
     <div
-      className={ classNames(`${CONSTANT.CLASS_PREFIX}`, 'progress', className) }
+      className={ classNames(className, 'progress', CONSTANT.CLASS_PREFIX) }
       data-size={ size }
       data-status={ status }
     >
