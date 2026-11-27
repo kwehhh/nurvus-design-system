@@ -24,12 +24,23 @@ export function formatType(type) {
   }
 }
 
+/**
+ * react-docgen's TypeScript type as a short readable string. Unions are
+ * expanded, so an alias like `Spacing` shows its values.
+ */
+export function formatTsType(t) {
+  if (!t) return 'unknown';
+  if (t.name === 'union' && Array.isArray(t.elements)) return t.elements.map(formatTsType).join(' | ');
+  if (t.name === 'literal') return t.value;
+  return t.raw || t.name;
+}
+
 /** The component's props, from react-docgen, in our own Table. */
 export default function PropsTable({ props }) {
   const rows = Object.entries(props).map(([name, p]) => ({
     key: name,
     name,
-    type: formatType(p.type),
+    type: p.tsType ? formatTsType(p.tsType) : formatType(p.type),
     default: p.defaultValue ? p.defaultValue.value : '',
     required: p.required,
     description: p.description,

@@ -27,6 +27,13 @@ export default function ComponentPage({ component }) {
       { component.parseError
         ? <Panel title="Couldn't read the props" caption={ component.parseError } />
         : <PropsTable props={ component.props } /> }
+
+      <h2 className="dx-section-title">TypeScript</h2>
+      <p className="dx-lede">
+        The package ships its types. The props above are <code>{ component.name }Props</code>; editors show each
+        description on hover.
+      </p>
+      <Example owner={ component.name } code={ `import { ${component.name} } from '@nurvus/ui';\nimport type { ${component.name}Props } from '@nurvus/ui';` } mode="static" />
     </div>
   );
 }

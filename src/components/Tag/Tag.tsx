@@ -1,8 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import CONSTANT from '../../constants.js';
+import CONSTANT from '../../constants';
 import './Tag.scss';
+
+export type TagTone = 'neutral' | 'accent' | 'success' | 'warning' | 'danger' | 'info';
+
+export interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /** Color: neutral (muted text) or one of the theme's accent / status colors. */
+  tone?: TagTone;
+  /** The label. */
+  children?: React.ReactNode;
+  /** Custom class name. */
+  className?: string;
+}
 
 /**
  * A small pill for a status or label ("new", "preview", "demo"). The text and
@@ -13,7 +23,7 @@ export default function Tag({
   children,
   className,
   ...restProps
-}) {
+}: TagProps) {
   return (
     <span
       className={ classNames(className, 'tag', CONSTANT.CLASS_PREFIX) }
@@ -24,18 +34,3 @@ export default function Tag({
     </span>
   );
 }
-
-Tag.propTypes = {
-  /**
-   * Color: neutral (muted text) or one of the theme's accent / status colors.
-   */
-  tone: PropTypes.oneOf(['neutral', 'accent', 'success', 'warning', 'danger', 'info']),
-  /**
-   * Custom class name.
-   */
-  className: PropTypes.string,
-  /**
-   * The label.
-   */
-  children: PropTypes.node
-};

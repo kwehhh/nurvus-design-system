@@ -3,33 +3,56 @@
   "version": "0.1.0-alpha.1",
   "description": "NURVUS Design System",
   "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./respawn": {
+      "types": "./dist/types/respawn/index.d.ts",
+      "default": "./dist/respawn.js"
+    },
+    "./theme": {
+      "types": "./dist/types/theme.d.ts",
+      "default": "./dist/theme.js"
+    },
+    "./nurvus.css": "./dist/nurvus.css",
+    "./themes/*": "./dist/themes/*",
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*",
+    "./src/*": "./src/*"
+  },
+  "sideEffects": [
+    "*.css",
+    "*.scss",
+    "./src/theme.ts",
+    "./dist/*.js"
+  ],
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "build": "rimraf dist && npm run build:tokens && webpack --mode=production --json > stats.json",
+    "build": "rimraf dist && npm run build:tokens && webpack --mode=production && node tools/finish-build.mjs && npm run build:types",
     "build:tokens": "node ./tools/build-tokens.js",
     "prepare": "npm run build",
     "styleguide": "npm run docs",
     "styleguide:build": "npm run docs:build",
     "docs": "npm run build:tokens && vite --config docs/vite.config.js",
-    "docs:build": "npm run build:tokens && vite build --config docs/vite.config.js"
+    "docs:build": "npm run build:tokens && vite build --config docs/vite.config.js",
+    "build:types": "tsc -p tsconfig.build.json && node tools/clean-types.mjs",
+    "typecheck": "tsc -p tsconfig.json"
   },
   "files": [
     "dist",
     "src"
   ],
   "dependencies": {
-    "@material-ui/core": "^4.12.3",
-    "@material-ui/icons": "^4.11.2",
-    "classnames": "^2.3.1",
-    "clsx": "^1.2.1",
-    "lodash": "^4.17.20",
-    "prop-types": "^15.7.2"
+    "classnames": "^2.3.1"
   },
   "peerDependencies": {
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
@@ -45,12 +68,17 @@
     "@fontsource/inter": "^5.3.0",
     "@fontsource/jetbrains-mono": "^5.3.0",
     "@lezer/highlight": "^1.2.5",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@types/react": "^17.0.94",
+    "@types/react-dom": "^17.0.26",
     "@vitejs/plugin-react": "^6.3.0",
     "babel-loader": "^8.1.0",
     "cross-env": "^7.0.3",
     "css-loader": "^5.0.0",
     "file-loader": "^6.2.0",
     "marked": "^18.3.0",
+    "mini-css-extract-plugin": "^2.10.2",
     "postcss": "^8.4.14",
     "react": "^16.8.0",
     "react-docgen": "^8.0.4",
@@ -61,7 +89,7 @@
     "sass-loader": "^10.0.4",
     "style-loader": "^2.0.0",
     "sucrase": "^3.35.1",
-    "typescript": "^4.4.3",
+    "typescript": "^5.9.3",
     "vite": "^8.3.8",
     "webpack": "^5.113.0",
     "webpack-cli": "^5.1.4"

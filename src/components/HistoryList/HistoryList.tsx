@@ -1,10 +1,40 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames  from 'classnames';
-import CONSTANT from '../../constants.js';
+import classNames from 'classnames';
+import CONSTANT from '../../constants';
 import './HistoryList.scss';
 
-const defaultFormatTime = (time) => new Date(time).toLocaleTimeString([], {
+export interface HistoryStep {
+  /** Unique id: keys the row. */
+  id: string | number;
+  /** What the step did. */
+  label: React.ReactNode;
+  /** A second line. */
+  detail?: React.ReactNode;
+  /** When it happened, as a timestamp in ms. */
+  time?: number;
+}
+
+export interface HistoryListProps extends React.OlHTMLAttributes<HTMLOListElement> {
+  /** Every step, OLDEST first. */
+  steps: HistoryStep[];
+  /**
+   * How many steps are applied: step N (1-based) is current when N === index,
+   * and 0 means everything is undone.
+   */
+  index: number;
+  /** Called with the step number to jump to (0 = the start row). */
+  onJump?: (step: number) => void;
+  /** Label of the bottom row, the state before any step. */
+  startLabel?: React.ReactNode;
+  /** Second line of the bottom row. */
+  startDetail?: React.ReactNode;
+  /** Formats a step's `time` for its row. Defaults to the locale time with seconds. */
+  formatTime?: (time: number) => React.ReactNode;
+  /** Custom class name. */
+  className?: string;
+}
+
+const defaultFormatTime = (time: number) => new Date(time).toLocaleTimeString([], {
   hour: '2-digit',
   minute: '2-digit',
   second: '2-digit'
@@ -18,25 +48,22 @@ const defaultFormatTime = (time) => new Date(time).toLocaleTimeString([], {
  *
  * Purely presentational: the app owns the history and passes `steps` (oldest
  * first) plus `index`, the number of steps currently applied.
- * @returns {ReactElement} of HistoryList component.
  */
-export default function HistoryList(props) {
-  const {
-    className,
-    formatTime,
-    index,
-    onJump,
-    startDetail,
-    startLabel,
-    steps,
-    ...restProps
-  } = props;
-
+export default function HistoryList({
+  className,
+  formatTime = defaultFormatTime,
+  index,
+  onJump,
+  startDetail = 'Before any changes',
+  startLabel = 'Start',
+  steps,
+  ...restProps
+}: HistoryListProps) {
   if (!steps.length) {
     return null;
   }
 
-  const renderRow = (number, label, detail, time, key) => {
+  const renderRow = (number: number, label: React.ReactNode, detail: React.ReactNode, time: number | null | undefined, key: string | number) => {
     const isCurrent = number === index;
     const isFuture = number > index;
     let title = 'Jump to this step (undo to here)';
@@ -78,43 +105,3 @@ export default function HistoryList(props) {
     </ol>
   );
 }
-
-HistoryList.propTypes = {
-  /**
-   * Every step, OLDEST first: `{ id, label, detail?, time? }`. `time` is a
-   * timestamp in ms.
-   */
-  steps: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    label: PropTypes.node.isRequired,
-    detail: PropTypes.node,
-    time: PropTypes.number
-  })).isRequired,
-  /**
-   * How many steps are applied: step N (1-based) is current when N === index,
-   * and 0 means everything is undone.
-   */
-  index: PropTypes.number.isRequired,
-  /**
-   * Called with the step number to jump to (0 = the start row).
-   */
-  onJump: PropTypes.func,
-  /**
-   * Label of the bottom row, the state before any step.
-   */
-  startLabel: PropTypes.node,
-  /**
-   * Second line of the bottom row.
-   */
-  startDetail: PropTypes.node,
-  /**
-   * Formats a step's `time` for its row. Defaults to the locale time with seconds.
-   */
-  formatTime: PropTypes.func
-};
-
-HistoryList.defaultProps = {
-  startLabel: 'Start',
-  startDetail: 'Before any changes',
-  formatTime: defaultFormatTime
-};

@@ -1,8 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import CONSTANT from '../../constants.js';
+import CONSTANT from '../../constants';
 import './Panel.scss';
+
+export type PanelPadding = 'none' | 'small' | 'medium';
+
+export interface PanelProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
+  /** Heading at the top of the panel. */
+  title?: React.ReactNode;
+  /** Footer line under a hairline, in caption type. */
+  caption?: React.ReactNode;
+  /** Inner spacing: none (e.g. a full-bleed image), small (12px) or medium (16px). */
+  padding?: PanelPadding;
+  /** The panel's content. */
+  children?: React.ReactNode;
+  /** Custom class name. */
+  className?: string;
+}
 
 /**
  * A card: the theme's surface, a hairline border and 12px corners, with an
@@ -15,7 +29,7 @@ export default function Panel({
   children,
   className,
   ...restProps
-}) {
+}: PanelProps) {
   return (
     <section
       className={ classNames(className, 'panel', CONSTANT.CLASS_PREFIX) }
@@ -32,26 +46,3 @@ export default function Panel({
     </section>
   );
 }
-
-Panel.propTypes = {
-  /**
-   * Heading at the top of the panel.
-   */
-  title: PropTypes.node,
-  /**
-   * Footer line under a hairline, in caption type.
-   */
-  caption: PropTypes.node,
-  /**
-   * Inner spacing: none (e.g. a full-bleed image), small (12px) or medium (16px).
-   */
-  padding: PropTypes.oneOf(['none', 'small', 'medium']),
-  /**
-   * Custom class name.
-   */
-  className: PropTypes.string,
-  /**
-   * The panel's content.
-   */
-  children: PropTypes.node
-};
