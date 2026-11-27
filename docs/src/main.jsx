@@ -8,6 +8,8 @@ import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
 import '@fontsource/jetbrains-mono/400.css';
 import '@fontsource/jetbrains-mono/500.css';
+// The docs offer every theme, so they load all of them (an app loads only the ones it offers).
+import '@nurvus/ui/themes/all.css';
 import App from './App';
 import './styles.scss';
 
