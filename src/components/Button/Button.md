@@ -8,7 +8,6 @@ import { Button, Layout } from '@nurvus/ui';
     <Layout
       display="flex"
       flexDirection="column"
-      itemDisplay="flex"
       alignItems="center"
       justifyContent="center"
       itemSpacing={ 13 }
@@ -22,7 +21,6 @@ import { Button, Layout } from '@nurvus/ui';
     <Layout
       display="flex"
       flexDirection="column"
-      itemDisplay="flex"
       alignItems="center"
       justifyContent="center"
       itemSpacing={ 13 }
@@ -38,7 +36,6 @@ import { Button, Layout } from '@nurvus/ui';
     <Layout
       display="flex"
       flexDirection="column"
-      itemDisplay="flex"
       alignItems="center"
       justifyContent="center"
       itemSpacing={ 13 }
@@ -52,7 +49,6 @@ import { Button, Layout } from '@nurvus/ui';
     <Layout
       display="flex"
       flexDirection="column"
-      itemDisplay="flex"
       alignItems="center"
       justifyContent="center"
       itemSpacing={ 13 }
