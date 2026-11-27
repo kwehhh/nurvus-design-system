@@ -2,7 +2,7 @@
 // 2026-08-23 concept screenshot (SF Pro: 18 / 14 / 24 / 14, 16px padding,
 // 30px swatches, 1px #323232 border on a #0E0E0E stage).
 
-$tc-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+$tc-font: var(--nv-font-sans);
 $tc-mono: ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, Consolas, monospace;
 $tc-stage: #0e0e0e;
 $tc-edge: #323232;

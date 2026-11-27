@@ -1,8 +1,9 @@
 import React from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import MenuIcon from '@material-ui/icons/Menu';
 import ThemeSwitcher from './ThemeSwitcher';
+import MenuToggle from './MenuToggle';
+import Logo from './Logo';
 import Search from './Search';
 import pkg from '../../../package.json';
 
@@ -32,22 +33,13 @@ function useLatestVersion() {
  * GitHub. `navShown`: whether the navigation is showing (the sidebar on a
  * desktop, the drawer on a phone); the button toggles it.
  */
-export default function Header({ onMenu, navShown }) {
+export default function Header({ onMenu, navShown, phone }) {
   const version = useLatestVersion();
   return (
     <header className="dx-header">
       <div className="dx-header-start">
-        <button
-          type="button"
-          className="dx-menu-button nv-icon-link"
-          onClick={ onMenu }
-          aria-label={ navShown ? 'Hide navigation' : 'Show navigation' }
-          aria-expanded={ navShown }
-          aria-controls="dx-sidebar"
-        >
-          <MenuIcon fontSize="small" />
-        </button>
-        <a className="dx-brand" href="#/">NURVUS UI</a>
+        <MenuToggle open={ navShown } phone={ phone } onClick={ onMenu } />
+        <a className="dx-brand" href="#/"><Logo id="dx-brand-logo" className="dx-brand-mark" />NURVUS UI</a>
       </div>
       <Search id="dx-search" shortcut className="dx-search-header" />
       <div className="dx-header-tools">

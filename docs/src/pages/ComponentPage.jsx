@@ -3,6 +3,7 @@ import { Panel, Text } from '@nurvus/ui';
 import Example from '../examples/Example';
 import PropsTable from '../examples/PropsTable';
 import ComponentSwitch from '../components/ComponentSwitch';
+import A11yTags from '../components/A11yTags';
 import { parseExamples, blockMarkdown } from '../examples/markdown';
 import { href } from '../router';
 
@@ -18,6 +19,7 @@ export default function ComponentPage({ component }) {
       <ComponentSwitch name={ component.name } current="react" />
       <h1 className="dx-page-title">{ component.name }</h1>
       { component.description && <div className="dx-prose dx-lede" dangerouslySetInnerHTML={ { __html: blockMarkdown(component.description) } } /> }
+      <A11yTags name={ component.name } />
 
       { parts.map((part, i) => {
         if (part.type === 'prose') return <div key={ i } className="dx-prose" dangerouslySetInnerHTML={ { __html: part.html } } />;

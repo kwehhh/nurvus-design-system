@@ -10,7 +10,7 @@ $tp-mono: ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, Consolas, monos
   border-radius: 18px;
   background: var(--nv-bg);
   color: var(--nv-text);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--nv-font-sans);
   font-size: 14px;
   line-height: 1.5;
 
@@ -76,7 +76,7 @@ $tp-mono: ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, Consolas, monos
   border-radius: 10px;
   background: var(--nv-accent-fill);
   color: var(--nv-on-accent);
-  font: 500 14px 'Inter', sans-serif;
+  font: 500 14px var(--nv-font-sans);
   cursor: pointer;
 
   &:hover { background: color-mix(in srgb, var(--nv-accent-fill) 86%, var(--nv-text)); }

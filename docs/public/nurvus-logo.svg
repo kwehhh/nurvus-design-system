@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="420 120 700 750" role="img" aria-labelledby="nurvus-title nurvus-desc">
+  <title id="nurvus-title">NURVUS</title>
+  <desc id="nurvus-desc">An organic circular vortex of blue, cyan, violet and pink segments.</desc>
+  <!-- Hand-traced vector artwork. Transparent background. No embedded raster or external assets. -->
+  <defs>
+    <linearGradient id="g-a" gradientUnits="userSpaceOnUse" x1="600" y1="165" x2="654" y2="300"><stop stop-color="#78e8de"/><stop offset="1" stop-color="#5471ee"/></linearGradient>
+    <linearGradient id="g-b" gradientUnits="userSpaceOnUse" x1="521" y1="300" x2="625" y2="432"><stop stop-color="#79e8df"/><stop offset="1" stop-color="#4664ee"/></linearGradient>
+    <linearGradient id="g-c" gradientUnits="userSpaceOnUse" x1="508" y1="401" x2="650" y2="654"><stop stop-color="#59cbe9"/><stop offset="1" stop-color="#5141e9"/></linearGradient>
+    <linearGradient id="g-d" gradientUnits="userSpaceOnUse" x1="750" y1="649" x2="890" y2="566"><stop stop-color="#3333df"/><stop offset="1" stop-color="#12a9e7"/></linearGradient>
+    <linearGradient id="g-e" gradientUnits="userSpaceOnUse" x1="979" y1="419" x2="914" y2="610"><stop stop-color="#82f6dc"/><stop offset="1" stop-color="#2296d9"/></linearGradient>
+    <linearGradient id="g-f" gradientUnits="userSpaceOnUse" x1="985" y1="334" x2="1013" y2="493"><stop stop-color="#923ce9"/><stop offset="1" stop-color="#ed80df"/></linearGradient>
+    <linearGradient id="g-g" gradientUnits="userSpaceOnUse" x1="755" y1="167" x2="958" y2="308"><stop stop-color="#fff9ef"/><stop offset="1" stop-color="#ee74b8"/></linearGradient>
+    <linearGradient id="g-h" gradientUnits="userSpaceOnUse" x1="707" y1="229" x2="619" y2="338"><stop stop-color="#141934"/><stop offset="1" stop-color="#244f70"/></linearGradient>
+    <linearGradient id="g-i" gradientUnits="userSpaceOnUse" x1="744" y1="221" x2="760" y2="277"><stop stop-color="#20174e"/><stop offset="1" stop-color="#344eaa"/></linearGradient>
+    <linearGradient id="g-j" gradientUnits="userSpaceOnUse" x1="785" y1="234" x2="915" y2="343"><stop stop-color="#453be8"/><stop offset="1" stop-color="#6284e7"/></linearGradient>
+    <linearGradient id="g-k" gradientUnits="userSpaceOnUse" x1="907" y1="344" x2="928" y2="529"><stop stop-color="#6686e7"/><stop offset="1" stop-color="#4cbaf5"/></linearGradient>
+    <linearGradient id="g-l" gradientUnits="userSpaceOnUse" x1="612" y1="444" x2="708" y2="560"><stop stop-color="#30c3b6"/><stop offset="1" stop-color="#42e2c9"/></linearGradient>
+    <linearGradient id="g-m" gradientUnits="userSpaceOnUse" x1="584" y1="479" x2="651" y2="575"><stop stop-color="#64dfdf"/><stop offset="1" stop-color="#259cea"/></linearGradient>
+    <linearGradient id="g-n" gradientUnits="userSpaceOnUse" x1="697" y1="571" x2="707" y2="597"><stop stop-color="#5ebee8"/><stop offset="1" stop-color="#4367e8"/></linearGradient>
+    <linearGradient id="g-o" gradientUnits="userSpaceOnUse" x1="744" y1="548" x2="786" y2="589"><stop stop-color="#50ded1"/><stop offset="1" stop-color="#26a6d8"/></linearGradient>
+    <linearGradient id="g-p" gradientUnits="userSpaceOnUse" x1="887" y1="471" x2="819" y2="571"><stop stop-color="#3c7de7"/><stop offset="1" stop-color="#20c9e8"/></linearGradient>
+    <linearGradient id="g-q" gradientUnits="userSpaceOnUse" x1="761" y1="202" x2="792" y2="225"><stop stop-color="#d5f3f3"/><stop offset="1" stop-color="#c8b5eb"/></linearGradient>
+    <linearGradient id="g-r" gradientUnits="userSpaceOnUse" x1="937" y1="336" x2="959" y2="378"><stop stop-color="#e5b5e9"/><stop offset="1" stop-color="#92b0f2"/></linearGradient>
+  </defs>
+  <g id="inner-current">
+    <path id="segment-h" fill="url(#g-h)" d="M696 237 C670 244 639 264 620 298 C605 320 607 335 615 342 C632 336 647 329 661 309 C675 293 689 286 705 279 C696 266 693 251 696 237 Z"/>
+    <path id="segment-i" fill="url(#g-i)" d="M705 229 C718 222 734 218 746 221 C763 242 785 257 806 267 C776 271 750 285 727 274 C709 266 701 249 705 229 Z"/>
+    <path id="segment-j" fill="url(#g-j)" d="M787 232 C838 231 894 267 922 305 C932 318 928 328 915 340 C906 348 896 348 891 336 C874 293 845 257 787 232 Z"/>
+    <path id="segment-k" fill="url(#g-k)" d="M896 343 C901 347 907 347 912 344 C915 358 934 373 943 390 C957 439 942 490 905 532 C924 500 932 461 923 433 C913 409 899 391 896 371 Z"/>
+    <path id="segment-l" fill="url(#g-l)" d="M725 557 C677 541 639 512 649 469 C653 447 642 434 627 435 C611 436 605 448 610 476 C619 521 665 550 723 562 Z"/>
+    <path id="segment-m" fill="url(#g-m)" d="M655 575 C622 552 613 527 608 499 C605 482 596 473 585 477 C570 482 573 498 585 518 C601 546 627 563 655 575 Z"/>
+    <path id="segment-n" fill="url(#g-n)" d="M680 580 C684 567 708 568 718 576 C731 587 720 599 704 597 C690 596 680 588 680 580 Z"/>
+    <path id="segment-o" fill="url(#g-o)" d="M807 547 C783 550 770 545 752 551 C733 557 727 570 736 581 C746 594 769 592 781 580 C789 571 798 557 807 547 Z"/>
+    <path id="segment-p" fill="url(#g-p)" d="M797 572 C839 550 852 527 860 497 C865 476 878 466 891 472 C912 481 905 505 889 525 C864 552 835 567 797 572 Z"/>
+    <path id="segment-q" fill="url(#g-q)" d="M755 210 C758 194 785 193 795 206 C805 218 789 227 775 226 C761 225 753 219 755 210 Z"/>
+    <path id="segment-r" fill="url(#g-r)" d="M932 334 C945 326 960 344 964 359 C969 378 951 385 940 370 C930 357 926 341 932 334 Z"/>
+  </g>
+  <g id="outer-current">
+    <path id="segment-a" fill="url(#g-a)" d="M557 294 C587 234 662 173 718 162 C734 163 744 182 736 198 C725 224 680 231 645 242 C609 253 581 278 568 292 C565 295 561 295 557 294 Z"/>
+    <path id="segment-b" fill="url(#g-b)" d="M534 283 C547 307 583 305 609 289 L639 270 C613 302 604 343 601 383 C599 420 606 454 595 464 C577 476 545 443 533 418 C513 379 515 313 534 283 Z"/>
+    <path id="segment-c" fill="url(#g-c)" d="M506 382 C509 421 529 452 551 469 C551 526 592 577 659 598 C697 610 699 639 669 655 C579 619 511 540 504 449 C502 420 503 399 506 382 Z"/>
+    <path id="segment-d" fill="url(#g-d)" d="M687 657 L697 646 C736 653 781 641 814 620 L733 625 C787 599 833 572 890 577 C902 578 902 594 894 605 C850 655 771 684 687 657 Z"/>
+    <path id="segment-e" fill="url(#g-e)" d="M970 394 C1000 460 989 531 951 580 C937 598 922 610 913 610 C889 583 919 553 942 526 C972 490 983 444 970 394 Z"/>
+    <path id="segment-f" fill="url(#g-f)" d="M975 341 C970 333 988 322 996 327 C1000 329 1002 335 1005 344 C1024 397 1019 449 1000 499 C1012 442 1009 392 975 341 Z"/>
+    <path id="segment-g" fill="url(#g-g)" d="M744 167 C829 154 920 205 974 277 C987 295 979 315 966 322 C947 332 921 316 922 279 C880 207 807 176 744 167 Z"/>
+  </g>
+  <g id="wordmark" fill="#f4f5f8" fill-rule="evenodd">
+    <path d="M463 747 H478 L529 806 V747 H544 V827 H529 L479 768 V827 H463 Z"/>
+    <path d="M578 747 H593 V793 C593 808 602 815 616 815 C631 815 640 808 640 793 V747 H655 V794 C655 817 640 828 616 828 C592 828 578 817 578 794 Z"/>
+    <path d="M689 747 H730 C752 747 764 757 764 773 C764 786 757 793 744 797 L771 827 H751 L727 798 H704 V827 H689 Z M704 760 V785 H729 C741 785 749 781 749 773 C749 764 742 760 729 760 Z"/>
+    <path d="M784 747 H802 L830 810 L858 747 H875 L839 827 H821 Z"/>
+    <path d="M900 747 H915 V793 C915 808 924 815 939 815 C954 815 963 808 963 793 V747 H978 V794 C978 817 963 828 939 828 C915 828 900 817 900 794 Z"/>
+    <path d="M1077 755 L1070 766 C1062 761 1053 757 1043 757 C1032 757 1025 762 1025 769 C1025 775 1030 778 1048 782 C1070 787 1080 793 1080 805 C1080 820 1065 828 1044 828 C1030 828 1016 824 1007 817 L1014 805 C1023 811 1034 815 1045 815 C1057 815 1064 811 1064 805 C1064 799 1058 796 1040 792 C1019 787 1009 782 1009 770 C1009 755 1023 745 1043 745 C1056 745 1068 749 1077 755 Z"/>
+  </g>
+</svg>

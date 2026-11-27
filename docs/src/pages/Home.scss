@@ -11,9 +11,15 @@
   padding: 12px 0 8px;
 }
 
-.hm-badges { margin-bottom: 18px; }
+.hm-badges { margin-bottom: 18px; flex-wrap: wrap; }
+
+// Pause motion sits at the end of the badges, by the moving title (WCAG 2.2.2).
+.hm-motion { margin-left: auto; }
 
 .hm-title {
+  display: flex;
+  align-items: center;
+  gap: 0.28em;
   margin: 0 0 8px;
   font-size: var(--nv-type-display-size);
   line-height: round(calc(var(--nv-type-display-size) * var(--nv-type-display-line)), 1px);
@@ -22,7 +28,54 @@
   text-wrap: balance;
 }
 
-// "Every pixel has a pulse." with a dot that pulses (still for reduced motion).
+// The mark beside the name, its currents turning slowly (Logo.jsx).
+.hm-title-mark { width: 1.15em; height: 1.15em; flex: none; }
+
+// The neon rainbow. Its colors are the theme's own accent, info, success,
+// warning and danger, so it changes with the theme and every stop is a color
+// the build already checked for 4.5:1 contrast on this background.
+.hm {
+  --hm-rainbow: var(--nv-accent), var(--nv-info), var(--nv-success), var(--nv-warning), var(--nv-danger), var(--nv-accent);
+}
+
+// The name: the rainbow clipped to the letters, flowing sideways.
+.hm-neon {
+  position: relative;
+  isolation: isolate; // keeps the glow (z-index -1) behind the letters, in front of the page
+  background: linear-gradient(90deg, var(--hm-rainbow));
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: hm-flow 8s linear infinite;
+}
+
+// The glow: a blurred copy drawn by CSS (not in the page text, so the heading
+// reads and copies as "NURVUS UI" once). The empty alt after "/" keeps screen
+// readers from reading it; browsers without that syntax use the line above.
+.hm-neon::after {
+  content: attr(data-text);
+  content: attr(data-text) / "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: inherit;
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: blur(14px);
+  opacity: 0.6;
+  animation: hm-flow 8s linear infinite;
+  pointer-events: none;
+  user-select: none;
+}
+
+// One gradient width per loop: seamless (the gradient starts and ends on accent).
+@keyframes hm-flow { to { background-position: 200% 0; } }
+
+// "Every pixel has a pulse." with a dot that pulses and glows through the same
+// rainbow (still, in the accent, for reduced motion).
 .hm-pulse-line {
   display: flex;
   align-items: center;
@@ -40,14 +93,17 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--nv-accent);
+  color: var(--nv-accent);
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor, 0 0 14px currentColor;
+  animation: hm-hue 8s linear infinite;
 
   &::after {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: var(--nv-accent);
+    background: currentColor;
     animation: hm-pulse 1.6s ease-out infinite;
   }
 }
@@ -57,7 +113,18 @@
   to { transform: scale(3); opacity: 0; }
 }
 
+@keyframes hm-hue {
+  0%, 100% { color: var(--nv-accent); }
+  20% { color: var(--nv-info); }
+  40% { color: var(--nv-success); }
+  60% { color: var(--nv-warning); }
+  80% { color: var(--nv-danger); }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .hm-neon,
+  .hm-neon::after,
+  .hm-pulse,
   .hm-pulse::after { animation: none; }
 }
 

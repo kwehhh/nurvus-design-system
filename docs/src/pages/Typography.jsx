@@ -68,7 +68,7 @@ export default function Typography() {
           <h3>Inter</h3>
           <p>
             For everything you read. Made for screens by Rasmus Andersson (first released 2017), open source (SIL Open
-            Font License). Tall lowercase letters stay clear at small sizes, and its numbers can line up in columns.
+            Font License). Tall lowercase letters stay clear at small sizes, and its numbers can line up in columns. This site loads the variable version: one file with every weight from 100 to 900 (see <a href="#/Foundations/Animated%20type">Animated type</a>).
           </p>
           <p className="ty-alphabet">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />abcdefghijklmnopqrstuvwxyz 0123456789</p>
         </div>

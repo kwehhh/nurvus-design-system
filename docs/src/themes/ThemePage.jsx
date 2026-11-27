@@ -1,5 +1,5 @@
 import React from 'react';
-import { getTheme, setTheme, themeRoles, Button, Menu, Progress, Table, Title } from '@nurvus/ui';
+import { getTheme, setTheme, themeRoles, Button, Progress, Table, Title, Tree } from '@nurvus/ui';
 import { checkTheme } from '../../../tools/contrast.mjs';
 import { CodeBlock } from './ThemeCollection';
 import './ThemePage.scss';
@@ -108,7 +108,8 @@ function ComponentPreview() {
         </div>
       </div>
       <div className="tp-col">
-        <Menu
+        <Tree
+          label="Sample tree"
           activePath={ active }
           items={ [{ label: 'Layers' }, { label: 'Timeline' }, { label: 'Presets' }, { label: 'Export' }] }
           onClick={ (e, path) => setActive(path) }

@@ -1,0 +1,187 @@
+// Animated type. Theme roles only; every animation stops for reduced motion
+// and under the Pause motion button (html[data-motion="paused"], styles.scss).
+
+.at-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space--12);
+  margin: var(--space--16) 0 var(--space--8);
+}
+
+.at-demo {
+  margin: var(--space--16) 0 var(--space--32);
+}
+
+.at-demo-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space--12);
+}
+
+.at-replay {
+  padding: var(--space--4) var(--space--12);
+  border: 1px solid var(--nv-border-strong);
+  border-radius: 8px;
+  background: var(--nv-surface);
+  color: var(--nv-text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+
+  &:hover { background: var(--nv-surface-hover); }
+  &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 2px; }
+}
+
+.at-stage {
+  display: grid;
+  gap: var(--space--12);
+  padding: var(--space--24);
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+  background: var(--nv-surface);
+  overflow: hidden;
+
+  p { margin: 0; }
+}
+
+.at-big {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.at-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space--32);
+}
+
+.at-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// 1. Weight
+.at-breathe { animation: at-breathe 2.4s ease-in-out infinite alternate; }
+
+@keyframes at-breathe {
+  from { font-weight: 300; }
+  to { font-weight: 800; }
+}
+
+.at-links { display: inline-flex; gap: var(--space--16); }
+
+.at-weight-link {
+  color: var(--nv-accent);
+  font-size: 20px;
+  font-weight: 400;
+  text-decoration: none;
+  transition: font-weight 0.3s ease;
+
+  &:hover { font-weight: 700; }
+  &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 2px; border-radius: 4px; }
+}
+
+.at-slider {
+  display: grid;
+  gap: var(--space--4);
+  max-width: 360px;
+  color: var(--nv-text-muted);
+  font-size: 14px;
+
+  output { color: var(--nv-text); font-family: var(--nv-font-mono); }
+  input { width: 100%; accent-color: var(--nv-accent); }
+}
+
+// 2. Letter by letter
+.at-reveal > span[aria-hidden],
+.at-wave > span[aria-hidden] { display: inline-block; }
+
+.at-reveal > span[aria-hidden] {
+  animation: at-rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i) * 28ms);
+}
+
+@keyframes at-rise { from { opacity: 0; transform: translateY(0.4em); } }
+
+.at-wave > span[aria-hidden] {
+  color: var(--nv-accent);
+  animation: at-wave 1.6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 90ms);
+}
+
+@keyframes at-wave { 50% { transform: translateY(-0.18em); } }
+
+// 3. Shine and rainbow
+.at-shine {
+  background: linear-gradient(100deg, var(--nv-text) 40%, var(--nv-accent) 50%, var(--nv-text) 60%) 0 0 / 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: at-shine 3s linear infinite;
+}
+
+@keyframes at-shine {
+  from { background-position: 100% 0; }
+  to { background-position: 0% 0; }
+}
+
+.at-rainbow {
+  background: linear-gradient(90deg, var(--nv-accent), var(--nv-info), var(--nv-success), var(--nv-warning), var(--nv-danger), var(--nv-accent)) 0 0 / 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: at-flow 8s linear infinite;
+}
+
+@keyframes at-flow { to { background-position: 200% 0; } }
+
+// 4. Neon
+.at-neon {
+  color: var(--nv-text);
+  text-shadow: 0 0 2px var(--nv-accent), 0 0 10px var(--nv-accent), 0 0 24px var(--nv-accent);
+  animation: at-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes at-glow {
+  from { text-shadow: 0 0 1px var(--nv-accent), 0 0 4px var(--nv-accent), 0 0 10px transparent; }
+}
+
+// 5. Spacing, size and opacity
+.at-track {
+  transition: letter-spacing 0.4s ease;
+  &:hover { letter-spacing: 0.2em; }
+}
+
+.at-fade { animation: at-fade 2.4s ease-in-out infinite alternate; }
+
+@keyframes at-fade { from { opacity: 0.55; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .at-breathe,
+  .at-reveal > span[aria-hidden],
+  .at-wave > span[aria-hidden],
+  .at-shine,
+  .at-rainbow,
+  .at-neon,
+  .at-fade { animation: none; }
+
+  .at-weight-link,
+  .at-track { transition: none; }
+}
+
+@media (max-width: 760px) {
+  .at-big { font-size: 24px; line-height: 32px; }
+  .at-stage { padding: var(--space--16); }
+}

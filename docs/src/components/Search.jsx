@@ -1,15 +1,17 @@
 import React from 'react';
-import { sections } from '../nav';
+import { navSections } from '../nav';
+import { getFramework } from '../framework';
 import { href } from '../router';
 
-/** Every page the sidebar lists, flat, with the section it belongs to. */
-const PAGES = [
+/** Every page the sidebar lists, flat, with the section it belongs to (components in the reader's framework). */
+const pages = (framework) => [
   { name: 'Overview', href: href(), group: 'Get started' },
-  ...sections.flatMap((s) => [
+  ...navSections(framework).flatMap((s) => [
     ...(s.href && s.href !== href() ? [{ name: s.name, href: s.href, group: s.name }] : []),
     ...s.items.map((item) => ({ name: item.name, href: item.href, group: s.name, hint: item.hint || '' })),
   ]),
 ];
+
 const MAX = 8;
 const MAC = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform);
 
@@ -25,7 +27,7 @@ export function searchPages(query) {
     if ((p.hint || '').toLowerCase().includes(q)) return 3;
     return -1;
   };
-  return PAGES.map((p) => ({ p, s: score(p) })).filter((r) => r.s >= 0).sort((a, b) => a.s - b.s).slice(0, MAX).map((r) => r.p);
+  return pages(getFramework()).map((p) => ({ p, s: score(p) })).filter((r) => r.s >= 0).sort((a, b) => a.s - b.s).slice(0, MAX).map((r) => r.p);
 }
 
 /** The page name with the matched part marked. */

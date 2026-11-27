@@ -2,6 +2,8 @@ import React from 'react';
 import { Button, Layout, Panel, Table, Tag, Text, Title, themes, setTheme, themeRoles } from '@nurvus/ui';
 import { components } from 'virtual:nurvus-docs';
 import Example from '../examples/Example';
+import Logo from '../components/Logo';
+import MotionToggle from '../components/MotionToggle';
 import { href } from '../router';
 import './Home.scss';
 
@@ -149,8 +151,12 @@ export default function Home() {
             <Tag tone="accent">TypeScript</Tag>
             <Tag>v0.1 alpha</Tag>
             <Tag>MIT</Tag>
+            <MotionToggle className="hm-motion" />
           </Layout>
-          <h1 className="hm-title">NURVUS UI</h1>
+          <h1 className="hm-title">
+            <Logo id="hm-logo" spin className="hm-title-mark" />
+            <span className="hm-neon" data-text="NURVUS UI">NURVUS UI</span>
+          </h1>
           <p className="hm-pulse-line"><span className="hm-pulse" aria-hidden="true" />Every pixel has a pulse.</p>
           <p className="hm-about">
             The NURVUS System (/ˈnərvəs ˌsistəm/) is the network of highly complex interconnected CaaS

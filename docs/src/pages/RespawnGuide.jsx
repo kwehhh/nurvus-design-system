@@ -175,31 +175,12 @@ app.append(Link({ href: '#/Components/Link', children: 'The React Link' }));`,
   },
   {
     name: 'Menu',
-    about: 'Nested rows, like a layers panel. A click marks the row active and calls onClick with its path.',
+    about: 'Site navigation: sections that open and close, the current page marked. A toggle opens or closes its section in place; inside, the arrow keys move between rows.',
     code: `import { Menu, Text } from '@nurvus/ui/respawn';
 
-const status = Text({ variant: 'caption', tone: 'muted', children: 'Click a row' });
+const status = Text({ variant: 'caption', tone: 'muted', children: 'Click a link or a chevron, or use the arrow keys' });
 
-const menu = Menu({
-  activePath: [0, 0],
-  items: [
-    { label: 'Header', items: [{ label: 'Logo' }, { label: 'Navigation' }] },
-    { label: 'Content', items: [{ label: 'Hero', items: [{ label: 'Title' }] }] },
-    { label: 'Footer' },
-  ],
-  onClick: (event, path) => { status.textContent = \`Clicked row [\${path.join(', ')}]\`; },
-});
-
-app.append(menu, status);`,
-  },
-  {
-    name: 'NavList',
-    about: 'Site navigation: sections that open and close, the current page marked. A toggle opens or closes its section in place.',
-    code: `import { NavList, Text } from '@nurvus/ui/respawn';
-
-const status = Text({ variant: 'caption', tone: 'muted', children: 'Click a link or a chevron' });
-
-app.append(NavList({
+app.append(Menu({
   id: 'respawn-demo-nav',
   current: '#/billing',
   onNavigate: (href, event) => { event.preventDefault(); status.textContent = 'Go to ' + href; },
@@ -246,6 +227,25 @@ const add = Button({
 });
 
 app.append(Layout({ itemSpacing: 12, children: [bar, add] }));`,
+  },
+  {
+    name: 'Select',
+    about: 'Pick one value from a list. Opening, moving and picking change the element in place; picking calls onChange.',
+    code: `import { Select, Text } from '@nurvus/ui/respawn';
+
+const status = Text({ variant: 'caption', tone: 'muted', children: 'Deploying to eu-west' });
+
+app.append(Select({
+  id: 'respawn-demo-region',
+  label: 'Region',
+  value: 'eu-west',
+  onChange: (value) => { status.textContent = 'Deploying to ' + value; },
+  options: [
+    { value: 'us-east', label: 'US East', description: 'Virginia' },
+    { value: 'us-west', label: 'US West', description: 'Oregon' },
+    { value: 'eu-west', label: 'EU West', description: 'Ireland' },
+  ],
+}), status);`,
   },
   {
     name: 'Table',
@@ -310,17 +310,38 @@ app.append(Layout({
   ],
 }));`,
   },
+  {
+    name: 'Tree',
+    about: 'Rows to pick from, nested like a layers panel. A click (or Enter) marks the row active and calls onClick with its path; the arrow keys move between rows.',
+    code: `import { Text, Tree } from '@nurvus/ui/respawn';
+
+const status = Text({ variant: 'caption', tone: 'muted', children: 'Click a row' });
+
+const tree = Tree({
+  label: 'Layers',
+  activePath: [0, 0],
+  items: [
+    { label: 'Header', items: [{ label: 'Logo' }, { label: 'Navigation' }] },
+    { label: 'Content', items: [{ label: 'Hero', items: [{ label: 'Title' }] }] },
+    { label: 'Footer' },
+  ],
+  onClick: (event, path) => { status.textContent = \`Clicked row [\${path.join(', ')}]\`; },
+});
+
+app.append(tree, status);`,
+  },
 ];
 
 export const RETURNS = {
   Button: '<button>', ButtonGroup: '<div>', FullPageModal: '<div class="portal">', HistoryList: '<ol>', Layout: '<div>', Link: '<a>',
-  Menu: '<div>', NavList: '<nav>', Panel: '<section>', Progress: '<div>', Table: '<table>', Tag: '<span>', Text: '<span> (or as)', Title: '<h1> to <h6>',
+  Menu: '<nav>', Panel: '<section>', Progress: '<div>', Select: '<div>', Table: '<table>', Tag: '<span>', Text: '<span> (or as)', Title: '<h1> to <h6>', Tree: '<div>',
 };
 export const NOTES = {
   FullPageModal: 'Mount it on document.body. update({ visible }) animates it in or out and keeps the same element.',
   HistoryList: 'A click calls onJump(step). Move the current step with update({ index }).',
-  Menu: 'A click marks the row active (same element), then calls onClick(event, path).',
-  NavList: 'A toggle opens or closes its section in place, then calls onToggle(id, open). update({ current }) marks another page.',
+  Menu: 'A toggle opens or closes its section in place, then calls onToggle(id, open). update({ current }) marks another page.',
+  Select: 'Opening, moving and picking change it in place; picking calls onChange(value, option). update({ value }) sets it from code.',
+  Tree: 'A click (or Enter) marks the row active (same element), then calls onClick(event, path).',
 };
 
 const IMPORT_RE = /^import\s[\s\S]*?from\s+['"][^'"]+['"];?[ \t]*$/gm;
@@ -434,7 +455,9 @@ export default function RespawnGuide() {
         </p>
         <Example owner="Guide" code={ UPDATE } mode="static" />
         <ul className="gd-list">
-          <li><strong>Menu</strong> changes in place: a click marks that row active, then calls <code>onClick(event, path)</code>.</li>
+          <li><strong>Tree</strong> changes in place: a click (or Enter) marks that row active, then calls <code>onClick(event, path)</code>.</li>
+          <li><strong>Menu</strong> changes in place: a chevron (or ← →) opens or closes its section, then calls <code>onToggle(id, open)</code>.</li>
+          <li><strong>Select</strong> changes in place: opening, moving and picking; a pick calls <code>onChange(value, option)</code>.</li>
           <li><strong>FullPageModal</strong> changes in place: <code>update({'{ visible: true }'})</code> animates it in, <code>false</code> animates it out and hides it.</li>
           <li><strong>HistoryList</strong> shows what you give it, like the React one. A click calls <code>onJump(step)</code>; you move the current step with <code>update({'{ index: step }'})</code>.</li>
         </ul>
@@ -456,7 +479,7 @@ export default function RespawnGuide() {
       <ul className="gd-list">
         <li><strong>FullPageModal</strong> returns its element for you to mount. React puts it into <code>&lt;body&gt;</code> itself.</li>
         <li><strong>HistoryList</strong> with no steps returns an empty, hidden list, so there is an element to update. React renders nothing.</li>
-        <li><strong>Menu</strong> marks a clicked row active by itself. In React, the app sets <code>activePath</code>.</li>
+        <li><strong>Tree</strong> marks a clicked row active by itself, and <strong>Select</strong> keeps the value it was given or picked. In React, the app sets <code>activePath</code> and <code>value</code>.</li>
       </ul>
 
       <h2 className="gd-h2">The API</h2>

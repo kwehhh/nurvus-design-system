@@ -51,7 +51,7 @@ export default function SupportedLibraries() {
       <ul className="gd-list">
         <li><strong>React apps:</strong> React and React DOM are peer dependencies (you bring your own, 16.8 to 19). The package's only other dependency is <code>classnames</code>.</li>
         <li><strong>Everyone else:</strong> nothing else. The Respawn build and the CSS have no dependencies.</li>
-        <li><strong>Fonts:</strong> the CSS names Inter and JetBrains Mono but doesn't ship them. Load them (e.g. <code>@fontsource/inter</code>), or the system font is used.</li>
+        <li><strong>Fonts:</strong> the CSS names Inter and JetBrains Mono but doesn't ship them. Load them (e.g. <code>@fontsource-variable/inter</code>, one file with every weight, or <code>@fontsource/inter</code>), or the system font is used.</li>
       </ul>
     </div>
   );
