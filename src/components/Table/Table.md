@@ -183,10 +183,11 @@ const columns = [
       textAlign: 'right'
     },
     render: (val, key, props) => {
-      let color = 'rgba(4, 170, 53, 1)';
+      // Theme roles, so the colors pass contrast in every theme.
+      let color = 'var(--nv-success)';
 
       if (val < 0) {
-        color = 'rgba(239, 2, 9, 1)';
+        color = 'var(--nv-danger)';
       }
 
       return (

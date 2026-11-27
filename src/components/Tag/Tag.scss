@@ -9,7 +9,9 @@
   border: 1px solid color-mix(in srgb, var(--tag-color) 45%, transparent);
   border-radius: $--radius--full;
   background: color-mix(in srgb, var(--tag-color) 10%, transparent);
-  color: var(--tag-color);
+  // The tone mixed with a fifth of the text color: on its own tint (and on a
+  // Panel's surface) every tone keeps 4.5:1 in every theme.
+  color: color-mix(in srgb, var(--tag-color) 80%, var(--nv-text));
   font-size: 12px;
   font-weight: 500;
   line-height: 18px;
