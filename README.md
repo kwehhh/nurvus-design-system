@@ -76,7 +76,17 @@ Themes nest (`<nav data-theme="tokyo-neon">` inside a light page), and your own 
 - New: **`Select`**, pick one value from a list (the WAI-ARIA select-only combobox).
 
 ### New in 0.1.0-alpha.15
-- **`Icon`**: 42 icons drawn for NURVUS on a 24-unit grid, in the text color, **1em by default** so an icon is as big as the text it sits in (`<Icon name="search" />`; `label` for an icon that stands alone). Names are typed (`IconName`); `ICONS` / `ICON_NAMES` list them. Same markup in `@nurvus/ui/respawn`.
+- **`Icon`**: icons drawn for NURVUS on a 24-unit grid, in the text color, **1em by default** so an icon is as big as the text it sits in (`<Icon name="search" />`; `label` for an icon that stands alone). Names are typed (`IconName`); `ICONS` / `ICON_NAMES` list them. Same markup in `@nurvus/ui/respawn`.
+
+### New in 0.1.0-alpha.16
+- **Sizes are rem.** Type, spacing, radii and component sizes are in rem (hairlines and focus rings stay px), so everything grows when a reader sets bigger text in their browser. At the default (16px) nothing moves: the same pixels as before.
+- **`Menu` is links, actions or a tree**, and screen readers hear each as what it is. Items with `href` make navigation (as before); items with `onSelect` make a menu of actions (`role="menu"`, one Tab stop, arrow keys, type to find); `kind="tree"` (or Tree's props) makes a tree. Up and Down move between items in all three. `Tree` is still there: the same as `<Menu kind="tree" />`. Menu with Tree's props no longer warns.
+- **`Loader`**: the NURVUS mark with a light running round it (`role="status"`, a label for screen readers).
+- **`Grid`** (equal columns, a count per breakpoint or as many as fit) and **`Stack`** (a column or a row with `gap`, the direction can change at a breakpoint), and **`BREAKPOINTS`** (sm 40em, md 48em, lg 64em, xl 80em).
+- **`FullPageModal` is a modal dialog**: `role="dialog"`, `aria-modal`, named by its title; focus moves in when it opens and back when it closes; Tab stays inside; Esc calls the new `onClose`. Give it an `id` to label it by its title element.
+- **`Progress`** is a `progressbar` with a name and value (`label`, `hideLabel`, `showValue`, `valueText`); with `showValue` its status is an icon and a word too. Its markup changed: the bar's track is now `.progress-track` inside `.progress`.
+- **70 icons** (28 new: settings, user, bell, calendar, star, panel-left…) and **`dist/icons.svg`**, every icon as a `<symbol>` for pages without JavaScript: `<svg width="1em" height="1em"><use href="icons.svg#search"/></svg>`.
+- `Select`'s list height is a CSS variable: `--nurvus-select-list-height` (default 360px).
 
 ### Docs
 Every component and theme, with live examples you can edit and each component's props: **https://design.nurvus.ai/**

@@ -1,0 +1,36 @@
+// Styles for Stack (React and Respawn: same markup).
+@import "../../styles/variables.scss";
+@import "../../styles/breakpoints.scss";
+
+$stack-steps: 0, 2, 4, 8, 12, 16, 24, 32, 48, 64;
+
+.#{$cls-prefix}.stack {
+  display: flex;
+  flex-direction: column;
+
+  &[data-direction="row"] { flex-direction: row; }
+
+  @each $bp, $width in $nurvus-breakpoints {
+    @media (min-width: $width) {
+      &[data-direction-#{$bp}="column"] { flex-direction: column; }
+      &[data-direction-#{$bp}="row"] { flex-direction: row; }
+    }
+  }
+
+  @each $n in $stack-steps {
+    &[data-gap="#{$n}"] { gap: var(--space--#{$n}); }
+  }
+
+  &[data-align="start"] { align-items: flex-start; }
+  &[data-align="center"] { align-items: center; }
+  &[data-align="end"] { align-items: flex-end; }
+  &[data-align="stretch"] { align-items: stretch; }
+  &[data-align="baseline"] { align-items: baseline; }
+
+  &[data-justify="start"] { justify-content: flex-start; }
+  &[data-justify="center"] { justify-content: center; }
+  &[data-justify="end"] { justify-content: flex-end; }
+  &[data-justify="between"] { justify-content: space-between; }
+
+  &[data-wrap="true"] { flex-wrap: wrap; }
+}

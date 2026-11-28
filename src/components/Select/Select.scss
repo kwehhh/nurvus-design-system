@@ -8,18 +8,18 @@ $select-speed: 0.12s;
   position: relative;
   display: inline-block;
   max-width: 100%;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 
   .select-trigger {
     display: inline-flex;
     align-items: center;
     gap: var(--space--8);
     max-width: 100%;
-    min-height: 32px;
+    min-height: 2rem;
     padding: var(--space--4) var(--space--8) var(--space--4) var(--space--12);
     border: 1px solid var(--nv-border-strong);
-    border-radius: 8px;
+    border-radius: 0.5rem;
     background: var(--nv-surface);
     color: var(--nv-text);
     cursor: pointer;
@@ -47,13 +47,13 @@ $select-speed: 0.12s;
   .select-chevron {
     display: inline-flex;
     flex: none;
-    width: 16px;
+    width: 1rem;
     justify-content: center;
 
     &::after {
       content: '';
-      width: 6px;
-      height: 6px;
+      width: 0.375rem;
+      height: 0.375rem;
       border-right: 1.5px solid currentColor;
       border-bottom: 1.5px solid currentColor;
       transform: translateY(-2px) rotate(45deg);
@@ -69,17 +69,18 @@ $select-speed: 0.12s;
     top: calc(100% + var(--space--4));
     left: 0;
     min-width: 100%;
-    max-height: 360px;
+    // Set --nurvus-select-list-height to make the list taller or shorter.
+    max-height: var(--nurvus-select-list-height, 22.5rem);
     overflow: auto;
     padding: var(--space--4);
     border: 1px solid var(--nv-border);
-    border-radius: 10px;
+    border-radius: 0.625rem;
     background: var(--nv-surface);
     color: var(--nv-text);
     box-shadow: 0 12px 32px rgb(0 0 0 / 0.24);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-4px) scale(0.98);
+    transform: translateY(-0.25rem) scale(0.98);
     transform-origin: top left;
     transition: opacity $select-speed ease, transform $select-speed ease, visibility 0s $select-speed;
   }
@@ -103,8 +104,8 @@ $select-speed: 0.12s;
   .select-group-label {
     padding: var(--space--4) var(--space--8);
     color: var(--nv-text-muted);
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 0.75rem;
+    line-height: 1rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -115,8 +116,8 @@ $select-speed: 0.12s;
     display: flex;
     align-items: center;
     gap: var(--space--8);
-    padding: 6px 32px 6px var(--space--8); // room on the right for the check
-    border-radius: 6px;
+    padding: 0.375rem 2rem 0.375rem var(--space--8); // room on the right for the check
+    border-radius: 0.375rem;
     cursor: pointer;
     white-space: nowrap;
 
@@ -136,9 +137,9 @@ $select-speed: 0.12s;
         content: '';
         position: absolute;
         top: 50%;
-        right: 12px;
-        width: 5px;
-        height: 10px;
+        right: 0.75rem;
+        width: 0.3125rem;
+        height: 0.625rem;
         border-right: 2px solid var(--nv-accent);
         border-bottom: 2px solid var(--nv-accent);
         transform: translateY(-60%) rotate(45deg);
@@ -157,8 +158,8 @@ $select-speed: 0.12s;
 
   .select-option-description {
     color: var(--nv-text-muted);
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 0.75rem;
+    line-height: 1rem;
     font-weight: 400;
   }
 

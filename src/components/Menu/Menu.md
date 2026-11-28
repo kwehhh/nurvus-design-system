@@ -1,8 +1,15 @@
-**Menu or Tree?** Menu takes people to pages: its rows are links (a `<nav>`), Tab visits each one, and the current page is marked. [Tree](#/Components/Tree) picks an item in a list on the same page, like layers in an editor: one Tab stop, the arrow keys move, and the picked row is selected. Screen readers announce them differently (links in a navigation area versus a tree you choose from), so they are two components with the same look.
+**The items decide what it is**, and screen readers hear it that way:
 
-Sections open and close with the chevron (or the whole heading, when it isn't a link). The current page is marked with a bar beside it, and its section opens by itself.
+| Items | It becomes | Screen readers say | Keys |
+|---|---|---|---|
+| Links (`href`) | Navigation: a `<nav>` landmark | "Pages, navigation… Billing, link, current page" | Tab goes link by link; ↑ ↓ Home End move too; → ← open and close sections |
+| Actions (`onSelect`) | A menu of commands (`role="menu"`) | "Actions, menu… Duplicate, menu item" | One Tab stop; ↑ ↓ Home End move; type a letter to jump; Enter or Space runs it |
+| Rows to pick, `kind="tree"` | A tree (the same as [Tree](#/Components/Tree)) | "Layers, tree… Header, level 1, 1 of 3, selected" | One Tab stop; ↑ ↓ move, → ← go in and out, Enter or Space picks |
 
-By keyboard: Tab goes link by link as usual, and inside the menu ↑ ↓ move between rows (going round at the ends), Home and End jump to the first and last, → opens a section and ← closes it. Enter follows a link; Enter or Space opens and closes a section (its chevron is a button). Links take Enter only, as everywhere on the web: Space scrolls the page.
+Left out, `kind` follows the items: navigation when any item has an `href`, actions when none has. An item without an `href` inside navigation is a button there ("Sign out"). Links take Enter only, as everywhere on the web (Space scrolls the page); buttons, chevrons and tree rows take Enter and Space.
+
+**Navigation.** Sections open and close with the chevron (or the whole heading, when it isn't a link). The current page is marked with a bar beside it, and its section opens by itself.
+
 ```jsx
 import { Menu } from '@nurvus/ui';
 
@@ -40,4 +47,61 @@ import { Menu } from '@nurvus/ui';
     ] }
   />
 </div>
+```
+
+**Actions.** Items with `onSelect` and no `href`: a menu of commands. Tab reaches it once (the item you were last on), then ↑ ↓ move and typing a letter jumps to the next item that starts with it. A disabled item stays in the list, so people still find it, but does nothing.
+```jsx
+import { Menu, Text } from '@nurvus/ui';
+
+const Actions = () => {
+  const [done, setDone] = React.useState('Nothing yet');
+  const run = (what) => () => setDone(what);
+  return (
+    <div style={ { maxWidth: 260 } }>
+      <Menu
+        id="layer-actions"
+        label="Layer actions"
+        sections={ [
+          { title: 'Edit', items: [
+            { label: 'Duplicate', onSelect: run('Duplicated') },
+            { label: 'Rename', onSelect: run('Renamed') },
+            { label: 'Group', onSelect: run('Grouped'), disabled: true },
+          ] },
+          { title: 'Arrange', items: [
+            { label: 'Bring to front', onSelect: run('Brought to front') },
+            { label: 'Send to back', onSelect: run('Sent to back') },
+            { label: 'Delete', onSelect: run('Deleted'), divider: true },
+          ] },
+        ] }
+      />
+      <Text variant="caption" tone="muted">{ done }</Text>
+    </div>
+  );
+};
+<Actions />
+```
+
+**A tree.** `kind="tree"` takes Tree's props: nested `items`, the `activePath` of the picked row, and `onClick(event, path)`.
+```jsx
+import { Menu } from '@nurvus/ui';
+
+const Layers = () => {
+  const [path, setPath] = React.useState([1, 0]);
+  return (
+    <div style={ { maxWidth: 260 } }>
+      <Menu
+        kind="tree"
+        label="Layers"
+        activePath={ path }
+        onClick={ (event, next) => setPath(next) }
+        items={ [
+          { label: 'Header' },
+          { label: 'Hero', items: [{ label: 'Title' }, { label: 'Image' }] },
+          { label: 'Footer' },
+        ] }
+      />
+    </div>
+  );
+};
+<Layers />
 ```

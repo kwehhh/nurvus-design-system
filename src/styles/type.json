@@ -5,36 +5,36 @@
   },
   "roles": {
     "display": {
-      "size": "clamp(30px, 4vw, 44px)",
+      "size": "clamp(1.875rem, 4vw, 2.75rem)",
       "line": "1.08",
       "weight": "600",
       "tracking": "-0.02em",
       "use": "The one big headline on a page."
     },
     "title": {
-      "size": "22px",
-      "line": "28px",
+      "size": "1.375rem",
+      "line": "1.75rem",
       "weight": "600",
       "tracking": "-0.01em",
       "use": "Section headings and panel titles."
     },
     "body": {
-      "size": "16px",
-      "line": "24px",
+      "size": "1rem",
+      "line": "1.5rem",
       "weight": "400",
       "tracking": "0",
       "use": "Running text."
     },
     "caption": {
-      "size": "14px",
-      "line": "20px",
+      "size": "0.875rem",
+      "line": "1.25rem",
       "weight": "400",
       "tracking": "0",
       "use": "Labels, captions, table cells, notes."
     },
     "mono": {
-      "size": "13px",
-      "line": "20px",
+      "size": "0.8125rem",
+      "line": "1.25rem",
       "weight": "400",
       "tracking": "0",
       "use": "Values: hex codes, tokens, numbers, code."

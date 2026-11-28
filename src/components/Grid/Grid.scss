@@ -1,0 +1,37 @@
+// Styles for Grid (React and Respawn: same markup).
+@import "../../styles/variables.scss";
+@import "../../styles/breakpoints.scss";
+
+$grid-steps: 0, 2, 4, 8, 12, 16, 24, 32, 48, 64;
+
+.#{$cls-prefix}.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+
+  // minmax(0, 1fr): equal columns that can shrink below their content, so a
+  // long word or a wide table can't push the grid off the screen.
+  @for $n from 1 through 12 {
+    &[data-columns="#{$n}"] { grid-template-columns: repeat($n, minmax(0, 1fr)); }
+  }
+
+  @each $bp, $width in $nurvus-breakpoints {
+    @media (min-width: $width) {
+      @for $n from 1 through 12 {
+        &[data-columns-#{$bp}="#{$n}"] { grid-template-columns: repeat($n, minmax(0, 1fr)); }
+      }
+    }
+  }
+
+  // As many columns as fit, each at least --nurvus-grid-min (never wider than the grid).
+  &[data-fit="true"] { grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--nurvus-grid-min, 15rem)), 1fr)); }
+
+  @each $n in $grid-steps {
+    &[data-gap="#{$n}"] { gap: var(--space--#{$n}); }
+    &[data-row-gap="#{$n}"] { row-gap: var(--space--#{$n}); }
+  }
+
+  &[data-align="start"] { align-items: start; }
+  &[data-align="center"] { align-items: center; }
+  &[data-align="end"] { align-items: end; }
+  &[data-align="stretch"] { align-items: stretch; }
+}

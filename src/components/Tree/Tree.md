@@ -1,4 +1,4 @@
-**Tree or Menu?** Tree picks an item in a list on the same page (layers, folders, outline). To take people to other pages, use [Menu](#/Components/Menu): its rows are links in a `<nav>`.
+**Tree is a Menu that picks.** `<Tree />` and `<Menu kind="tree" />` are the same thing: rows to choose from on the page (layers, folders, an outline). For links or commands, use [Menu](#/Components/Menu) with links or actions: the same look, and screen readers hear each as what it is.
 
 A list of rows to pick from, nested like a layers panel. Click a row, or use the keyboard: Tab reaches the active row, ↑ ↓ move, → goes to a child row, ← to its parent, Enter or Space picks.
 ```jsx

@@ -82,6 +82,11 @@
     // Theme roles (it had fixed purples, so its title was dark on dark in light themes).
     background-color: var(--nv-bg);
     color: var(--nv-text);
+    overflow: auto;
+
+    // Focus lands on the whole modal when it opens (so screen readers say its
+    // name); a ring around the entire screen would only be noise.
+    &:focus { outline: none; }
 
     .header {
       padding: var(--space--12) var(--space--16);

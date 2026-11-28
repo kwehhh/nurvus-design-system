@@ -4,6 +4,7 @@ import { spawn, Child, ElementProps } from './spawn';
 import { NurvusElement } from './update';
 import Layout from './Layout';
 import Title from './Title';
+import { dialogKeydown, focusDialog, restoreFocus } from '../dialog';
 import '../components/FullPageModal/FullPageModal.scss';
 
 export interface FullPageModalProps extends ElementProps {
@@ -17,10 +18,16 @@ export interface FullPageModalProps extends ElementProps {
   children?: Child;
   /** Appends the modal to this element when it is made, e.g. document.body. */
   mountEl?: Element;
+  /** Called when someone presses Esc. Close the modal in it: modal.update({ visible: false }). */
+  onClose?: () => void;
+  /** Names the modal and its title: the title gets the id "<id>-title", and the modal is labelled by it. */
+  id?: string;
 }
 
 /**
- * Shows content over the whole screen. Returns the modal's outer element
+ * Shows content over the whole screen: a modal dialog, like the React one
+ * (focus moves in when it opens and back when it closes, Tab stays inside,
+ * Esc calls onClose). Returns the modal's outer element
  * (`<div class="portal nurvus">`, the one React puts into `<body>` itself):
  * mount it on document.body, or pass `mountEl: document.body`.
  *
@@ -42,6 +49,7 @@ export default function FullPageModal(props: FullPageModalProps = {}): NurvusEle
   // The React component's two states.
   let isVisible = Boolean(current.visible);
   let animationState = '';
+  let opener: Element | null = null;
 
   const portal = spawn<HTMLDivElement>({ className: `portal ${CONSTANT.CLASS_PREFIX}` }) as NurvusElement<HTMLDivElement, FullPageModalProps>;
   let mask: HTMLElement | null = null;
@@ -80,10 +88,24 @@ export default function FullPageModal(props: FullPageModalProps = {}): NurvusEle
   };
 
   const buildModal = () => {
-    const { children, className, headerActions, title, visible: _visible, mountEl: _mountEl, ...rest } = current;
+    const { children, className, headerActions, title, visible: _visible, mountEl: _mountEl, onClose, id, events, ...rest } = current;
+    const titleId = id && title ? `${id}-title` : undefined;
     const el = spawn({
       className: classNames(className, 'modal', CONSTANT.CLASS_PREFIX),
+      role: 'dialog',
+      'aria-modal': 'true',
+      'aria-labelledby': titleId,
+      'aria-label': !id && typeof title === 'string' ? title : undefined,
+      tabindex: -1,
+      id,
       ...rest,
+      events: {
+        ...(events as object),
+        keydown: (event: KeyboardEvent, node: HTMLElement) => {
+          dialogKeydown(event, node, current.onClose);
+          if (events && (events as any).keydown) (events as any).keydown(event, node);
+        },
+      },
       tag: 'div',
       children: [
         spawn({
@@ -92,7 +114,7 @@ export default function FullPageModal(props: FullPageModalProps = {}): NurvusEle
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            children: [Title({ children: title }), spawn({ className: 'header-actions', children: headerActions })],
+            children: [Title({ id: titleId, children: title }), spawn({ className: 'header-actions', children: headerActions })],
           }),
         }),
         children,
@@ -117,9 +139,14 @@ export default function FullPageModal(props: FullPageModalProps = {}): NurvusEle
     const visible = Boolean(current.visible);
     if (visible !== was) start(visible);
     sync();
+    // Focus in on open; back to the opener on close.
+    if (visible && !was) { opener = document.activeElement; focusDialog(modal); }
+    if (!visible && was) { restoreFocus(opener); opener = null; }
     return portal;
   };
 
   if (mountEl) mountEl.appendChild(portal);
+  // Open from the start: focus goes in once it is on the page.
+  if (current.visible) { opener = document.activeElement; focusDialog(modal); }
   return portal;
 }

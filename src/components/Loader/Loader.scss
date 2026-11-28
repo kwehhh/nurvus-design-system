@@ -1,0 +1,42 @@
+// Styles for Loader.tsx (and the Respawn Loader: same markup). The logo's
+// Pulse: each segment brightens as a light runs round the ring.
+@import "../../styles/variables.scss";
+
+$loader-turn: 1.6s;
+
+.#{$cls-prefix}.loader {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space--8);
+  color: var(--nv-text-muted);
+  vertical-align: middle;
+
+  .loader-mark {
+    display: block;
+    flex: none;
+    overflow: visible;
+  }
+
+  .loader-seg {
+    opacity: 0.35;
+    animation: nurvus-loader-glint $loader-turn ease-in-out infinite;
+    // Each segment lights up when the light reaches its place on the ring.
+    animation-delay: calc(var(--nurvus-loader-at, 0) * #{$loader-turn} - #{$loader-turn});
+  }
+
+  // Shown only to screen readers unless showLabel.
+  &[data-label="hidden"] .loader-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+@keyframes nurvus-loader-glint {
+  0%, 100% { opacity: 0.35; }
+  14% { opacity: 1; }
+  45% { opacity: 0.35; }
+}

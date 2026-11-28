@@ -1,32 +1,33 @@
-Basic Example
-```jsx
-import Layout from '../Layout/Layout.jsx';
+Shows how far along something is. Give it a `label` (what is in progress) and, where the number helps, `showValue`. Screen readers hear "Uploading, progress bar, 40%" and hear it change.
 
-<Layout itemSpacing={ 32 }>
-  <Layout itemSpacing={ 12 } style={ { maxWidth: 90 } }>
-    <Progress size="small" />
-    <Progress size="small" percent={ 50 } />
-    <Progress size="small" percent={ 100 } />
-  </Layout>
-  <Layout itemSpacing={ 12 } style={ { maxWidth: 105 } }>
-    <Progress size="medium" />
-    <Progress size="medium" percent={ 50 } />
-    <Progress size="medium" percent={ 100 } />
-  </Layout>
-  <Layout itemSpacing={ 12 } style={ { maxWidth: 226 } }>
-    <Progress size="large" />
-    <Progress size="large" percent={ 50 } />
-    <Progress size="large" percent={ 100 } />
-  </Layout>
+```jsx
+import { Layout, Progress } from '@nurvus/ui';
+
+<Layout itemSpacing={ 24 } style={ { maxWidth: 360 } }>
+  <Progress label="Uploading photos" percent={ 40 } showValue />
+  <Progress label="Storage used" percent={ 72 } size="large" showValue />
+  <Progress label="Step 2 of 5" percent={ 40 } size="small" />
 </Layout>
 ```
 
-Status Example
+The status colors the bar, and with `showValue` it is also an icon and a word (Done, Needs attention, Failed), so it never rests on color alone. Screen readers hear the word: "100%, Done".
 ```jsx
-import Layout from '../Layout/Layout.jsx';
-  <Layout itemSpacing={ 12 } style={ { maxWidth: 90 } }>
-    <Progress status="critical" percent={ 10 } />
-    <Progress status="warning" percent={ 50 } />
-    <Progress status="success" percent={ 100 } />
-  </Layout>
+import { Layout, Progress } from '@nurvus/ui';
+
+<Layout itemSpacing={ 24 } style={ { maxWidth: 360 } }>
+  <Progress label="Backup" status="success" percent={ 100 } showValue />
+  <Progress label="Disk space" status="warning" percent={ 88 } showValue />
+  <Progress label="Import" status="critical" percent={ 35 } showValue />
+</Layout>
+```
+
+Sizes. Where the words around the bar already say what it is, `hideLabel` keeps the label for screen readers only.
+```jsx
+import { Layout, Progress } from '@nurvus/ui';
+
+<Layout itemSpacing={ 16 } style={ { maxWidth: 240 } }>
+  <Progress size="small" percent={ 50 } label="Small" hideLabel />
+  <Progress size="medium" percent={ 50 } label="Medium" hideLabel />
+  <Progress size="large" percent={ 50 } label="Large" hideLabel />
+</Layout>
 ```
