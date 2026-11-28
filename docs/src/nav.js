@@ -31,6 +31,7 @@ export function navSections(framework = 'react') {
         { name: 'Typography', href: href('Foundations', 'Typography'), hint: 'Inter, the type scale, Text and Title' },
         { name: 'Icons', href: href('Foundations', 'Icons'), hint: 'The NURVUS icon set, sized in em' },
         { name: 'Animated type', href: href('Foundations', 'Animated type'), hint: 'Variable weight, letter by letter, shine, neon' },
+        { name: 'Review', href: href('Review'), hint: 'Choices waiting for a decision: the logo at small sizes, the menu button' },
       ],
     },
     {

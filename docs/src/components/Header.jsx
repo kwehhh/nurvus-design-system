@@ -1,6 +1,7 @@
 import React from 'react';
 import ThemeSwitcher from './ThemeSwitcher';
 import MenuToggle from './MenuToggle';
+import SidebarToggle from './SidebarToggle';
 import Logo, { Wordmark } from './Logo';
 import Search from './Search';
 import { useBrandFx, Burst } from './brandFx';
@@ -42,13 +43,18 @@ function useLatestVersion() {
  * theme menu, GitHub. `navShown`: whether the navigation is showing (the sidebar on a
  * desktop, the drawer on a phone); the button toggles it.
  */
-export default function Header({ onMenu, navShown }) {
+export default function Header({ onMenu, navShown, phone }) {
   const version = useLatestVersion();
   const fx = useBrandFx();
   return (
     <header className="dx-header">
       <div className="dx-header-start">
-        <MenuToggle open={ navShown } onClick={ onMenu } />
+        { /* Round 9: the sidebar icon on a desktop (the sidebar is docked beside the page,
+            as in VS Code, shadcn/ui, Keyframery); the hamburger on a phone (a drawer over
+            the page), sliding into a cross. */ }
+        { phone
+          ? <MenuToggle open={ navShown } morph="slide" onClick={ onMenu } />
+          : <SidebarToggle open={ navShown } onClick={ onMenu } controls="dx-sidebar" /> }
         <a className="dx-brand nv-brand-fx" href="#/" { ...fx }>
           <span className="nv-brand-mark-wrap"><Logo id="dx-brand-logo" motion="assemble" className="dx-brand-mark" /><Burst /></span>
           <Wordmark />

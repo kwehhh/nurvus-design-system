@@ -3,9 +3,9 @@ import React from 'react';
 /**
  * A sidebar toggle in the VS Code / ChatGPT / Linear style: a window with a
  * side pane that fills while the panel shows and slides empty when it's
- * hidden. Kept for later (round 8: the header went back to the hamburger);
- * Foundations > Brand > Review shows it. The static version is the
- * `panel-left` icon in @nurvus/ui.
+ * hidden. The header's button on a desktop (round 9); phones get the
+ * hamburger (MenuToggle). The static version is the `panel-left` icon in
+ * @nurvus/ui.
  */
 export default function SidebarToggle({ open, onClick, controls, label = 'navigation' }) {
   return (

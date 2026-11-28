@@ -47,9 +47,12 @@ const SPECKS = ['n', 'q', 'r']; // the three smallest segments: about 2 x 3 pixe
  *    whole mark);
  *  - simple: leave out the three specks;
  *  - weight: a stroke of each segment's own color, in artwork units (540 across);
+ *    innerWeight: the same for the inner ring only (a thicker inside);
  *  - tile: on a dark navy rounded square, like an app icon.
  */
-export default function LogoVariant({ id, size = 28, tone = 'original', simple = false, weight = 0, tile = false, title }) {
+export default function LogoVariant({ id, size = 28, tone = 'original', simple = false, weight = 0, innerWeight, tile = false, title }) {
+  const inner = new Set(INNER.map(([k]) => k));
+  const widthOf = (k) => (inner.has(k) && innerWeight !== undefined ? innerWeight : weight);
   const g = (k) => `url(#${id}-${tone === 'mono' ? 'mono' : k})`;
   const keep = ([k]) => !(simple && SPECKS.includes(k));
   const stops = (from, to) => {
@@ -77,7 +80,7 @@ export default function LogoVariant({ id, size = 28, tone = 'original', simple =
         </linearGradient>
       </defs>
       { [...INNER, ...OUTER].filter(keep).map(([k, d]) => (
-        <path key={ k } d={ d } fill={ g(k) } stroke={ weight ? g(k) : undefined } strokeWidth={ weight || undefined } strokeLinejoin="round" />
+        <path key={ k } d={ d } fill={ g(k) } stroke={ widthOf(k) ? g(k) : undefined } strokeWidth={ widthOf(k) || undefined } strokeLinejoin="round" />
       )) }
     </>
   );

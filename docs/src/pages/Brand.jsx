@@ -148,6 +148,11 @@ export default function Brand() {
         <FxCard kind="click" />
       </div>
 
+      <p className="gd-note">
+        Options for the logo at small sizes and on white (deeper colors, a small-size cut, a thicker inside, a tile)
+        are drawn side by side on <a href="#/Review">Review</a>.
+      </p>
+
       <h2 className="gd-h2">Using it</h2>
       <ul className="gd-list">
         <li><strong>Room around it:</strong> keep clear space at least the height of the wordmark's N on every side.</li>

@@ -34,6 +34,15 @@ const TEXT_CONTRAST = 'Its text colors are theme roles the build checks: 4.5:1 o
  * `note` (when the component has no criteria of its own).
  */
 export const COMPONENT_A11Y = {
+  Anchor: {
+    meets: {
+      '1.3.1': 'A navigation landmark ("On this page", named by its heading) holding a list of links.',
+      '2.1.1': 'Native links: Tab reaches each, Enter scrolls to the section and moves focus to it.',
+      '2.4.7': 'A 2px accent ring on keyboard focus.',
+      '2.4.8': 'The section being read is marked (aria-current="location"), and the highlight follows the scrolling.',
+      '4.1.2': 'Each row is a link named by its label; the full label is its tooltip when it ends in "…".',
+    },
+  },
   Button: {
     meets: {
       '1.4.3': TEXT_CONTRAST,
@@ -45,6 +54,16 @@ export const COMPONENT_A11Y = {
   },
   ButtonGroup: {
     note: 'A row of Buttons. It adds no criteria of its own; each Button brings its own.',
+  },
+  Dropdown: {
+    meets: {
+      '1.4.3': TEXT_CONTRAST,
+      '2.1.1': 'The WAI-ARIA menu button keys: Enter, Space or ↓ open it on the first action, ↑ on the last; ↑ ↓ Home End and letters move; Enter runs one; Esc closes.',
+      '2.4.3': 'Opening moves focus into the menu; choosing an action or Esc puts it back on the button.',
+      '2.4.7': 'A 2px accent ring on the button and on the action the keys are on.',
+      '2.5.8': 'The button and every action are at least 24 pixels tall.',
+      '4.1.2': 'A button that says it has a menu (aria-haspopup) and whether it is open (aria-expanded); the menu is named by the button; a disabled action says so.',
+    },
   },
   FullPageModal: {
     meets: {
@@ -100,7 +119,7 @@ export const COMPONENT_A11Y = {
       '1.3.1': 'What it is, from its items: links make a <nav> landmark of lists (each chevron tied to its list), actions a menu with groups named by their headings, a tree a WAI-ARIA tree.',
       '1.4.1': 'The current page is marked by a bar and bolder text, not by color alone.',
       '1.4.3': TEXT_CONTRAST,
-      '2.1.1': '↑ ↓ Home End move between items in every kind. Links: Tab goes link by link, → and ← open and close sections. Actions: one Tab stop, type a letter to jump, Enter or Space runs it.',
+      '2.1.1': '↑ ↓ Home End move between items in every kind. Links: Tab goes link by link, → and ← open and close sections; a chevron opens and closes with Enter or Space. Actions: one Tab stop, type a letter to jump, Enter or Space runs it.',
       '2.3.3': 'Sections open and close without animation when the system asks for less motion.',
       '2.4.7': 'A 2px accent ring on keyboard focus.',
       '2.4.8': 'The current page is marked, with aria-current="page": readers always know where they are.',

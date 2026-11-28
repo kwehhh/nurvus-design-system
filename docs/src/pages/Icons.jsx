@@ -18,7 +18,7 @@ const GROUPS = [
   ['Status', ['check', 'info', 'warning', 'error', 'help']],
   ['People and time', ['user', 'users', 'mail', 'bell', 'calendar', 'clock', 'globe', 'map-pin']],
   ['Things', ['file', 'folder', 'image', 'layers', 'grid', 'list', 'tag', 'bookmark', 'star', 'heart', 'eye', 'eye-off', 'lock', 'unlock', 'link']],
-  ['Theme and code', ['sun', 'moon', 'palette', 'sparkles', 'zap', 'code', 'terminal']],
+  ['Theme and code', ['sun', 'moon', 'contrast', 'palette', 'sparkles', 'zap', 'code', 'terminal']],
 ];
 
 const USE = `import { Icon } from '@nurvus/ui';

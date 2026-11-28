@@ -119,6 +119,39 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
   span:nth-child(3) { width: 9px; transform: translate(4px, -6px) rotate(45deg); }
 }
 
+// Slide (Jonathan Suh's "Slider"; the phone's): the outer bars turn into a
+// cross while the middle one slides out to the left and fades.
+[data-shape="slide"] .dx-menu-bars {
+  span { transform-origin: center; }
+  span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  span:nth-child(2) { opacity: 0; transform: translateX(-10px); transition-duration: 0.15s; }
+  span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+}
+
+// Squeeze: the outer bars close in on the middle first, then turn into a
+// cross (and the reverse on the way back): two beats.
+.dx-menu-bars[data-morph="squeeze"] span {
+  transform-origin: center;
+  transition: translate 0.12s ease 0.12s, rotate 0.12s ease, opacity 0.1s ease 0.1s;
+}
+
+[data-shape="squeeze"] .dx-menu-bars {
+  span { transition: translate 0.12s ease, rotate 0.12s ease 0.12s, opacity 0.1s ease; }
+  span:nth-child(1) { translate: 0 6px; rotate: 45deg; }
+  span:nth-child(2) { opacity: 0; }
+  span:nth-child(3) { translate: 0 -6px; rotate: -45deg; }
+}
+
+// Elastic: the cross, with a spring that overshoots and settles.
+.dx-menu-bars[data-morph="elastic"] span { transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.2s ease; }
+
+[data-shape="elastic"] .dx-menu-bars {
+  span { transform-origin: center; }
+  span:nth-child(1) { transform: translateY(6px) rotate(135deg); }
+  span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  span:nth-child(3) { transform: translateY(-6px) rotate(-135deg); }
+}
+
 // Collapse (—): the outer bars slide into the middle one.
 [data-shape="merge"] .dx-menu-bars {
   span:nth-child(1) { transform: translateY(6px); }
@@ -297,6 +330,32 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 
 .dx-page { max-width: 1100px; }
 
+// "On this page" (PageAnchor.jsx, round 9): a column beside the page on wide
+// screens, sticky under the header. Narrower than that, the page has the room.
+.dx-main-grid { display: block; }
+.dx-page-anchor { display: none; }
+
+@media (min-width: 1280px) {
+  .dx-main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 13rem;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .dx-page-anchor {
+    display: block;
+    position: sticky;
+    top: 84px;
+    max-height: calc(100vh - 104px);
+    overflow: auto;
+  }
+}
+
+// Section headings stop below the sticky header when the anchor scrolls to them.
+.dx-main h2[id],
+.dx-main h3[id] { scroll-margin-top: 76px; }
+
 // React | Respawn: a small segmented switch above a component's title.
 .dx-switch {
   display: inline-flex;
@@ -349,6 +408,16 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 
 .dx-scrim { display: none; }
 
+// Text for screen readers only (e.g. the theme's name in the icon button).
+.dx-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 // Phone: the sidebar becomes a drawer behind the header menu button.
 // Below this the version gives its room to the search.
 @media (max-width: 1040px) {
@@ -382,20 +451,27 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
   .dx-sidebar { transition: none; }
 }
 
-// The header's theme picker (ThemeSwitcher.jsx): @nurvus/ui's Select, with a
-// swatch beside each theme. Only the swatch and the sizes are the docs' own.
-.nv-theme-select {
+// The header's theme picker (ThemeSwitcher.jsx): @nurvus/ui's Select drawn as
+// one icon button (round 9, like shadcn/ui's), the list with a swatch beside
+// each theme. Only the icon button, the swatch and the sizes are the docs' own.
+// (Doubled up so it outranks the package's .nurvus.select rules.)
+.nurvus.select.nv-theme-select {
   .select-trigger {
+    justify-content: center;
+    width: 32px;
     height: 32px;
     min-height: 32px;
-    padding-left: 6px;
-    border-color: var(--nv-border);
+    padding: 0;
+    border: 0;
     border-radius: 10px;
-    background: color-mix(in srgb, var(--nv-text) 6%, transparent);
-    font-weight: 500;
+    background: transparent;
+    color: var(--nv-text);
 
-    &:hover { background: color-mix(in srgb, var(--nv-text) 10%, transparent); border-color: var(--nv-border-strong); }
+    &:hover { background: color-mix(in srgb, var(--nv-text) 8%, transparent); color: var(--nv-accent); }
   }
+
+  .select-value { display: inline-flex; flex: none; }
+  .select-chevron { display: none; }
 
   // Tall enough for all seven themes; on a short window, as tall as fits under the header.
   .select-list { --nurvus-select-list-height: min(560px, calc(100dvh - 72px)); min-width: 270px; background: var(--nv-bg); }
@@ -479,6 +555,11 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
   color: var(--nv-text);
   overflow-x: auto;
 }
+
+// A Select or Dropdown open in an example: its list may hang below the preview
+// (overflow-x: auto would clip it, as it makes the other axis scroll too).
+.dx-example-preview:has(.nurvus[data-open="true"]) { overflow: visible; }
+.dx-example:has(.dx-example-preview .nurvus[data-open="true"]) { position: relative; z-index: 5; overflow: visible; }
 
 .dx-example-bar {
   display: flex;
@@ -713,14 +794,14 @@ html[data-mode="light"] .nv-wordmark-sheen {
   pointer-events: none;
 }
 
-// Two thin rings that spread from the mark: crisp lines (1.5px whatever their
-// size: they grow by their inset, not by scaling), a small glow, and an
+// Two rings that spread from the mark: crisp lines (2.25px whatever their
+// size: they grow by their inset, not by scaling; at most 80% opaque), a small glow, and an
 // ease-out that starts fast and glides, the second one a beat behind and a
 // little wider so they move like a ripple on water.
 .nv-burst span {
   position: absolute;
   inset: 10%;
-  border: 1.5px solid var(--nv-accent);
+  border: 2.25px solid var(--nv-accent);
   border-radius: 50%;
   box-shadow: 0 0 6px color-mix(in srgb, var(--nv-accent) 45%, transparent);
   opacity: 0;
@@ -736,15 +817,15 @@ html[data-mode="light"] .nv-wordmark-sheen {
 
 @keyframes nv-shock {
   0% { opacity: 0; inset: 10%; }
-  8% { opacity: 1; }
-  60% { opacity: 0.45; }
+  8% { opacity: 0.8; }
+  60% { opacity: 0.36; }
   100% { opacity: 0; inset: -70%; }
 }
 
 @keyframes nv-shock-2 {
   0% { opacity: 0; inset: 10%; }
-  10% { opacity: 0.9; }
-  60% { opacity: 0.35; }
+  10% { opacity: 0.72; }
+  60% { opacity: 0.28; }
   100% { opacity: 0; inset: -95%; }
 }
 

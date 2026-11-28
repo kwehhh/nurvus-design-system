@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, themes, setTheme, currentTheme, initTheme } from '@nurvus/ui';
+import { Icon, Select, themes, setTheme, currentTheme, initTheme } from '@nurvus/ui';
 
 /** A theme's mark: its background, edged and dotted with its accent fill. */
 function ThemeSwatch({ theme }) {
@@ -50,10 +50,13 @@ export default function ThemeSwitcher() {
       value={ id }
       options={ OPTIONS }
       onChange={ (next) => setTheme(next) }
+      title={ `Theme: ${byId(id).name}` }
+      // One small icon (round 9, as on shadcn/ui): the theme's name is in the
+      // button for screen readers ("Theme, combobox, Apollo White") and the tooltip.
       renderValue={ (option) => (
         <>
-          <ThemeSwatch theme={ byId(option && option.value) } />
-          <span>{ option ? option.label : '' }</span>
+          <Icon name="contrast" size="1.125em" />
+          <span className="dx-sr-only">{ option ? option.label : '' }</span>
         </>
       ) }
       renderOption={ (option) => (

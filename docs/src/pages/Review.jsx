@@ -7,13 +7,15 @@ import { Wordmark } from '../components/Logo';
 import './Guides.scss';
 import './Review.scss';
 
-// Choices to review (round 8, 2026-11-28). Not in the sidebar: #/Review.
+// Choices to review (rounds 8-9, 2026-11-28): Foundations > Review, #/Review.
 
 const LOGOS = [
   { id: 'today', name: 'Today', about: 'The logo as drawn. On white, the top-right arc starts almost white (1.05:1) and the mint ends are under 2:1; on dark, the two navy pieces vanish; at 28px three pieces are specks.', light: {}, dark: {} },
   { id: 'deep', name: 'Deeper colors', about: 'Same shapes. Every gradient end is at least 3:1 against the background: darker on white, the navy pieces lifted on dark. Hue kept.', light: { tone: 'light' }, dark: { tone: 'dark' } },
   { id: 'small', name: 'Small-size cut', about: 'Same colors. The three specks left out, and every piece a little bolder (a thin outline in its own color), as icon sets do for small sizes.', light: { simple: true, weight: 20 }, dark: { simple: true, weight: 20 } },
   { id: 'both', name: 'Deeper + small-size cut', about: 'Both: the colors hold up on white and on dark, and the shape reads at 16 to 32 pixels. Big sizes keep the full drawing.', light: { tone: 'light', simple: true, weight: 20 }, dark: { tone: 'dark', simple: true, weight: 20 }, pick: true },
+  { id: 'inner', name: 'Thicker inside', about: 'Deeper colors and the small-size cut, with the inner ring much bolder than the outer: the ring reads as one solid band at 16 to 28 pixels.', light: { tone: 'light', simple: true, weight: 16, innerWeight: 44 }, dark: { tone: 'dark', simple: true, weight: 16, innerWeight: 44 } },
+  { id: 'inner-today', name: 'Thicker inside, today\'s colors', about: 'Only the inner ring bolder; the colors and every piece as drawn.', light: { innerWeight: 40 }, dark: { innerWeight: 40 } },
   { id: 'tile', name: 'On a tile', about: 'The logo exactly as drawn, on a dark navy rounded square (like an app icon or the favicon). Same look on every background.', light: { tile: true }, dark: { tile: true } },
   { id: 'mono', name: 'One gradient', about: 'At small sizes, one blue-to-violet gradient over the whole mark instead of 18: calm and crisp, like a monogram.', light: { tone: 'mono', simple: true, weight: 16 }, dark: { tone: 'mono', simple: true, weight: 16 } },
 ];
@@ -28,7 +30,7 @@ function MorphDemo({ morph }) {
         <MenuToggle open={ open } morph={ morph.id } onClick={ () => setOpen(!open) } controls="rv-none" />
       </div>
       <figcaption>
-        <strong>{ morph.name }</strong>{ morph.id === 'cross' && <Tag tone="accent">In the header now</Tag> }
+        <strong>{ morph.name }</strong>{ morph.id === 'slide' && <Tag tone="accent">Phones now</Tag> }
         <span>{ morph.about }</span>
       </figcaption>
     </figure>
@@ -44,12 +46,15 @@ export default function Review() {
       <p className="dx-lede">Choices for round 8, live. Click the buttons; switch the theme at the top right to see the header column change.</p>
 
       <h2 className="gd-h2">The menu button</h2>
-      <p className="gd-p">Three bars that change shape while the navigation is open. Click each one to open and close it.</p>
+      <p className="gd-p">
+        The header uses the sidebar icon on a desktop (the sidebar sits beside the page) and the hamburger on a phone
+        (the menu covers the page), sliding into a cross. Click each one to open and close it.
+      </p>
       <div className="rv-morphs">
         { MENU_MORPHS.map((m) => <MorphDemo key={ m.id } morph={ m } />) }
         <figure className="rv-card">
           <div className="rv-stage"><SidebarToggle open={ sideOpen } onClick={ () => setSideOpen(!sideOpen) } controls="rv-none" /></div>
-          <figcaption><strong>Sidebar toggle</strong><Tag>Kept for later</Tag><span>The window-with-a-pane icon, its pane filling while the panel shows. Saved as SidebarToggle (and the panel-left icon).</span></figcaption>
+          <figcaption><strong>Sidebar toggle</strong><Tag tone="accent">Desktop now</Tag><span>The window-with-a-pane icon, its pane filling while the panel shows (SidebarToggle; the static one is the panel-left icon). VS Code, shadcn/ui and Keyframery use it for a docked sidebar.</span></figcaption>
         </figure>
       </div>
 

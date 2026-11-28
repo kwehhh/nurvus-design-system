@@ -4,6 +4,7 @@ import { components } from 'virtual:nurvus-docs';
 import { useRoute, href } from './router';
 import { useFramework, setFramework } from './framework';
 import Header from './components/Header';
+import PageAnchor from './components/PageAnchor';
 import Sidebar from './components/Sidebar';
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
@@ -44,7 +45,7 @@ function resolve(route) {
   if (section === 'Foundations' && name === 'Brand' && !kind) return { page: <Brand />, title: name, current: href('Foundations', name) };
   if (section === 'Foundations' && name === 'Animated type' && !kind) return { page: <AnimatedType />, title: name, current: href('Foundations', name) };
   // Choices for the owner to review (round 8); not in the sidebar.
-  if (section === 'Review' && !name) return { page: <Review />, title: 'Review', current: null };
+  if (section === 'Review' && !name) return { page: <Review />, title: 'Review', current: href('Review') };
   if (section === 'Guides' && name === 'React' && !kind) return { page: <ReactGuide />, title: 'React', current: href('Guides', 'React') };
   if (section === 'Guides' && name === 'Supported libraries' && !kind) return { page: <SupportedLibraries />, title: name, current: href('Guides', name) };
   // Respawn: the guide, then one page per component. #/Guides/Respawn was its first address.
@@ -121,7 +122,12 @@ export default function App() {
       <div className="dx-layout" data-nav={ collapsed ? 'collapsed' : 'shown' }>
         <Sidebar current={ current } framework={ framework } open={ menuOpen } onNavigate={ () => setMenuOpen(false) } />
         <div className="dx-scrim" data-open={ menuOpen } onClick={ () => setMenuOpen(false) } />
-        <main className="dx-main">{ page }</main>
+        <main className="dx-main">
+          <div className="dx-main-grid">
+            { page }
+            <PageAnchor route={ title } />
+          </div>
+        </main>
       </div>
     </>
   );

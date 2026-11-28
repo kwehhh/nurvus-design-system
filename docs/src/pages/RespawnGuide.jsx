@@ -238,6 +238,44 @@ app.append(Stack({
 }));`,
   },
   {
+    name: 'Anchor',
+    about: '"On this page": the rail bends with the levels and its highlight follows the section in view. Here it is set from code with current.',
+    code: `import { Anchor, Button } from '@nurvus/ui/respawn';
+
+const items = [
+  { href: '#install', label: 'Install' },
+  { href: '#usage', label: 'Usage' },
+  { href: '#anatomy', label: 'Anatomy', level: 2 },
+  { href: '#api', label: 'API' },
+];
+let at = 0;
+let toc = Anchor({ id: 'respawn-toc', items, current: items[at].href });
+
+app.append(toc, Button({
+  type: 'secondary',
+  size: 'small',
+  children: 'Next section',
+  onClick: () => { at = (at + 1) % items.length; toc = toc.update({ current: items[at].href }); },
+}));`,
+  },
+  {
+    name: 'Dropdown',
+    about: 'A button that opens a menu of actions. Opening and closing change it in place; choosing runs the action and puts focus back on the button.',
+    code: `import { Dropdown, Text } from '@nurvus/ui/respawn';
+
+const note = Text({ tone: 'muted', children: 'Nothing yet' });
+
+app.append(Dropdown({
+  id: 'respawn-dropdown',
+  label: 'Actions',
+  items: [
+    { label: 'Duplicate', onSelect: () => { note.textContent = 'Duplicated'; } },
+    { label: 'Rename', onSelect: () => { note.textContent = 'Renamed'; } },
+    { label: 'Delete', onSelect: () => { note.textContent = 'Deleted'; } },
+  ],
+}), note);`,
+  },
+  {
     name: 'Menu',
     about: 'Links make navigation (shown here: sections that open and close, the current page marked); onSelect items make a menu of actions; kind: "tree" makes a Tree. The arrow keys move between items.',
     code: `import { Menu, Text } from '@nurvus/ui/respawn';
@@ -398,9 +436,11 @@ app.append(tree, status);`,
 
 export const RETURNS = {
   Button: '<button>', ButtonGroup: '<div>', FullPageModal: '<div class="portal">', HistoryList: '<ol>', Icon: '<svg>', Layout: '<div>', Link: '<a>',
-  Menu: '<nav> (links) or <div role="menu"> (actions)', Loader: '<div role="status">', Grid: '<div>', Stack: '<div>', Panel: '<section>', Progress: '<div>', Select: '<div>', Table: '<table>', Tag: '<span>', Text: '<span> (or as)', Title: '<h1> to <h6>', Tree: '<div>',
+  Menu: '<nav> (links) or <div role="menu"> (actions)', Loader: '<div role="status">', Anchor: '<nav>', Dropdown: '<div>', Grid: '<div>', Stack: '<div>', Panel: '<section>', Progress: '<div>', Select: '<div>', Table: '<table>', Tag: '<span>', Text: '<span> (or as)', Title: '<h1> to <h6>', Tree: '<div>',
 };
 export const NOTES = {
+  Anchor: 'Follows the scrolling in place (the element stays the same); update({ current }) sets the section from code.',
+  Dropdown: 'Opening, closing and choosing change it in place; choosing calls the action\'s onSelect.',
   FullPageModal: 'Mount it on document.body. update({ visible }) animates it in or out and keeps the same element.',
   HistoryList: 'A click calls onJump(step). Move the current step with update({ index }).',
   Icon: 'update({ name }) draws another icon in its place.',
