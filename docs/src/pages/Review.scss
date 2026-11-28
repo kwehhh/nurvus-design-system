@@ -1,9 +1,12 @@
 // The Review page (Review.jsx): choices drawn live.
-.rv-morphs {
+.rv-morphs,
+.rv-buttons {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space--16);
 }
+
+.rv-buttons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
 .rv-card {
   margin: 0;
@@ -34,23 +37,7 @@
   height: 120px;
   background: var(--nv-bg-alt);
 
-  .dx-menu-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    padding: 0;
-    border: 0;
-    border-radius: 12px;
-    background: transparent;
-    color: var(--nv-text);
-    cursor: pointer;
-    transform: scale(1.6);
-
-    &:hover { background: color-mix(in srgb, var(--nv-text) 8%, transparent); }
-    &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 2px; }
-  }
+  .nav-toggle { transform: scale(1.6); }
 }
 
 .rv-logos {

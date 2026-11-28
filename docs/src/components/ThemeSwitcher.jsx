@@ -1,5 +1,26 @@
 import React from 'react';
-import { Icon, Select, themes, setTheme, currentTheme, initTheme } from '@nurvus/ui';
+import { Select, themes, setTheme, currentTheme, initTheme } from '@nurvus/ui';
+
+/**
+ * The theme button's icon (round 10: a touch of NURVUS on shadcn/ui's
+ * half-filled circle): the filled half is the theme's own accent-to-info
+ * gradient, and it turns half a circle whenever the theme changes, like a
+ * moon phase (keyed on the theme, so it replays). 20px, like every header icon.
+ */
+function ThemeMark({ theme }) {
+  return (
+    <svg key={ theme } className="dx-theme-mark" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="dx-theme-half" gradientUnits="userSpaceOnUse" x1="12" y1="3" x2="12" y2="21">
+          <stop style={ { stopColor: 'var(--nv-accent)' } } />
+          <stop offset="1" style={ { stopColor: 'var(--nv-info)' } } />
+        </linearGradient>
+      </defs>
+      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" />
+      <path className="dx-theme-half" d="M12 3a9 9 0 0 1 0 18z" fill="url(#dx-theme-half)" />
+    </svg>
+  );
+}
 
 /** A theme's mark: its background, edged and dotted with its accent fill. */
 function ThemeSwatch({ theme }) {
@@ -55,7 +76,7 @@ export default function ThemeSwitcher() {
       // button for screen readers ("Theme, combobox, Apollo White") and the tooltip.
       renderValue={ (option) => (
         <>
-          <Icon name="contrast" size="1.125em" />
+          <ThemeMark theme={ option ? option.value : '' } />
           <span className="dx-sr-only">{ option ? option.label : '' }</span>
         </>
       ) }

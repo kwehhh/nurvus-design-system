@@ -17,7 +17,7 @@ const GROUPS = [
   ['Actions', ['add', 'remove', 'edit', 'copy', 'delete', 'download', 'upload', 'search', 'filter', 'sliders', 'settings', 'refresh', 'undo', 'redo', 'share', 'play', 'pause', 'sign-out']],
   ['Status', ['check', 'info', 'warning', 'error', 'help']],
   ['People and time', ['user', 'users', 'mail', 'bell', 'calendar', 'clock', 'globe', 'map-pin']],
-  ['Things', ['file', 'folder', 'image', 'layers', 'grid', 'list', 'tag', 'bookmark', 'star', 'heart', 'eye', 'eye-off', 'lock', 'unlock', 'link']],
+  ['Things', ['file', 'folder', 'image', 'layers', 'grid', 'list', 'align-left', 'tag', 'bookmark', 'star', 'heart', 'eye', 'eye-off', 'lock', 'unlock', 'link']],
   ['Theme and code', ['sun', 'moon', 'contrast', 'palette', 'sparkles', 'zap', 'code', 'terminal']],
 ];
 
@@ -88,6 +88,22 @@ export default function Icons() {
       <p className="gd-p">
         An icon on its own (in a button with no words) reads better a little bigger: <code>size=&quot;1.25em&quot;</code>.
         Give it a <code>label</code> then, so screen readers can say what it does.
+      </p>
+
+      <h2 className="gd-h2">Sizes</h2>
+      <p className="gd-p">Four sizes, so icons side by side always match:</p>
+      <table className="gd-scale ic-sizes">
+        <thead><tr><th>Size</th><th>Where</th><th aria-label="Example" /></tr></thead>
+        <tbody>
+          <tr><td className="gd-value">1em</td><td className="gd-use">Beside words (the default): the icon follows the text, and grows when people enlarge it.</td><td><span className="ic-body"><Icon name="check" /> Saved</span></td></tr>
+          <tr><td className="gd-value">16px</td><td className="gd-use">Dense spots: table rows, tags, small buttons.</td><td><Icon name="settings" size={ 16 } /></td></tr>
+          <tr><td className="gd-value">20px</td><td className="gd-use">Icon buttons and the header: a 20px icon in a 32 by 32 button. The sidebar button, the theme button and GitHub are all 20.</td><td><Icon name="panel-left" size={ 20 } /> <Icon name="contrast" size={ 20 } /></td></tr>
+          <tr><td className="gd-value">24px</td><td className="gd-use">Standing alone, larger: empty states, feature lists.</td><td><Icon name="layers" size={ 24 } /></td></tr>
+        </tbody>
+      </table>
+      <p className="gd-note">
+        Other people&apos;s marks (the GitHub logo) are drawn inside the same 20-unit live area as ours (the 24-unit grid
+        less its 2-unit margin), so a 20px GitHub mark looks as big as a 20px icon beside it, not bigger.
       </p>
 
       <h2 className="gd-h2">The grid</h2>

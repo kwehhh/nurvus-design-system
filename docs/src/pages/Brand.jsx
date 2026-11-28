@@ -11,6 +11,7 @@ const FILES = [
   { file: 'nurvus-logo.svg', what: 'The logo: the mark with the wordmark in light lettering (#F4F5F8), for dark backgrounds.' },
   { file: 'nurvus-logo-dark.svg', what: 'The same, with the wordmark in dark navy (#0B1326), for light backgrounds.' },
   { file: 'favicon.svg', what: 'The mark alone, cropped square: app icons, favicons, avatars.' },
+  { file: 'nurvus-mark-mono.svg', what: 'The alt mark for small sizes: one gradient, no specks, a touch bolder (the header\'s).' },
   { file: 'nurvus-wordmark.svg', what: 'The wordmark alone, light lettering.' },
   { file: 'nurvus-wordmark-dark.svg', what: 'The wordmark alone, dark navy lettering.' },
 ];
@@ -90,6 +91,8 @@ function FxCard({ kind }) {
   );
 }
 
+const SIZES = [16, 24, 32, 48, 64, 96];
+
 /** The NURVUS logo: the files, the wordmark's letters, how it moves, and how to use it. */
 export default function Brand() {
   return (
@@ -118,6 +121,30 @@ export default function Brand() {
           </li>
         )) }
       </ul>
+
+      <h2 className="gd-h2">The logo at every size</h2>
+      <p className="gd-p">
+        The full drawing has 18 pieces and fine gradients: beautiful from about 48 pixels, busy below. Under that, use
+        the <strong>alt mark</strong>: one blue-to-violet gradient over the whole ring, the three smallest pieces left
+        out, every piece a touch bolder. The header&apos;s mark is the alt one at <strong>28 pixels</strong>.
+      </p>
+      <div className="br-sizes" role="table" aria-label="The logo at every size">
+        <div className="br-sizes-row br-sizes-head" role="row">
+          <span role="columnheader">Mark</span>
+          { SIZES.map((s) => <span key={ s } role="columnheader">{ s }px</span>) }
+        </div>
+        { [['full', 'Full drawing', '#ffffff'], ['full', 'Full drawing', '#0b1326'], ['mono', 'Alt mark', '#ffffff'], ['mono', 'Alt mark', '#0b1326']].map(([tone, name, bg], r) => (
+          <div key={ r } className="br-sizes-row" role="row" style={ { background: bg, color: bg === '#ffffff' ? '#0b1326' : '#f4f5f8' } }>
+            <span role="rowheader">{ name }<small>{ bg === '#ffffff' ? 'on white' : 'on dark' }</small></span>
+            { SIZES.map((s) => (
+              <span key={ s } role="cell" data-use={ (tone === 'mono') === (s <= 32) ? 'yes' : 'no' }>
+                <span className="br-size-box" style={ { width: s, height: s } }><Logo id={ `br-size-${r}-${s}` } tone={ tone } className="br-size-mark" /></span>
+              </span>
+            )) }
+          </div>
+        )) }
+      </div>
+      <p className="gd-note">“Use” marks the one for each size: the alt mark up to 32 pixels, the full drawing from 48.</p>
 
       <h2 className="gd-h2">The wordmark</h2>
       <div className="br-panel br-panel-dark br-wordmark-panel">

@@ -102,6 +102,32 @@ export default function App() {
       return !was;
     });
   };
+  // ⌘B (Ctrl+B elsewhere) shows and hides the sidebar, as in VS Code; not
+  // while typing (where it means bold). Esc closes the phone drawer. When the
+  // navigation closes with focus inside it, focus goes back to the button.
+  const toggleRef = React.useRef(toggleNav);
+  toggleRef.current = toggleNav;
+  React.useEffect(() => {
+    const mac = /mac|iphone|ipad/i.test(navigator.platform || navigator.userAgent);
+    const onKey = (event) => {
+      const t = event.target;
+      const typing = t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName));
+      if ((mac ? event.metaKey : event.ctrlKey) && !event.shiftKey && !event.altKey && event.key.toLowerCase() === 'b' && !typing) {
+        event.preventDefault();
+        toggleRef.current();
+      }
+      if (event.key === 'Escape' && phone && menuOpen) { setMenuOpen(false); const b = document.querySelector('.dx-header .nav-toggle'); if (b) b.focus(); }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [phone, menuOpen]);
+  const navShown = phone ? menuOpen : !collapsed;
+  React.useEffect(() => {
+    const side = document.getElementById('dx-sidebar');
+    if (!side) return;
+    if (!navShown && side.contains(document.activeElement)) { const b = document.querySelector('.dx-header .nav-toggle'); if (b) b.focus(); }
+    side.inert = !navShown; // out of the tab order and away from screen readers while hidden
+  }, [navShown]);
   const { page, isolated, title, current, framework: pageFramework } = resolve(route);
   // A component page in one framework makes it the reader's choice; the sidebar follows.
   const chosen = useFramework();
@@ -118,7 +144,7 @@ export default function App() {
 
   return (
     <>
-      <Header navShown={ phone ? menuOpen : !collapsed } phone={ phone } onMenu={ toggleNav } />
+      <Header navShown={ navShown } phone={ phone } onMenu={ toggleNav } />
       <div className="dx-layout" data-nav={ collapsed ? 'collapsed' : 'shown' }>
         <Sidebar current={ current } framework={ framework } open={ menuOpen } onNavigate={ () => setMenuOpen(false) } />
         <div className="dx-scrim" data-open={ menuOpen } onClick={ () => setMenuOpen(false) } />

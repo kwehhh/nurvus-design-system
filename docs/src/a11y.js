@@ -12,6 +12,7 @@ export const CRITERIA = {
   '1.4.1': { name: 'Use of Color', level: 'A', slug: 'use-of-color' },
   '1.4.3': { name: 'Contrast (Minimum)', level: 'AA', slug: 'contrast-minimum' },
   '1.4.11': { name: 'Non-text Contrast', level: 'AA', slug: 'non-text-contrast' },
+  '1.4.13': { name: 'Content on Hover or Focus', level: 'AA', slug: 'content-on-hover-or-focus' },
   '1.4.4': { name: 'Resize Text', level: 'AA', slug: 'resize-text' },
   '2.1.1': { name: 'Keyboard', level: 'A', slug: 'keyboard' },
   '2.1.2': { name: 'No Keyboard Trap', level: 'A', slug: 'no-keyboard-trap' },
@@ -96,6 +97,13 @@ export const COMPONENT_A11Y = {
     },
     note: 'Columns only: what you put in them decides the rest. Keep the reading order in the code the order people see (CSS grid can show it differently).',
   },
+  Kbd: {
+    meets: {
+      '1.3.1': 'Real <kbd> elements, one for the shortcut and one per key, so it is marked as keyboard input.',
+      '1.4.3': TEXT_CONTRAST,
+    },
+    note: 'Showing a shortcut helps people find it; also put aria-keyshortcuts on the control, so assistive technology can announce it.',
+  },
   Layout: {
     note: 'Spacing and alignment only. It adds no criteria of its own; what you put in it decides.',
   },
@@ -125,6 +133,16 @@ export const COMPONENT_A11Y = {
       '2.4.8': 'The current page is marked, with aria-current="page": readers always know where they are.',
       '2.5.8': 'Every link and chevron is at least 24 by 24 pixels.',
       '4.1.2': 'Each item is what it does: a link, a button, a menu item or a tree item. Chevrons say "Show" or "Hide" and their section, and report expanded or collapsed; a disabled action says "dimmed".',
+    },
+  },
+  NavToggle: {
+    meets: {
+      '1.4.11': 'Drawn in the text color: 4.5:1 or more in every theme.',
+      '2.1.1': 'A native <button>: Tab reaches it, Enter and Space press it.',
+      '2.3.3': 'The bars and the pane change instantly when the system asks for less motion.',
+      '2.4.7': 'A 2px accent ring on keyboard focus.',
+      '2.5.8': '32 by 32 pixels.',
+      '4.1.2': 'Its name says what it will do ("Hide sidebar"), it reports open or closed (aria-expanded) and points at what it controls (aria-controls).',
     },
   },
   Panel: {
@@ -181,6 +199,14 @@ export const COMPONENT_A11Y = {
     meets: {
       '1.3.1': 'Real headings (<h1> to <h6>), so the page\'s outline is there for screen readers.',
       '1.4.3': TEXT_CONTRAST,
+    },
+  },
+  Tooltip: {
+    meets: {
+      '1.4.13': 'Esc hides it without moving focus; the pointer can move onto it; it stays until the pointer or focus leaves.',
+      '1.4.3': 'Inverted colors (the theme\'s text on its background color): 4.5:1 or more in every theme.',
+      '2.1.1': 'It shows on keyboard focus too, not only on hover.',
+      '4.1.2': 'role="tooltip", and the control is described by it (aria-describedby): screen readers say it after the control\'s name.',
     },
   },
   Tree: {

@@ -31,6 +31,8 @@ export default function Sidebar({ current, framework, open, onNavigate }) {
   const sections = React.useMemo(() => menuSections(framework), [framework]);
   return (
     <aside id="dx-sidebar" className="dx-sidebar" data-open={ open }>
+      { /* A fixed-width layer: when the column closes it slides away whole, nothing re-wraps. */ }
+      <div className="dx-sidebar-inner">
       <Search id="dx-search-drawer" className="dx-search-drawer" onNavigate={ onNavigate } />
       <Menu
         id="dx-nav"
@@ -41,6 +43,7 @@ export default function Sidebar({ current, framework, open, onNavigate }) {
         onToggle={ remember }
         onNavigate={ () => { if (onNavigate) onNavigate(); } }
       />
+      </div>
     </aside>
   );
 }

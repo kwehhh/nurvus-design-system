@@ -1,7 +1,6 @@
 import React from 'react';
-import { Tag } from '@nurvus/ui';
-import MenuToggle, { MENU_MORPHS } from '../components/MenuToggle';
-import SidebarToggle from '../components/SidebarToggle';
+import { Button, Kbd, NavToggle, Tag, modKey } from '@nurvus/ui';
+import { useNavButton, setNavButton } from '../components/navButton';
 import LogoVariant from '../components/LogoVariant';
 import { Wordmark } from '../components/Logo';
 import './Guides.scss';
@@ -22,16 +21,21 @@ const LOGOS = [
 
 const SIZES = [16, 28, 48];
 
-function MorphDemo({ morph }) {
+const BUTTONS = [
+  { id: 'hamburger', name: 'Hamburger: Slide, asymmetric lines', about: 'Three bars of different lengths that line up when pointed at; open, they slide into a cross. The header\'s button now, and always on phones.', props: { morph: 'slide', lines: 'asymmetric' } },
+  { id: 'sidebar', name: 'Sidebar icon', about: 'A window with a side pane that fills while the sidebar shows; closed, it shrinks away and the divider slides left (VS Code, shadcn/ui, Keyframery).', props: { variant: 'sidebar' } },
+];
+
+/** One header button to try: live (click it), and "Use in the header" makes the real one this. */
+function ButtonChoice({ choice, inUse }) {
   const [open, setOpen] = React.useState(true);
   return (
     <figure className="rv-card">
-      <div className="rv-stage">
-        <MenuToggle open={ open } morph={ morph.id } onClick={ () => setOpen(!open) } controls="rv-none" />
-      </div>
+      <div className="rv-stage"><NavToggle open={ open } label={ `sidebar (${choice.id})` } onClick={ () => setOpen(!open) } { ...choice.props } /></div>
       <figcaption>
-        <strong>{ morph.name }</strong>{ morph.id === 'slide' && <Tag tone="accent">Phones now</Tag> }
-        <span>{ morph.about }</span>
+        <strong>{ choice.name }</strong>{ inUse && <Tag tone="accent">In the header</Tag> }
+        <span>{ choice.about }</span>
+        <span><Button size="small" type={ inUse ? 'secondary' : 'primary' } aria-pressed={ inUse } onClick={ () => setNavButton(choice.id) }>{ inUse ? 'In use' : 'Use in the header' }</Button></span>
       </figcaption>
     </figure>
   );
@@ -39,23 +43,20 @@ function MorphDemo({ morph }) {
 
 /** Things to choose between, drawn live: the menu button's shapes and the logo at small sizes. */
 export default function Review() {
-  const [sideOpen, setSideOpen] = React.useState(true);
+  const inUse = useNavButton();
   return (
     <div className="dx-page gd rv">
       <h1 className="dx-page-title">Review</h1>
       <p className="dx-lede">Choices for round 8, live. Click the buttons; switch the theme at the top right to see the header column change.</p>
 
-      <h2 className="gd-h2">The menu button</h2>
+      <h2 className="gd-h2">The header button (desktop)</h2>
       <p className="gd-p">
-        The header uses the sidebar icon on a desktop (the sidebar sits beside the page) and the hamburger on a phone
-        (the menu covers the page), sliding into a cross. Click each one to open and close it.
+        Try both: click each to open and close it, and <strong>Use in the header</strong> to switch the real one (it
+        is remembered). Phones always get the hamburger. <Kbd keys={ [modKey(), 'B'] } /> shows and hides the sidebar
+        with either. Every hamburger morph is on <a href="#/Components/NavToggle">NavToggle</a>.
       </p>
-      <div className="rv-morphs">
-        { MENU_MORPHS.map((m) => <MorphDemo key={ m.id } morph={ m } />) }
-        <figure className="rv-card">
-          <div className="rv-stage"><SidebarToggle open={ sideOpen } onClick={ () => setSideOpen(!sideOpen) } controls="rv-none" /></div>
-          <figcaption><strong>Sidebar toggle</strong><Tag tone="accent">Desktop now</Tag><span>The window-with-a-pane icon, its pane filling while the panel shows (SidebarToggle; the static one is the panel-left icon). VS Code, shadcn/ui and Keyframery use it for a docked sidebar.</span></figcaption>
-        </figure>
+      <div className="rv-buttons">
+        { BUTTONS.map((choice) => <ButtonChoice key={ choice.id } choice={ choice } inUse={ inUse === choice.id } />) }
       </div>
 
       <h2 className="gd-h2">The logo at small sizes</h2>

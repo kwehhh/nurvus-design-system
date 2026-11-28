@@ -23,6 +23,13 @@ function place([k, d]) {
 const INNER_PLACED = INNER.map(place);
 const OUTER_PLACED = OUTER.map(place);
 
+// The alt logo for small sizes (round 10, "One gradient" on Review): one
+// blue-to-violet gradient over the whole mark, the three specks left out, every
+// piece a touch bolder. Clean at 16 to 32 pixels: the header and the favicon size.
+const SPECKS = ['n', 'q', 'r'];
+export const MONO_STOPS = [['#2c9fd0', 0], ['#4664ee', 0.5], ['#8a3fe0', 1]];
+const MONO_WEIGHT = 16; // artwork units (540 across): about 0.8px each side at 28px
+
 /** The motions the mark can have (Foundations > Brand shows each). */
 export const LOGO_MOTIONS = [
   { id: 'current', name: 'Current', about: 'The two rings turn slowly in opposite directions. The home page uses it.' },
@@ -37,19 +44,23 @@ export const LOGO_MOTIONS = [
  * The NURVUS logo: the mark (two "currents" of segments) and, with
  * `wordmark`, the name under it in the text color (so it reads on light and
  * dark themes). `motion` animates it (see LOGO_MOTIONS; `spin` = "current");
+ * `tone="mono"` draws the alt logo for small sizes (one gradient, no specks);
  * every motion stops for reduced motion and under Pause motion. `id` keeps the
  * gradient ids unique when the logo is on a page twice. Without `title` it is
  * decorative (hidden from screen readers).
  */
-export default function Logo({ id = 'nv-logo', wordmark = false, spin = false, motion, title, className = '' }) {
-  const ref = (k) => `url(#${id}-g-${k})`;
+export default function Logo({ id = 'nv-logo', wordmark = false, spin = false, motion, tone = 'full', title, className = '' }) {
+  const mono = tone === 'mono';
+  const ref = (k) => (mono ? `url(#${id}-mono)` : `url(#${id}-g-${k})`);
   const a11y = title ? { role: 'img', 'aria-label': title } : { 'aria-hidden': true, focusable: 'false' };
   const current = motion || (spin ? 'current' : undefined);
   const ring = (cls, segments) => (
     <g className={ `nv-logo-current ${cls}` }>
       <g className="nv-logo-depth">
         <circle cx={ CX } cy={ CY } r="280" fill="none" />
-        { segments.map((s) => <path key={ s.k } className="nv-logo-seg" fill={ ref(s.k) } d={ s.d } style={ s.style } />) }
+        { segments.filter((s) => !(mono && SPECKS.includes(s.k))).map((s) => (
+          <path key={ s.k } className="nv-logo-seg" fill={ ref(s.k) } d={ s.d } style={ s.style } stroke={ mono ? ref(s.k) : undefined } strokeWidth={ mono ? MONO_WEIGHT : undefined } strokeLinejoin="round" />
+        )) }
       </g>
     </g>
   );
@@ -59,9 +70,15 @@ export default function Logo({ id = 'nv-logo', wordmark = false, spin = false, m
       viewBox={ wordmark ? '420 120 700 750' : '492 149 540 540' }
       data-spin={ current ? 'true' : undefined }
       data-motion={ current }
+      data-tone={ tone }
       { ...a11y }
     >
       <defs>
+        { mono && (
+          <linearGradient id={ `${id}-mono` } gradientUnits="userSpaceOnUse" x1="520" y1="180" x2="1000" y2="660">
+            { MONO_STOPS.map(([color, at]) => <stop key={ at } offset={ at } stopColor={ color } />) }
+          </linearGradient>
+        ) }
         { GRADIENTS.map(([k, x1, y1, x2, y2, from, to]) => (
           <linearGradient key={ k } id={ `${id}-g-${k}` } gradientUnits="userSpaceOnUse" x1={ x1 } y1={ y1 } x2={ x2 } y2={ y2 }>
             <stop stopColor={ from } />

@@ -61,141 +61,7 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
   gap: 10px;
 }
 
-// Shows and hides the navigation (the sidebar on a desktop, the drawer on a
-// phone): three bars that move into another shape while it is open
-// (MenuToggle.jsx, MENU_MORPHS; the header uses the cross). SidebarToggle.jsx
-// (a window with a side pane) is kept for later and shares this button style.
-.dx-header .dx-menu-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: 0;
-  border-radius: 10px;
-  background: transparent;
-  color: var(--nv-text);
-  cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
-
-  &:hover { background: color-mix(in srgb, var(--nv-text) 8%, transparent); color: var(--nv-accent); }
-  &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 2px; }
-}
-
-.dx-menu-bars {
-  position: relative;
-  width: 18px;
-  height: 14px;
-
-  span {
-    position: absolute;
-    left: 0;
-    width: 18px;
-    height: 2px;
-    border-radius: 1px;
-    background: currentColor;
-    transform-origin: left center;
-    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  span:nth-child(1) { top: 0; }
-  span:nth-child(2) { top: 6px; }
-  span:nth-child(3) { top: 12px; }
-}
-
-.dx-menu-bars { transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
-
-// Back arrow (←): the outer bars swing in from the left end to make the head.
-[data-shape="arrow"] .dx-menu-bars {
-  span:nth-child(1) { width: 10px; transform: translate(0, 6px) rotate(-45deg); }
-  span:nth-child(3) { width: 10px; transform: translate(0, -6px) rotate(45deg); }
-}
-
-// Chevron (‹): the outer bars fold to a point on the left; the middle fades.
-[data-shape="chevron"] .dx-menu-bars {
-  span:nth-child(1) { width: 9px; transform: translate(4px, 6px) rotate(-45deg); }
-  span:nth-child(2) { opacity: 0; transform: scaleX(0.2); }
-  span:nth-child(3) { width: 9px; transform: translate(4px, -6px) rotate(45deg); }
-}
-
-// Slide (Jonathan Suh's "Slider"; the phone's): the outer bars turn into a
-// cross while the middle one slides out to the left and fades.
-[data-shape="slide"] .dx-menu-bars {
-  span { transform-origin: center; }
-  span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-  span:nth-child(2) { opacity: 0; transform: translateX(-10px); transition-duration: 0.15s; }
-  span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-}
-
-// Squeeze: the outer bars close in on the middle first, then turn into a
-// cross (and the reverse on the way back): two beats.
-.dx-menu-bars[data-morph="squeeze"] span {
-  transform-origin: center;
-  transition: translate 0.12s ease 0.12s, rotate 0.12s ease, opacity 0.1s ease 0.1s;
-}
-
-[data-shape="squeeze"] .dx-menu-bars {
-  span { transition: translate 0.12s ease, rotate 0.12s ease 0.12s, opacity 0.1s ease; }
-  span:nth-child(1) { translate: 0 6px; rotate: 45deg; }
-  span:nth-child(2) { opacity: 0; }
-  span:nth-child(3) { translate: 0 -6px; rotate: -45deg; }
-}
-
-// Elastic: the cross, with a spring that overshoots and settles.
-.dx-menu-bars[data-morph="elastic"] span { transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.2s ease; }
-
-[data-shape="elastic"] .dx-menu-bars {
-  span { transform-origin: center; }
-  span:nth-child(1) { transform: translateY(6px) rotate(135deg); }
-  span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-  span:nth-child(3) { transform: translateY(-6px) rotate(-135deg); }
-}
-
-// Collapse (—): the outer bars slide into the middle one.
-[data-shape="merge"] .dx-menu-bars {
-  span:nth-child(1) { transform: translateY(6px); }
-  span:nth-child(3) { transform: translateY(-6px); }
-}
-
-// Sidebar icon: the window and its divider in lines; the pane fills from the
-// left edge while the sidebar shows.
-.dx-menu-panel {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-}
-
-.dx-menu-pane {
-  fill: currentColor;
-  stroke: none;
-  opacity: 0.4;
-  transform-box: fill-box;
-  transform-origin: left center;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
-}
-
-[data-shape="panel"][data-open="false"] .dx-menu-pane { opacity: 0; transform: scaleX(0); }
-
-// Cross (×): the outer bars meet in the middle; the middle one fades. Spin
-// does the same while the whole button turns half a circle.
-[data-shape="spin"] .dx-menu-bars { transform: rotate(180deg); }
-
-[data-shape="cross"] .dx-menu-bars,
-[data-shape="spin"] .dx-menu-bars {
-  span { transform-origin: center; }
-  span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-  span:nth-child(2) { opacity: 0; transform: scaleX(0.2); }
-  span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dx-menu-bars,
-  .dx-menu-bars span,
-  .dx-menu-pane { transition: none; }
-}
+// The navigation button is @nurvus/ui's NavToggle (its own styles), in a Tooltip.
 
 // Search: a combobox in the middle of the header.
 .dx-search {
@@ -229,14 +95,11 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
   &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 1px; }
 }
 
+// ⌘K as @nurvus/ui Kbd key caps, inside the search field's right edge.
 .dx-search-kbd {
   position: absolute;
   right: 8px;
-  padding: 1px 6px;
-  border: 1px solid var(--nv-border);
-  border-radius: 4px;
-  color: var(--nv-text-muted);
-  font: 12px var(--nv-font-sans);
+  font-size: 12px;
   pointer-events: none;
 }
 
@@ -282,23 +145,22 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
   grid-template-columns: 240px minmax(0, 1fr);
 }
 
-// Desktop: the sidebar column slides shut (and open) and the page reflows to
-// the full width. Hidden once shut, so it leaves the tab order.
+// Desktop (round 10, after the user's "morphing panel" motion study): the
+// sidebar column closes to 0 and the page glides into the room, while the
+// sidebar's fixed-width layer slides a little left and fades: it leaves whole,
+// nothing squashes or re-wraps. Fast out, gentle settle, 250ms. Closed, it is
+// inert (App.jsx): out of the tab order and away from screen readers.
+$dx-drawer: 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+
 @media (min-width: 761px) {
-  .dx-layout { transition: grid-template-columns 0.25s ease; }
+  .dx-layout { transition: grid-template-columns $dx-drawer; }
   .dx-layout[data-nav="collapsed"] { grid-template-columns: 0px minmax(0, 1fr); }
-  .dx-layout .dx-sidebar { transition: padding 0.25s ease, visibility 0s 0s; }
-  .dx-layout[data-nav="collapsed"] .dx-sidebar {
-    padding-left: 0;
-    padding-right: 0;
-    border-right-width: 0;
-    visibility: hidden;
-    transition: padding 0.25s ease, visibility 0s 0.25s;
-  }
+  .dx-layout .dx-sidebar-inner { transition: transform $dx-drawer, opacity $dx-drawer; }
+  .dx-layout[data-nav="collapsed"] .dx-sidebar-inner { transform: translateX(-24px); opacity: 0; }
 }
 
 @media (min-width: 761px) and (prefers-reduced-motion: reduce) {
-  .dx-layout, .dx-layout .dx-sidebar, .dx-layout[data-nav="collapsed"] .dx-sidebar { transition: none; }
+  .dx-layout, .dx-layout .dx-sidebar-inner { transition: none; }
 }
 
 .dx-sidebar {
@@ -307,12 +169,15 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
   height: calc(100vh - 56px);
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 16px 12px 32px;
   background: var(--nv-bg-alt);
-  border-right: 1px solid var(--nv-border);
+}
 
-  // Keeps its width while the column slides shut, so nothing re-wraps.
-  > * { min-width: 216px; }
+// The sidebar's contents at their full width, whatever the column is doing.
+.dx-sidebar-inner {
+  width: 240px;
+  min-height: 100%;
+  padding: 16px 12px 32px;
+  border-right: 1px solid var(--nv-border);
 }
 
 // The links themselves are @nurvus/ui's Menu (its own styles). Contributing
@@ -408,6 +273,16 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 
 .dx-scrim { display: none; }
 
+// A new theme: the filled half turns half a circle into place.
+@keyframes dx-theme-turn {
+  from { transform: rotate(-180deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nv-theme-select .dx-theme-mark { animation: none; transition: none; }
+  .nv-theme-select .select-trigger:hover .dx-theme-mark { transform: none; }
+}
+
 // Text for screen readers only (e.g. the theme's name in the icon button).
 .dx-sr-only {
   position: absolute;
@@ -440,10 +315,13 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
     width: min(300px, 85vw);
     height: auto;
     transform: translateX(-102%);
-    transition: transform 0.2s ease;
+    transition: transform $dx-drawer, box-shadow $dx-drawer;
   }
+  .dx-sidebar-inner { width: auto; border-right: 0; }
   .dx-sidebar[data-open="true"] { transform: none; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35); }
-  .dx-scrim[data-open="true"] { display: block; position: fixed; inset: 56px 0 0; z-index: 25; background: rgba(0, 0, 0, 0.3); }
+  // The backdrop fades in and out with the drawer.
+  .dx-scrim { display: block; position: fixed; inset: 56px 0 0; z-index: 25; background: rgba(0, 0, 0, 0.3); opacity: 0; pointer-events: none; transition: opacity $dx-drawer; }
+  .dx-scrim[data-open="true"] { opacity: 1; pointer-events: auto; }
   .dx-main { padding: 20px 16px 56px; }
 }
 
@@ -472,6 +350,13 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 
   .select-value { display: inline-flex; flex: none; }
   .select-chevron { display: none; }
+
+  .dx-theme-mark {
+    animation: dx-theme-turn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .select-trigger:hover .dx-theme-mark { transform: rotate(-20deg); }
 
   // Tall enough for all seven themes; on a short window, as tall as fits under the header.
   .select-list { --nurvus-select-list-height: min(560px, calc(100dvh - 72px)); min-width: 270px; background: var(--nv-bg); }

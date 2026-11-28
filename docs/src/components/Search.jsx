@@ -1,4 +1,5 @@
 import React from 'react';
+import { Kbd } from '@nurvus/ui';
 import { navSections } from '../nav';
 import { getFramework } from '../framework';
 import { href } from '../router';
@@ -117,7 +118,7 @@ export default function Search({ id = 'dx-search', shortcut = false, onNavigate,
         onBlur={ () => setOpen(false) }
         onKeyDown={ onKeyDown }
       />
-      { shortcut && !query && <kbd className="dx-search-kbd" aria-hidden="true">{ MAC ? '⌘K' : 'Ctrl K' }</kbd> }
+      { shortcut && !query && <Kbd className="dx-search-kbd" keys={ [MAC ? '⌘' : 'Ctrl', 'K'] } aria-hidden="true" /> }
       <ul id={ listId } className="dx-search-list" role="listbox" aria-label="Pages" hidden={ !expanded }>
         { results.map((page, i) => (
           <li

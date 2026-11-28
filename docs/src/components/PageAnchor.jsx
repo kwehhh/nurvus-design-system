@@ -37,7 +37,7 @@ export default function PageAnchor({ route }) {
   if (items.length < 2) return null;
   return (
     <aside className="dx-page-anchor">
-      <Anchor id="dx-on-this-page" items={ items } offset={ 88 } updateHash={ false } />
+      <Anchor id="dx-on-this-page" items={ items } offset={ 88 } updateHash={ false } fade />
     </aside>
   );
 }

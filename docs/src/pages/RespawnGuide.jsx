@@ -276,6 +276,43 @@ app.append(Dropdown({
 }), note);`,
   },
   {
+    name: 'Kbd',
+    about: 'Key caps for a shortcut: a <kbd> holding a <kbd> per key.',
+    code: `import { Kbd, Text } from '@nurvus/ui/respawn';
+
+app.append(Text({ children: ['Show or hide the sidebar: ', Kbd({ keys: ['⌘', 'B'] })] }));`,
+  },
+  {
+    name: 'NavToggle',
+    about: 'The show/hide navigation button: the hamburger or the sidebar icon. update({ open }) changes it in place, so the bars move.',
+    code: `import { NavToggle, Stack } from '@nurvus/ui/respawn';
+
+let open = false;
+const toggles = [
+  NavToggle({ open, lines: 'asymmetric', label: 'menu' }),
+  NavToggle({ open, variant: 'sidebar', label: 'sidebar' }),
+];
+toggles.forEach((toggle) => toggle.addEventListener('click', () => {
+  open = !open;
+  toggles.forEach((t) => t.update({ open }));
+}));
+
+app.append(Stack({ direction: 'row', gap: 16, children: toggles }));`,
+  },
+  {
+    name: 'Tooltip',
+    about: 'A short label for a control, with its shortcut as key caps. It wraps the element and describes it (aria-describedby).',
+    code: `import { Button, Icon, Tooltip } from '@nurvus/ui/respawn';
+
+app.append(Tooltip({
+  id: 'respawn-tip',
+  content: 'Save',
+  shortcut: ['⌘', 'S'],
+  align: 'start',
+  children: Button({ type: 'secondary', size: 'small', 'aria-label': 'Save', children: Icon({ name: 'download' }) }),
+}));`,
+  },
+  {
     name: 'Menu',
     about: 'Links make navigation (shown here: sections that open and close, the current page marked); onSelect items make a menu of actions; kind: "tree" makes a Tree. The arrow keys move between items.',
     code: `import { Menu, Text } from '@nurvus/ui/respawn';
@@ -436,9 +473,11 @@ app.append(tree, status);`,
 
 export const RETURNS = {
   Button: '<button>', ButtonGroup: '<div>', FullPageModal: '<div class="portal">', HistoryList: '<ol>', Icon: '<svg>', Layout: '<div>', Link: '<a>',
-  Menu: '<nav> (links) or <div role="menu"> (actions)', Loader: '<div role="status">', Anchor: '<nav>', Dropdown: '<div>', Grid: '<div>', Stack: '<div>', Panel: '<section>', Progress: '<div>', Select: '<div>', Table: '<table>', Tag: '<span>', Text: '<span> (or as)', Title: '<h1> to <h6>', Tree: '<div>',
+  Menu: '<nav> (links) or <div role="menu"> (actions)', Loader: '<div role="status">', Anchor: '<nav>', Dropdown: '<div>', Kbd: '<kbd>', NavToggle: '<button>', Tooltip: '<span>', Grid: '<div>', Stack: '<div>', Panel: '<section>', Progress: '<div>', Select: '<div>', Table: '<table>', Tag: '<span>', Text: '<span> (or as)', Title: '<h1> to <h6>', Tree: '<div>',
 };
 export const NOTES = {
+  NavToggle: 'update({ open }) changes it in place (the bars animate); other changes rebuild it.',
+  Tooltip: 'Opens and closes in place on hover, focus and Esc; the element you pass in gets aria-describedby.',
   Anchor: 'Follows the scrolling in place (the element stays the same); update({ current }) sets the section from code.',
   Dropdown: 'Opening, closing and choosing change it in place; choosing calls the action\'s onSelect.',
   FullPageModal: 'Mount it on document.body. update({ visible }) animates it in or out and keeps the same element.',
