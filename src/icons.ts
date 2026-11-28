@@ -9,6 +9,7 @@
 
 /** One SVG element of an icon: its tag and attributes. */
 export type IconNode = [tag: 'path' | 'circle' | 'rect', attrs: Record<string, string | number>];
+// A shape may fill (fill: 'currentColor'): only `contrast` does, for its filled half.
 
 const path = (d: string): IconNode => ['path', { d }];
 const circle = (cx: number, cy: number, r: number): IconNode => ['circle', { cx, cy, r }];
@@ -88,6 +89,7 @@ const DEFS = {
   // Theme
   sun: [circle(12, 12, 4), path('M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41')],
   moon: [path('M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z')],
+  contrast: [ring, ['path', { d: 'M12 3a9 9 0 0 1 0 18z', fill: 'currentColor' }] as IconNode],
   palette: [path('M12 3a9 9 0 0 0 0 18c1.1 0 1.6-.8 1.6-1.6 0-1-.9-1.4-.9-2.4 0-.9.7-1.5 1.6-1.5H16a5 5 0 0 0 5-5C21 6.4 17 3 12 3z'), dot(7.5, 11.5), dot(9.5, 7.5), dot(14.5, 7.5)],
   sparkles: [path('M10 4l1.6 4.4L16 10l-4.4 1.6L10 16l-1.6-4.4L4 10l4.4-1.6z'), path('M18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8z')],
   zap: [path('M13 2.5L4.5 13.5H11l-1 8 8.5-11H12z')],

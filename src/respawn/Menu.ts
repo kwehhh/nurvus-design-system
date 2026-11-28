@@ -48,6 +48,8 @@ interface MenuBaseProps extends ElementProps {
   label?: string;
   /** Prefix for the ids inside (each toggle names its list). Defaults to "menu". */
   id?: string;
+  /** Navigation: the chevron before the title ('start', the default: right when closed, down when open, a guide line down the items) or after it ('end'). */
+  chevron?: 'start' | 'end';
 }
 
 export interface MenuProps extends MenuBaseProps {
@@ -81,12 +83,12 @@ export type MenuTreeProps = TreeProps & { kind: 'tree' };
 export default function Menu(props: MenuProps = { sections: [] }): NurvusElement<HTMLElement, MenuProps> {
   const kind = menuKind(props || {});
   if (kind === 'tree') {
-    const { kind: _kind, sections: _s, current: _c, defaultOpen: _d, onToggle: _t, onNavigate: _n, ...tree } = props;
+    const { kind: _kind, sections: _s, current: _c, defaultOpen: _d, onToggle: _t, onNavigate: _n, chevron: _ch, ...tree } = props;
     return Tree(tree as TreeProps) as any;
   }
   if (kind === 'actions') return MenuActions(props as MenuListProps) as any;
   return updatable<HTMLElement, MenuListProps>(({
-    kind: _kind, sections = [], current, defaultOpen = true, onToggle, onNavigate, label = 'Pages', id = 'menu', className, ...rest
+    kind: _kind, sections = [], current, defaultOpen = true, onToggle, onNavigate, chevron = 'start', label = 'Pages', id = 'menu', className, ...rest
   }: MenuListProps, keep) => {
     const open: Record<string, boolean> = Object.fromEntries(sections.map((s) => [sectionId(s), startsOpen(defaultOpen, sectionId(s))]));
     // The current page's section always starts open, as in React.
@@ -112,11 +114,10 @@ export default function Menu(props: MenuProps = { sections: [] }): NurvusElement
       const toggleProps = (extra: Record<string, unknown>) => ({
         tag: 'button', type: 'button', 'aria-expanded': open[sid], 'aria-controls': listId, events: { click: toggle }, ...extra,
       });
+      const link = () => spawn({ tag: 'a', className: 'menu-title', href: section.href, 'data-active': current === section.href, events: navigate(section.href as string), children: section.title });
+      const chev = () => spawn(toggleProps({ className: 'menu-toggle', 'aria-label': `${open[sid] ? 'Hide' : 'Show'} ${String(section.title)}` }));
       const heading = section.href
-        ? [
-          spawn({ tag: 'a', className: 'menu-title', href: section.href, 'data-active': current === section.href, events: navigate(section.href), children: section.title }),
-          spawn(toggleProps({ className: 'menu-toggle', 'aria-label': `${open[sid] ? 'Hide' : 'Show'} ${String(section.title)}` })),
-        ]
+        ? (chevron === 'start' ? [chev(), link()] : [link(), chev()])
         : [spawn(toggleProps({ className: 'menu-title menu-toggle', children: section.title }))];
       heading.forEach((h) => { if (h.tagName === 'BUTTON') toggles.push(h); });
 
@@ -166,6 +167,7 @@ export default function Menu(props: MenuProps = { sections: [] }): NurvusElement
       className: classNames(className, 'menu', CONSTANT.CLASS_PREFIX),
       'aria-label': label,
       'data-kind': 'nav',
+      'data-chevron': chevron,
       ...others,
       events: {
         ...events,
@@ -182,13 +184,14 @@ export default function Menu(props: MenuProps = { sections: [] }): NurvusElement
 /** A menu of actions (role="menu"): one Tab stop that follows the focus, arrow keys, type to find. */
 function MenuActions(props: MenuListProps): NurvusElement<HTMLElement, MenuListProps> {
   return updatable(({
-    kind: _kind, sections = [], label = 'Actions', id = 'menu', className, current: _c, defaultOpen: _d, onToggle: _t, onNavigate: _n, ...rest
+    kind: _kind, sections = [], label = 'Actions', id = 'menu', className, current: _c, defaultOpen: _d, onToggle: _t, onNavigate: _n, chevron: _ch, ...rest
   }: MenuListProps) => {
     let first = true;
     const { events, ...others } = rest;
     return spawn<HTMLElement>({
       className: classNames(className, 'menu', CONSTANT.CLASS_PREFIX),
       role: 'menu',
+      id,
       'aria-label': label,
       'data-kind': 'actions',
       ...others,

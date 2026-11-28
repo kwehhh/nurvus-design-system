@@ -8,7 +8,7 @@
 
 Left out, `kind` follows the items: navigation when any item has an `href`, actions when none has. An item without an `href` inside navigation is a button there ("Sign out"). Links take Enter only, as everywhere on the web (Space scrolls the page); buttons, chevrons and tree rows take Enter and Space.
 
-**Navigation.** Sections open and close with the chevron (or the whole heading, when it isn't a link). The current page is marked with a bar beside it, and its section opens by itself.
+**Navigation.** Sections open and close with the chevron (or the whole heading, when it isn't a link). The chevron sits before the title, as Material UI draws it: › while a section is closed, ⌄ while it is open, so it stays next to the words it belongs to (easier to find for people who zoom in) and every title lines up. An open section has a hairline guide down its items, and the current page's bar sits on it; the page also opens its section by itself. `chevron="end"` puts the chevron after the title instead (⌄ closed, ⌃ open), with no guide line.
 
 ```jsx
 import { Menu } from '@nurvus/ui';

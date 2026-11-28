@@ -50,6 +50,13 @@ export interface MenuProps extends Omit<React.HTMLAttributes<HTMLElement>, 'onTo
   onToggle?: (id: string, open: boolean) => void;
   /** Navigation: called when any link is clicked, with its href (e.g. to close a drawer). */
   onNavigate?: (href: string, event: React.MouseEvent<HTMLAnchorElement>) => void;
+  /**
+   * Navigation: where each section's chevron sits. 'start' (the default): before
+   * the title, pointing right when closed and down when open, with a guide line
+   * down the open section's items (as Material UI draws it). 'end': after the
+   * title, down when closed and up when open.
+   */
+  chevron?: 'start' | 'end';
   /** Tree: the rows, each with optional child `items`. */
   items?: TreeItem[];
   /** Tree: the picked row as a path of indexes, e.g. [2, 0] = the first child of the third row. */
@@ -62,7 +69,7 @@ export interface MenuProps extends Omit<React.HTMLAttributes<HTMLElement>, 'onTo
   maxIndentDepth?: number;
   /** What screen readers call the menu ("Pages", "Actions", "Layers"). */
   label?: string;
-  /** Prefix for the ids inside (each toggle names its list). Defaults to "menu". */
+  /** Prefix for the ids inside (each toggle names its list). Defaults to "menu". A menu of actions also carries it (so a button can point at it with aria-controls). */
   id?: string;
   /** Custom class name. */
   className?: string;
@@ -85,7 +92,7 @@ export type MenuTreeProps = TreeProps & { kind: 'tree' };
 export default function Menu(props: MenuProps) {
   const kind = menuKind(props);
   if (kind === 'tree') {
-    const { kind: _kind, sections: _s, current: _c, defaultOpen: _d, onToggle: _t, onNavigate: _n, ...tree } = props;
+    const { kind: _kind, sections: _s, current: _c, defaultOpen: _d, onToggle: _t, onNavigate: _n, chevron: _ch, ...tree } = props;
     return <Tree { ...(tree as TreeProps) } />;
   }
   const { label = kind === 'actions' ? 'Actions' : 'Pages', items: _i, activePath: _a, onClick: _o, itemRenderer: _r, maxIndentDepth: _m, ...rest } = props;
@@ -99,6 +106,7 @@ function MenuNav({
   defaultOpen = true,
   onToggle,
   onNavigate,
+  chevron = 'start',
   label,
   id = 'menu',
   className,
@@ -128,6 +136,7 @@ function MenuNav({
     <nav className={ classNames(className, 'menu', CONSTANT.CLASS_PREFIX) }
       aria-label={ label }
       data-kind="nav"
+      data-chevron={ chevron }
       { ...restProps }
       onKeyDown={ (e) => { menuKeydown(e.nativeEvent, e.currentTarget); if (onKeyDown) onKeyDown(e); } }
     >
@@ -146,10 +155,11 @@ function MenuNav({
             <div className="menu-heading">
               { section.href ? (
                 <>
+                  { chevron === 'start' && <button className="menu-toggle" aria-label={ `${shown ? 'Hide' : 'Show'} ${String(section.title)}` } { ...toggleProps } /> }
                   <a className="menu-title" href={ section.href } data-active={ current === section.href } onClick={ navigate(section.href) }>
                     { section.title }
                   </a>
-                  <button className="menu-toggle" aria-label={ `${shown ? 'Hide' : 'Show'} ${String(section.title)}` } { ...toggleProps } />
+                  { chevron === 'end' && <button className="menu-toggle" aria-label={ `${shown ? 'Hide' : 'Show'} ${String(section.title)}` } { ...toggleProps } /> }
                 </>
               ) : (
                 <button className="menu-title menu-toggle" { ...toggleProps }>{ section.title }</button>
@@ -197,6 +207,7 @@ function MenuActions({
   defaultOpen: _defaultOpen,
   onToggle: _onToggle,
   onNavigate: _onNavigate,
+  chevron: _chevron,
   ...restProps
 }: MenuListProps) {
   let first = true;
@@ -204,6 +215,7 @@ function MenuActions({
     <div
       className={ classNames(className, 'menu', CONSTANT.CLASS_PREFIX) }
       role="menu"
+      id={ id }
       aria-label={ label }
       data-kind="actions"
       { ...restProps }

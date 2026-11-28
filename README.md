@@ -78,6 +78,12 @@ Themes nest (`<nav data-theme="tokyo-neon">` inside a light page), and your own 
 ### New in 0.1.0-alpha.15
 - **`Icon`**: icons drawn for NURVUS on a 24-unit grid, in the text color, **1em by default** so an icon is as big as the text it sits in (`<Icon name="search" />`; `label` for an icon that stands alone). Names are typed (`IconName`); `ICONS` / `ICON_NAMES` list them. Same markup in `@nurvus/ui/respawn`.
 
+### New in 0.1.0-alpha.17
+- **`Dropdown`**: a button that opens a menu of actions (the WAI-ARIA menu button: `aria-haspopup`, ↓ / ↑ / Enter / Space open it, Esc and choosing put focus back on the button, a click outside or Tab closes it).
+- **`Anchor`**: "On this page". A rail beside the rows bends in and out with the nesting, and a highlight slides along it to the section in view (scroll-spy on the page or inside `scrollRoot`); picking a row scrolls there and moves focus. Drawn from the items alone (rows are 1.75rem), so it renders the same on the server.
+- **`Menu` chevrons at the start** (as Material UI): › closed, ⌄ open, before the title, with a hairline guide down an open section and the current page's bar on it. `chevron="end"` keeps the old look. A menu of actions now carries its `id` (for `aria-controls`).
+- **`contrast` icon** (71 icons): a ring with its right half filled, for theme switches.
+
 ### New in 0.1.0-alpha.16
 - **Sizes are rem.** Type, spacing, radii and component sizes are in rem (hairlines and focus rings stay px), so everything grows when a reader sets bigger text in their browser. At the default (16px) nothing moves: the same pixels as before.
 - **`Menu` is links, actions or a tree**, and screen readers hear each as what it is. Items with `href` make navigation (as before); items with `onSelect` make a menu of actions (`role="menu"`, one Tab stop, arrow keys, type to find); `kind="tree"` (or Tree's props) makes a tree. Up and Down move between items in all three. `Tree` is still there: the same as `<Menu kind="tree" />`. Menu with Tree's props no longer warns.

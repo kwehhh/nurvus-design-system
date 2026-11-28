@@ -155,6 +155,82 @@ $menu-speed: 0.2s;
     }
   }
 
+  // Chevron at the start (data-chevron="start", the default since 0.1.0-alpha.17;
+  // as Material UI draws it): before the title, › while the section is closed
+  // and ⌄ while it is open, a quarter turn between. Every chevron is centered
+  // 12px from the left, both title kinds start their text at 30px, and a
+  // hairline guide runs down an open section's items under the chevron; the
+  // current page's bar is drawn on that line.
+  &[data-chevron="start"] {
+    .menu-heading { gap: var(--space--4); }
+
+    .menu-toggle::after { transform: translateY(-1px) rotate(45deg); }
+    .menu-section[data-open="false"] .menu-toggle::after { transform: translateX(-1px) rotate(-45deg); }
+
+    // A linked title: the chevron button first, then the link.
+    .menu-toggle:not(.menu-title) + .menu-title { padding-left: 0.125rem; }
+
+    // A title that is the toggle: the chevron drawn before the words.
+    .menu-title.menu-toggle {
+      justify-content: flex-start;
+      padding-left: var(--space--4);
+
+      &::after { content: none; }
+
+      &::before {
+        content: "";
+        flex: none;
+        width: 0.375rem;
+        height: 0.375rem;
+        margin: 0 0.9375rem 0 0.3125rem;
+        border-right: 1.5px solid currentColor;
+        border-bottom: 1.5px solid currentColor;
+        transform: translateY(-1px) rotate(45deg);
+        transition: transform $menu-speed ease;
+      }
+    }
+
+    .menu-section[data-open="false"] .menu-title.menu-toggle::before { transform: translateX(-1px) rotate(-45deg); }
+
+    ul {
+      position: relative;
+      margin: 0;
+      padding: 0;
+    }
+
+    // The guide line, under the chevrons.
+    ul::before {
+      content: "";
+      position: absolute;
+      top: 2px;
+      bottom: var(--space--8);
+      left: calc(0.75rem - 0.5px);
+      width: 1px;
+      background: var(--nv-border);
+    }
+
+    // A divider starts where the items do, right of the guide line.
+    li[data-divider] { margin-left: 1.25rem; }
+    li[data-divider] .menu-item { width: 100%; margin-left: 0; }
+
+    .menu-item {
+      width: calc(100% - 1.25rem);
+      margin-left: 1.25rem;
+      padding-left: var(--space--16);
+    }
+
+    // The current page: a bar on the guide line, the item's full height.
+    .menu-item[data-active="true"]::before {
+      top: 2px;
+      bottom: 2px;
+      left: calc(-0.5rem - 1px);
+      width: 2px;
+      height: auto;
+      border-radius: 1px;
+      transform: none;
+    }
+  }
+
   // Actions: always open; section titles are labels, not buttons; items in the text color.
   &[data-kind="actions"] {
     .menu-title {
@@ -169,12 +245,14 @@ $menu-speed: 0.2s;
     }
 
     .menu-item { padding-left: 0.625rem; color: var(--nv-text); }
+    .menu-item[aria-disabled="true"] { color: var(--nv-text-subtle); }
     li:last-child { margin-bottom: 0; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .menu-items,
     .menu-toggle::after,
+    .menu-toggle::before,
     .menu-section[data-open="false"] ul { transition: none; }
   }
 }

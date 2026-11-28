@@ -1,0 +1,65 @@
+// Styles for Anchor (React and Respawn: same markup). Rows are exactly 1.75rem
+// tall so the rail (drawn from the items, src/anchor.ts) lines up with them.
+@import "../../styles/variables.scss";
+
+.#{$cls-prefix}.anchor {
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+
+  .anchor-title {
+    margin: 0 0 var(--space--8);
+    color: var(--nv-text);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  .anchor-body { position: relative; }
+
+  .anchor-rail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+    fill: none;
+    stroke-linecap: round;
+  }
+
+  .anchor-track { stroke: var(--nv-border-strong); stroke-width: 1; }
+
+  // The highlight: the same path, a dash over the section in view, sliding.
+  .anchor-thumb {
+    stroke: var(--nv-accent);
+    stroke-width: 2;
+    transition: stroke-dasharray 0.35s cubic-bezier(0.4, 0, 0.2, 1), stroke-dashoffset 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .anchor-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li { padding-left: calc(var(--anchor-level, 0) * 0.75rem + 1rem); }
+
+  .anchor-link {
+    display: block;
+    height: 1.75rem;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    color: var(--nv-text-muted);
+    line-height: 1.75rem;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+
+    &:hover { color: var(--nv-text); }
+    &:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: -2px; }
+    &[data-active="true"] { color: var(--nv-text); font-weight: 500; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .#{$cls-prefix}.anchor .anchor-thumb,
+  .#{$cls-prefix}.anchor .anchor-link { transition: none; }
+}

@@ -13,6 +13,8 @@ import './components/Icon/Icon.scss';
 import './components/Loader/Loader.scss';
 import './components/Tree/Tree.scss';
 import './components/Menu/Menu.scss';
+import './components/Dropdown/Dropdown.scss';
+import './components/Anchor/Anchor.scss';
 import './components/Select/Select.scss';
 import './components/Panel/Panel.scss';
 import './components/Progress/Progress.scss';
