@@ -106,12 +106,14 @@ app.append(ButtonGroup({
   },
   {
     name: 'FullPageModal',
-    about: 'Covers the whole screen. Mount it on document.body; update({ visible }) opens and closes it.',
+    about: 'A modal dialog over the whole screen. Mount it on document.body; update({ visible }) opens and closes it. Focus moves in and back; Esc calls onClose.',
     code: `import { Button, FullPageModal, Panel } from '@nurvus/ui/respawn';
 
 const modal = FullPageModal({
+  id: 'respawn-settings',
   title: 'Settings',
   mountEl: document.body,
+  onClose: () => modal.update({ visible: false }),
   headerActions: Button({
     size: 'small',
     children: 'Close',
@@ -192,8 +194,52 @@ app.append(Layout({
 app.append(Link({ href: '#/Components/Link', children: 'The React Link' }));`,
   },
   {
+    name: 'Loader',
+    about: 'The NURVUS mark with a light running round it. A status: screen readers say its label once. Remove it when the thing has loaded.',
+    code: `import { Button, Loader, Stack, Text } from '@nurvus/ui/respawn';
+
+let shown = Loader({ label: 'Loading photos', showLabel: true });
+const toggle = Button({
+  type: 'secondary',
+  size: 'small',
+  children: 'Finish',
+  onClick: () => {
+    const done = shown.matches('.loader');
+    const next = done ? Text({ children: '12 photos' }) : Loader({ label: 'Loading photos', showLabel: true });
+    shown.replaceWith(next);
+    shown = next;
+    toggle.textContent = done ? 'Load again' : 'Finish';
+  },
+});
+
+app.append(Stack({ gap: 12, align: 'start', children: [shown, toggle] }));`,
+  },
+  {
+    name: 'Grid',
+    about: 'Equal columns: a count that changes at the breakpoints, or as many as fit (minItemWidth).',
+    code: `import { Grid, Panel, Text } from '@nurvus/ui/respawn';
+
+app.append(Grid({
+  columns: { base: 1, sm: 2, lg: 3 },
+  gap: 16,
+  children: ['Checkout API', 'Search', 'Billing jobs'].map((name) => Panel({ title: name, children: Text({ tone: 'muted', children: 'Healthy' }) })),
+}));`,
+  },
+  {
+    name: 'Stack',
+    about: 'A column or a row with even space between the children; the direction can change at a breakpoint.',
+    code: `import { Button, Stack, Tag } from '@nurvus/ui/respawn';
+
+app.append(Stack({
+  direction: { base: 'column', md: 'row' },
+  gap: 8,
+  align: 'start',
+  children: [Tag({ tone: 'success', children: 'Ready' }), Button({ children: 'Publish' }), Button({ type: 'secondary', children: 'Preview' })],
+}));`,
+  },
+  {
     name: 'Menu',
-    about: 'Site navigation: sections that open and close, the current page marked. A toggle opens or closes its section in place; inside, the arrow keys move between rows.',
+    about: 'Links make navigation (shown here: sections that open and close, the current page marked); onSelect items make a menu of actions; kind: "tree" makes a Tree. The arrow keys move between items.',
     code: `import { Menu, Text } from '@nurvus/ui/respawn';
 
 const status = Text({ variant: 'caption', tone: 'muted', children: 'Click a link or a chevron, or use the arrow keys' });
@@ -232,7 +278,7 @@ app.append(Panel({
     code: `import { Button, Layout, Progress } from '@nurvus/ui/respawn';
 
 let percent = 30;
-let bar = Progress({ percent });
+let bar = Progress({ percent, label: 'Uploading', showValue: true });
 
 const add = Button({
   type: 'secondary',
@@ -352,7 +398,7 @@ app.append(tree, status);`,
 
 export const RETURNS = {
   Button: '<button>', ButtonGroup: '<div>', FullPageModal: '<div class="portal">', HistoryList: '<ol>', Icon: '<svg>', Layout: '<div>', Link: '<a>',
-  Menu: '<nav>', Panel: '<section>', Progress: '<div>', Select: '<div>', Table: '<table>', Tag: '<span>', Text: '<span> (or as)', Title: '<h1> to <h6>', Tree: '<div>',
+  Menu: '<nav> (links) or <div role="menu"> (actions)', Loader: '<div role="status">', Grid: '<div>', Stack: '<div>', Panel: '<section>', Progress: '<div>', Select: '<div>', Table: '<table>', Tag: '<span>', Text: '<span> (or as)', Title: '<h1> to <h6>', Tree: '<div>',
 };
 export const NOTES = {
   FullPageModal: 'Mount it on document.body. update({ visible }) animates it in or out and keeps the same element.',

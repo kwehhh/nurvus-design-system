@@ -12,12 +12,17 @@ export const CRITERIA = {
   '1.4.1': { name: 'Use of Color', level: 'A', slug: 'use-of-color' },
   '1.4.3': { name: 'Contrast (Minimum)', level: 'AA', slug: 'contrast-minimum' },
   '1.4.11': { name: 'Non-text Contrast', level: 'AA', slug: 'non-text-contrast' },
+  '1.4.4': { name: 'Resize Text', level: 'AA', slug: 'resize-text' },
   '2.1.1': { name: 'Keyboard', level: 'A', slug: 'keyboard' },
+  '2.1.2': { name: 'No Keyboard Trap', level: 'A', slug: 'no-keyboard-trap' },
+  '2.2.2': { name: 'Pause, Stop, Hide', level: 'A', slug: 'pause-stop-hide' },
   '2.3.3': { name: 'Animation from Interactions', level: 'AAA', slug: 'animation-from-interactions' },
+  '2.4.3': { name: 'Focus Order', level: 'A', slug: 'focus-order' },
   '2.4.7': { name: 'Focus Visible', level: 'AA', slug: 'focus-visible' },
   '2.4.8': { name: 'Location', level: 'AAA', slug: 'location' },
   '2.5.8': { name: 'Target Size (Minimum)', level: 'AA', slug: 'target-size-minimum' },
   '4.1.2': { name: 'Name, Role, Value', level: 'A', slug: 'name-role-value' },
+  '4.1.3': { name: 'Status Messages', level: 'AA', slug: 'status-messages' },
 };
 
 export const understanding = (id) => `https://www.w3.org/WAI/WCAG22/Understanding/${CRITERIA[id].slug}`;
@@ -43,13 +48,13 @@ export const COMPONENT_A11Y = {
   },
   FullPageModal: {
     meets: {
-      '1.3.1': 'Its title is a real heading.',
+      '1.3.1': 'Its title is a real heading, and it names the dialog.',
       '1.4.3': TEXT_CONTRAST,
+      '2.1.1': 'Esc calls onClose; everything in it works by keyboard.',
+      '2.1.2': 'Tab is kept inside while it is open (a modal must), and Esc or its own Close button always lets people out.',
+      '2.4.3': 'Opening it moves focus into it; closing it gives focus back to the button that opened it.',
+      '4.1.2': 'A modal dialog (role="dialog", aria-modal="true") named by its title: screen readers say "Settings, dialog".',
     },
-    gaps: [
-      'It is not marked as a dialog yet (role="dialog", aria-modal, a label), so screen readers don\'t announce it as one.',
-      'Focus doesn\'t move into it when it opens, stay inside it, or go back when it closes; Esc doesn\'t close it.',
-    ],
   },
   Icon: {
     meets: {
@@ -66,8 +71,21 @@ export const COMPONENT_A11Y = {
       '4.1.2': 'The current step carries aria-current="step".',
     },
   },
+  Grid: {
+    meets: {
+      '1.4.4': 'Gaps are rem and the breakpoints em, so with bigger text the columns get fewer and wider instead of overflowing.',
+    },
+    note: 'Columns only: what you put in them decides the rest. Keep the reading order in the code the order people see (CSS grid can show it differently).',
+  },
   Layout: {
     note: 'Spacing and alignment only. It adds no criteria of its own; what you put in it decides.',
+  },
+  Loader: {
+    meets: {
+      '1.1.1': 'The mark is decorative (hidden from screen readers); the label says what is happening.',
+      '2.2.2': 'A loading animation is essential: it shows the page isn\'t stuck. It only changes brightness, nothing moves, so it keeps going with reduced motion.',
+      '4.1.3': 'A status (role="status"): screen readers say its label, "Loading", without moving focus.',
+    },
   },
   Link: {
     meets: {
@@ -79,15 +97,15 @@ export const COMPONENT_A11Y = {
   },
   Menu: {
     meets: {
-      '1.3.1': 'A <nav> landmark of lists; each chevron is tied to its list (aria-controls).',
+      '1.3.1': 'What it is, from its items: links make a <nav> landmark of lists (each chevron tied to its list), actions a menu with groups named by their headings, a tree a WAI-ARIA tree.',
       '1.4.1': 'The current page is marked by a bar and bolder text, not by color alone.',
       '1.4.3': TEXT_CONTRAST,
-      '2.1.1': 'Tab goes link by link; ↑ ↓ Home End move between rows; → and ← open and close sections.',
+      '2.1.1': '↑ ↓ Home End move between items in every kind. Links: Tab goes link by link, → and ← open and close sections. Actions: one Tab stop, type a letter to jump, Enter or Space runs it.',
       '2.3.3': 'Sections open and close without animation when the system asks for less motion.',
       '2.4.7': 'A 2px accent ring on keyboard focus.',
       '2.4.8': 'The current page is marked, with aria-current="page": readers always know where they are.',
       '2.5.8': 'Every link and chevron is at least 24 by 24 pixels.',
-      '4.1.2': 'Chevrons say "Show" or "Hide" and their section, and report expanded or collapsed.',
+      '4.1.2': 'Each item is what it does: a link, a button, a menu item or a tree item. Chevrons say "Show" or "Hide" and their section, and report expanded or collapsed; a disabled action says "dimmed".',
     },
   },
   Panel: {
@@ -97,10 +115,13 @@ export const COMPONENT_A11Y = {
     },
   },
   Progress: {
-    gaps: [
-      'Screen readers can\'t read it yet: it has no progressbar role, label or value (4.1.2).',
-      'Its status (success, critical) is shown by color alone (1.4.1): say it in text next to the bar.',
-    ],
+    meets: {
+      '1.4.1': 'With showValue the status is an icon and a word too (Done, Needs attention, Failed), not color alone.',
+      '1.4.3': TEXT_CONTRAST,
+      '1.4.11': 'The filled bar is 3:1 or more against its track in every theme, so the amount reads clearly (the track also has a hairline edge).',
+      '4.1.2': 'A progressbar with its label and value: "Uploading, progress bar, 40%", and the status in words ("100%, Done").',
+    },
+    gaps: ['Without a label or showValue the status is color only: give it one where the status matters.'],
   },
   Select: {
     meets: {
@@ -113,6 +134,12 @@ export const COMPONENT_A11Y = {
       '2.5.8': 'The button and every option are at least 24 pixels tall.',
       '4.1.2': 'A combobox with its label, expanded or collapsed, the active option, and the picked one (aria-selected).',
     },
+  },
+  Stack: {
+    meets: {
+      '1.4.4': 'Gaps are rem and the breakpoints em, so a row that would overflow with bigger text becomes a column sooner, and wrapped rows keep their spacing.',
+    },
+    note: 'Spacing and direction only: what you put in it decides the rest.',
   },
   Table: {
     meets: {

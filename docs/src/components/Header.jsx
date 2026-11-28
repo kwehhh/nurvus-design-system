@@ -1,14 +1,22 @@
 import React from 'react';
-import Tooltip from '@material-ui/core/Tooltip';
-import GitHubIcon from '@material-ui/icons/GitHub';
 import ThemeSwitcher from './ThemeSwitcher';
 import MenuToggle from './MenuToggle';
 import Logo, { Wordmark } from './Logo';
 import Search from './Search';
+import { useBrandFx, Burst } from './brandFx';
 import pkg from '../../../package.json';
 
 const REPO_URL = 'https://github.com/kwehhh/nurvus-design-system';
 const NPM_URL = 'https://www.npmjs.com/package/@nurvus/ui';
+
+/** GitHub's mark (their logo, used as they allow: a link to GitHub). Not one of our icons. */
+function GitHubMark() {
+  return (
+    <svg className="dx-github-mark" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8 0 3.2.9.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3" />
+    </svg>
+  );
+}
 
 /**
  * The newest @nurvus/ui on npm. package.json holds only the BASE version (CI
@@ -29,17 +37,22 @@ function useLatestVersion() {
 }
 
 /**
- * The site header: menu button, brand, search (center), version, theme menu,
- * GitHub. `navShown`: whether the navigation is showing (the sidebar on a
+ * The site header: menu button, brand (the logo assembles when the site
+ * opens; hover and click effects in brandFx.jsx), search (center), version,
+ * theme menu, GitHub. `navShown`: whether the navigation is showing (the sidebar on a
  * desktop, the drawer on a phone); the button toggles it.
  */
 export default function Header({ onMenu, navShown, phone }) {
   const version = useLatestVersion();
+  const fx = useBrandFx();
   return (
     <header className="dx-header">
       <div className="dx-header-start">
         <MenuToggle open={ navShown } phone={ phone } onClick={ onMenu } />
-        <a className="dx-brand" href="#/"><Logo id="dx-brand-logo" motion="current" className="dx-brand-mark" /><Wordmark /></a>
+        <a className="dx-brand nv-brand-fx" href="#/" { ...fx }>
+          <span className="nv-brand-mark-wrap"><Logo id="dx-brand-logo" motion="assemble" className="dx-brand-mark" /><Burst /></span>
+          <Wordmark />
+        </a>
       </div>
       <Search id="dx-search" shortcut className="dx-search-header" />
       <div className="dx-header-tools">
@@ -49,11 +62,9 @@ export default function Header({ onMenu, navShown, phone }) {
           </a>
         ) }
         <ThemeSwitcher />
-        <Tooltip title="View the source on GitHub" arrow>
-          <a className="nv-icon-link" href={ REPO_URL } target="_blank" rel="noopener noreferrer" aria-label="NURVUS UI on GitHub (opens in a new tab)">
-            <GitHubIcon fontSize="small" />
-          </a>
-        </Tooltip>
+        <a className="nv-icon-link" href={ REPO_URL } target="_blank" rel="noopener noreferrer" aria-label="NURVUS UI on GitHub (opens in a new tab)" title="View the source on GitHub">
+          <GitHubMark />
+        </a>
       </div>
     </header>
   );

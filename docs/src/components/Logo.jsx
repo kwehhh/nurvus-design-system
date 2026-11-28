@@ -25,12 +25,12 @@ const OUTER_PLACED = OUTER.map(place);
 
 /** The motions the mark can have (Foundations > Brand shows each). */
 export const LOGO_MOTIONS = [
-  { id: 'current', name: 'Current', about: 'The two rings turn slowly, opposite ways. Calm, always on.' },
-  { id: 'whirlpool', name: 'Whirlpool', about: 'Both rings turn the same way, the inner one twice as fast, and it sinks and rises as if drawn into the middle.' },
-  { id: 'ripple', name: 'Ripple', about: 'A wave goes round the ring: each segment drifts outward and back in turn, so the ring breathes.' },
-  { id: 'pulse', name: 'Pulse', about: 'A light runs round the ring: segments brighten one after another. Every pixel has a pulse.' },
-  { id: 'spectrum', name: 'Spectrum', about: 'The colors drift through the whole spectrum while the rings turn, and come back to the logo\'s own.' },
-  { id: 'assemble', name: 'Assemble', about: 'The segments fly in from outside and settle into the ring, once, then the rings turn. For a first view.' },
+  { id: 'current', name: 'Current', about: 'The two rings turn slowly in opposite directions. The home page uses it.' },
+  { id: 'whirlpool', name: 'Whirlpool', about: 'Both rings turn the same way, the inner one twice as fast, and it sinks and rises like water draining.' },
+  { id: 'ripple', name: 'Ripple', about: 'A wave travels around the ring; each piece drifts outward and back in turn, so the ring breathes.' },
+  { id: 'pulse', name: 'Pulse', about: 'A light runs around the ring, lighting each piece in turn. The Loader uses it.' },
+  { id: 'spectrum', name: 'Spectrum', about: 'The colors drift through the whole rainbow while the rings turn.' },
+  { id: 'assemble', name: 'Assemble', about: 'The pieces fly in from outside and settle into the ring, once. Good for a first visit: the header does it when the site opens.' },
 ];
 
 /**
@@ -100,6 +100,7 @@ export function Wordmark({ text = 'NURVUS UI', className = '' }) {
       <span className="nv-wordmark-text">{ text }</span>
       <span className="nv-wordmark-glow" aria-hidden="true"><span className="nv-wordmark-fill" /></span>
       <span className="nv-wordmark-fill" aria-hidden="true" />
+      <span className="nv-wordmark-sheen" aria-hidden="true" />
     </span>
   );
 }

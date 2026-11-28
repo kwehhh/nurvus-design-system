@@ -2,6 +2,7 @@ import React from 'react';
 import { Table } from '@nurvus/ui';
 import Logo, { Wordmark, LOGO_MOTIONS } from '../components/Logo';
 import MotionToggle from '../components/MotionToggle';
+import { useBrandFx, Burst } from '../components/brandFx';
 import './Guides.scss';
 import './AnimatedType.scss'; // .at-controls, .at-replay
 import './Brand.scss';
@@ -38,6 +39,52 @@ function MotionCard({ motion }) {
           { motion.id === 'assemble' && <button type="button" className="at-replay" onClick={ () => setRun((n) => n + 1) }>Replay</button> }
         </span>
         <span>{ motion.about }</span>
+      </figcaption>
+    </figure>
+  );
+}
+
+const FX = {
+  hover: {
+    name: 'Hover: spin up',
+    about: 'The rings spin up to six times their speed, easing in, and the colors flow faster; when the pointer leaves they ease back down. Keyboard focus on the header logo does the same.',
+    button: 'Spin up',
+  },
+  click: {
+    name: 'Click: flare',
+    about: 'A flare, like a shield recharging: the mark dips and springs back, two rings of light spread from it, a light sweeps across the letters and the rings whip round once.',
+    button: 'Flare',
+  },
+};
+
+/**
+ * One of the logo's answers to the pointer, live: the header's lockup (mark +
+ * "NURVUS UI") on the page's own background, so it looks as it does in the
+ * header in this theme. The button plays it for keyboard and touch.
+ */
+function FxCard({ kind }) {
+  const fx = useBrandFx();
+  const [spun, setSpun] = React.useState(false);
+  const pointer = kind === 'hover'
+    ? { onMouseEnter: fx.onMouseEnter, onMouseLeave: () => { if (!spun) fx.onMouseLeave(); } }
+    : { onClick: fx.onClick };
+  const press = () => {
+    if (kind === 'click') { fx.onClick(); return; }
+    if (spun) fx.onMouseLeave(); else fx.onMouseEnter();
+    setSpun(!spun);
+  };
+  return (
+    <figure className="br-fx" data-fx-demo={ kind }>
+      <div className="br-fx-stage nv-brand-fx" ref={ fx.ref } data-hover={ spun || undefined } { ...pointer }>
+        <span className="nv-brand-mark-wrap"><Logo id={ `br-fx-${kind}` } motion="current" className="br-fx-mark" /><Burst /></span>
+        <Wordmark />
+      </div>
+      <figcaption>
+        <span className="br-motion-head">
+          <strong>{ FX[kind].name }</strong>
+          <button type="button" className="at-replay" onClick={ press } aria-pressed={ kind === 'hover' ? spun : undefined }>{ FX[kind].button }</button>
+        </span>
+        <span>{ FX[kind].about }</span>
       </figcaption>
     </figure>
   );
@@ -82,12 +129,23 @@ export default function Brand() {
 
       <h2 className="gd-h2">Motion</h2>
       <p className="gd-p">
-        Six ways the mark can move, each in plain CSS. The home page and the header use Current. All of them stop when
-        the system asks for less motion, and under Pause motion.
+        Six ways the mark can move, each in plain CSS. The home page uses Current; the header Assembles when the site
+        opens, then turns; the Loader is Pulse. All of them stop when the system asks for less motion, and under Pause
+        motion (except the Loader's light: see Loader).
       </p>
       <div className="at-controls"><MotionToggle /></div>
       <div className="br-motions">
         { LOGO_MOTIONS.map((m) => <MotionCard key={ m.id } motion={ m } />) }
+      </div>
+
+      <h2 className="gd-h2">Hover and click</h2>
+      <p className="gd-p">
+        The logo in the header and the title on the home page answer the pointer. Point at these, click them, or use
+        the buttons. Nothing moves when the system asks for less motion or under Pause motion.
+      </p>
+      <div className="br-fxs">
+        <FxCard kind="hover" />
+        <FxCard kind="click" />
       </div>
 
       <h2 className="gd-h2">Using it</h2>

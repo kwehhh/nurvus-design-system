@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, themes, setTheme, currentTheme, initTheme, THEME_CHANGE_EVENT } from '@nurvus/ui';
+import { Select, themes, setTheme, currentTheme, initTheme } from '@nurvus/ui';
 
 /** A theme's mark: its background, edged and dotted with its accent fill. */
 function ThemeSwatch({ theme }) {
@@ -29,11 +29,16 @@ export default function ThemeSwitcher() {
   const [id, setId] = React.useState(() => currentTheme().id);
 
   React.useEffect(() => {
-    setId(initTheme().id);
     const root = document.documentElement;
-    const sync = (e) => { if (e.target === root) setId(e.detail.id); };
-    root.addEventListener(THEME_CHANGE_EVENT, sync);
-    return () => root.removeEventListener(THEME_CHANGE_EVENT, sync);
+    // data-mode="light|dark" on <html>, so the site can style the two kinds
+    // apart (the wordmark). It follows data-theme however that changes: this
+    // menu, a theme page's "Use this theme", or code setting the attribute.
+    const sync = () => { const theme = currentTheme(root); root.setAttribute('data-mode', theme.mode === 'light' ? 'light' : 'dark'); setId(theme.id); };
+    initTheme();
+    sync();
+    const watch = new MutationObserver(sync);
+    watch.observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => watch.disconnect();
   }, []);
 
   return (

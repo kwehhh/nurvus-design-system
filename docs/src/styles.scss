@@ -7,7 +7,7 @@ body {
   margin: 0;
   background: var(--nv-bg);
   color: var(--nv-text);
-  font: 16px/1.55 var(--nv-font-sans);
+  font: 1rem/1.55 var(--nv-font-sans); // rem: follows the reader's text size, like the package
   -webkit-font-smoothing: antialiased;
 }
 
@@ -18,12 +18,14 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 
 // Header
 // Three columns so the search sits at the true center: start | search | tools.
+// The side columns never shrink below their content (the search gives way
+// first), so the theme menu can't be pushed off the right edge.
 .dx-header {
   position: sticky;
   top: 0;
   z-index: 20;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 480px) minmax(0, 1fr);
+  grid-template-columns: minmax(max-content, 1fr) minmax(0, 480px) minmax(max-content, 1fr);
   align-items: center;
   gap: 12px;
   height: 56px;
@@ -59,9 +61,9 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
   gap: 10px;
 }
 
-// Desktop: collapses the sidebar. Phone: opens the drawer. Three bars that
-// move into a new shape (MenuToggle.jsx): bars, an arrow toward the sidebar
-// (desktop, shown), or a cross (phone, open).
+// Desktop: shows and hides the sidebar (a sidebar icon whose pane fills while
+// it shows). Phone: opens the drawer (three bars that become a cross).
+// MenuToggle.jsx.
 .dx-header .dx-menu-button {
   display: inline-flex;
   align-items: center;
@@ -101,11 +103,26 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
   span:nth-child(3) { top: 12px; }
 }
 
-// Arrow (←): the outer bars swing in from the left end to make the head.
-[data-shape="arrow"] .dx-menu-bars {
-  span:nth-child(1) { width: 10px; transform: translate(0, 6px) rotate(-45deg); }
-  span:nth-child(3) { width: 10px; transform: translate(0, -6px) rotate(45deg); }
+// Sidebar icon: the window and its divider in lines; the pane fills from the
+// left edge while the sidebar shows.
+.dx-menu-panel {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
 }
+
+.dx-menu-pane {
+  fill: currentColor;
+  stroke: none;
+  opacity: 0.4;
+  transform-box: fill-box;
+  transform-origin: left center;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+}
+
+[data-shape="panel"][data-open="false"] .dx-menu-pane { opacity: 0; transform: scaleX(0); }
 
 // Cross (×): the outer bars meet in the middle; the middle one fades.
 [data-shape="close"] .dx-menu-bars {
@@ -116,7 +133,8 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dx-menu-bars span { transition: none; }
+  .dx-menu-bars span,
+  .dx-menu-pane { transition: none; }
 }
 
 // Search: a combobox in the middle of the header.
@@ -305,6 +323,11 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 .dx-scrim { display: none; }
 
 // Phone: the sidebar becomes a drawer behind the header menu button.
+// Below this the version gives its room to the search.
+@media (max-width: 1040px) {
+  .nv-version-link { display: none; }
+}
+
 @media (max-width: 760px) {
   .dx-header { padding: 0 12px; display: flex; }
   .dx-header-tools { margin-left: auto; }
@@ -347,7 +370,8 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
     &:hover { background: color-mix(in srgb, var(--nv-text) 10%, transparent); border-color: var(--nv-border-strong); }
   }
 
-  .select-list { min-width: 270px; max-height: 480px; background: var(--nv-bg); }
+  // Tall enough for all seven themes; on a short window, as tall as fits under the header.
+  .select-list { --nurvus-select-list-height: min(560px, calc(100dvh - 72px)); min-width: 270px; background: var(--nv-bg); }
   .select-option { gap: 12px; padding-top: 7px; padding-bottom: 7px; }
 }
 
@@ -588,9 +612,112 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 // One gradient width per loop: seamless (the gradient starts and ends on accent).
 @keyframes nv-flow { to { background-position: 200% 0; } }
 
+// Light themes (html[data-mode="light"]): the letters in the logo's own blues
+// and violets, crisp, with no glow (a glow on white reads as a smudge). The
+// theme roles' rainbow is darkened for text contrast on light themes, which
+// turned the letters olive and brown. Hover and click still play.
+html[data-mode="light"] .nv-wordmark {
+  --nv-rainbow: #2c9fd0, #4664ee, #5141e9, #8a3fe0, #d04f9f, #4664ee, #2c9fd0;
+}
+
+html[data-mode="light"] .nv-wordmark-glow { opacity: 0; animation: none !important; }
+
+// The sheen: a band of light that sweeps across the letters on a click (the
+// flare, brandFx.jsx).
+.nv-wordmark-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 40%, rgb(255 255 255 / 0.95) 50%, transparent 60%) 100% 0 / 300% 100% no-repeat;
+  -webkit-mask: var(--nv-wordmark-mask) center / 100% 100% no-repeat;
+  mask: var(--nv-wordmark-mask) center / 100% 100% no-repeat;
+  opacity: 0;
+  pointer-events: none;
+}
+
+html[data-mode="light"] .nv-wordmark-sheen {
+  background-image: linear-gradient(100deg, transparent 40%, rgb(255 255 255 / 0.9) 50%, transparent 60%);
+}
+
+[data-fx="flare"] .nv-wordmark-sheen { animation: nv-sheen 0.8s cubic-bezier(0.3, 0, 0.2, 1) 0.08s both; }
+[data-fx="flare"] .nv-wordmark-glow { animation: nv-glow-flare 0.9s ease-out both; }
+
+@keyframes nv-sheen {
+  from { opacity: 1; background-position: 100% 0; }
+  to { opacity: 1; background-position: 0 0; }
+}
+
+@keyframes nv-glow-flare {
+  20% { opacity: 1; filter: blur(0.45em); }
+}
+
+// Hover (brandFx.jsx speeds the turning): the mark lifts and glows.
+.nv-brand-mark-wrap {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+}
+
+.nv-brand-fx .nv-logo {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.35s ease;
+}
+
+.nv-brand-fx:hover .nv-logo,
+.nv-brand-fx:focus-visible .nv-logo,
+.nv-brand-fx[data-hover="true"] .nv-logo {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 0.2em color-mix(in srgb, var(--nv-accent) 70%, transparent));
+}
+
+.dx-brand:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 4px; border-radius: 8px; }
+
+// Click: the flare. The mark dips and springs back, and two shock rings
+// spread from it like a shield recharging.
+[data-fx="flare"] .nv-brand-mark-wrap { animation: nv-pop 0.55s cubic-bezier(0.3, 1.6, 0.5, 1); }
+
+@keyframes nv-pop {
+  0% { transform: scale(1); }
+  25% { transform: scale(0.82); }
+  100% { transform: scale(1); }
+}
+
+.nv-burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.nv-burst span {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--nv-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0.4em var(--nv-accent), inset 0 0 0.3em var(--nv-accent);
+  opacity: 0;
+}
+
+.nv-burst span + span {
+  border-color: var(--nv-info);
+  box-shadow: 0 0 0.4em var(--nv-info), inset 0 0 0.3em var(--nv-info);
+}
+
+[data-fx="flare"] .nv-burst span { animation: nv-shock 0.75s cubic-bezier(0.1, 0.7, 0.3, 1) both; }
+[data-fx="flare"] .nv-burst span + span { animation-delay: 0.14s; }
+
+@keyframes nv-shock {
+  from { opacity: 0.95; transform: scale(0.7); }
+  to { opacity: 0; transform: scale(2.6); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .nv-wordmark-fill { animation: none; }
+  .nv-brand-fx .nv-logo { transition: none; }
+  .nv-brand-fx:hover .nv-logo,
+  .nv-brand-fx:focus-visible .nv-logo,
+  .nv-brand-fx[data-hover="true"] .nv-logo { transform: none; filter: none; }
+  [data-fx="flare"] * { animation: none !important; }
 }
+
+html[data-motion="paused"] [data-fx="flare"] * { animation: none !important; }
 
 // "Pause motion" (MotionToggle.jsx): pauses every animation on the site for
 // people who want it still (WCAG 2.2.2), remembered between visits.

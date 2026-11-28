@@ -13,11 +13,12 @@ const SIZES = [
 ];
 
 const GROUPS = [
-  ['Navigation', ['menu', 'close', 'chevron-down', 'chevron-up', 'chevron-left', 'chevron-right', 'arrow-left', 'arrow-right', 'arrow-up', 'arrow-down', 'external-link']],
-  ['Actions', ['add', 'remove', 'edit', 'copy', 'delete', 'download', 'upload', 'search', 'filter', 'sliders', 'refresh', 'undo', 'redo']],
+  ['Navigation', ['menu', 'close', 'home', 'panel-left', 'chevron-down', 'chevron-up', 'chevron-left', 'chevron-right', 'arrow-left', 'arrow-right', 'arrow-up', 'arrow-down', 'external-link', 'more-horizontal', 'more-vertical', 'maximize', 'minimize']],
+  ['Actions', ['add', 'remove', 'edit', 'copy', 'delete', 'download', 'upload', 'search', 'filter', 'sliders', 'settings', 'refresh', 'undo', 'redo', 'share', 'play', 'pause', 'sign-out']],
   ['Status', ['check', 'info', 'warning', 'error', 'help']],
-  ['Things', ['file', 'folder', 'image', 'layers', 'eye', 'eye-off', 'lock', 'unlock', 'link']],
-  ['Theme and code', ['sun', 'moon', 'code', 'terminal']],
+  ['People and time', ['user', 'users', 'mail', 'bell', 'calendar', 'clock', 'globe', 'map-pin']],
+  ['Things', ['file', 'folder', 'image', 'layers', 'grid', 'list', 'tag', 'bookmark', 'star', 'heart', 'eye', 'eye-off', 'lock', 'unlock', 'link']],
+  ['Theme and code', ['sun', 'moon', 'palette', 'sparkles', 'zap', 'code', 'terminal']],
 ];
 
 const USE = `import { Icon } from '@nurvus/ui';

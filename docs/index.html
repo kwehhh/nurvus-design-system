@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>NURVUS UI</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <!-- Apply the saved theme before the first paint; move people off the old
+    <!-- Apply the saved theme (and its mode) before the first paint; move people off the old
          2026-08 light/dark toggle's key. -->
     <script>
       try {
@@ -13,6 +13,8 @@
         if (o !== null) { if (o === 'dark' && !localStorage.getItem(k)) localStorage.setItem(k, 'tokyo-neon'); localStorage.removeItem('nurvus-theme'); }
         var t = localStorage.getItem(k);
         if (t) document.documentElement.setAttribute('data-theme', t);
+        // data-mode: light or dark, so the site can style both kinds (ThemeSwitcher keeps it in step).
+        document.documentElement.setAttribute('data-mode', !t || t === 'apollo-white' || t === 'dopamine' ? 'light' : 'dark');
       } catch (e) { /* storage blocked */ }
     </script>
   </head>

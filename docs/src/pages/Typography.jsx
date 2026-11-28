@@ -16,6 +16,8 @@ const USE = {
 
 /** A CSS custom property's value on <html>. */
 const cssVar = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+/** "1.375rem" -> "1.375rem (22px)": the token, and what it is at the default 16px. */
+const withPx = (value) => (/^[\d.]+rem$/.test(value) ? `${value} (${+(parseFloat(value) * 16).toFixed(2)}px)` : value);
 
 const WHICH = `<>
   <Title level={ 2 }>Billing</Title>
@@ -96,7 +98,7 @@ export default function Typography() {
           <div key={ r.role } className="ty-role">
             <div className="ty-role-meta">
               <Tag tone={ r.role === 'body' ? 'accent' : 'neutral' }>{ r.role }</Tag>
-              <span>{ r.size } / { r.line } · { r.weight }</span>
+              <span>{ withPx(r.size) } / { withPx(r.line) } · { r.weight }</span>
             </div>
             <Text as="p" variant={ r.role } className="ty-role-sample">
               { r.role === 'mono' ? '#245CC7 --nv-accent-fill' : 'Build the interface once.' }

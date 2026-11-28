@@ -4,6 +4,7 @@ import { components } from 'virtual:nurvus-docs';
 import Example from '../examples/Example';
 import Logo, { Wordmark } from '../components/Logo';
 import MotionToggle from '../components/MotionToggle';
+import { useBrandFx, Burst } from '../components/brandFx';
 import { href } from '../router';
 import './Home.scss';
 
@@ -139,6 +140,7 @@ ReactDOM.render(<App />, document.getElementById('root'));`;
 
 /** The front page: what NURVUS UI is, how theming works, and where to start. */
 export default function Home() {
+  const heroFx = useBrandFx();
   const light = themes.filter((t) => t.mode === 'light').length;
   const dark = themes.length - light;
   return (
@@ -153,8 +155,9 @@ export default function Home() {
             <Tag>MIT</Tag>
             <MotionToggle className="hm-motion" />
           </Layout>
-          <h1 className="hm-title">
-            <Logo id="hm-logo" motion="current" className="hm-title-mark" />
+          { /* Hover: the rings spin up; click: a flare (brandFx.jsx). Decoration only. */ }
+          <h1 className="hm-title nv-brand-fx" { ...heroFx }>
+            <span className="nv-brand-mark-wrap"><Logo id="hm-logo" motion="current" className="hm-title-mark" /><Burst /></span>
             <Wordmark className="hm-wordmark" />
           </h1>
           <p className="hm-pulse-line"><span className="hm-pulse" aria-hidden="true" />Every pixel has a pulse.</p>

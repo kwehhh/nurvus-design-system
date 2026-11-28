@@ -18,6 +18,7 @@ export function navSections(framework = 'react') {
       href: href(),
       items: [
         { name: 'Supported libraries', href: href('Guides', 'Supported libraries'), hint: 'React 16.8 to 19, Respawn, plain HTML, any stack' },
+        { name: 'React', href: href('Guides', 'React'), hint: 'Install, render, state, themes, TypeScript' },
         { name: 'Respawn', href: href('Respawn'), hint: 'Every component as plain DOM, no React' },
       ],
     },

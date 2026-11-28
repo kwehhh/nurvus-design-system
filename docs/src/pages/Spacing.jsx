@@ -42,22 +42,23 @@ export default function Spacing() {
       <h1 className="dx-page-title">Spacing</h1>
       <p className="dx-lede">
         One scale for every gap, margin and padding: a <strong>4px base</strong> with an <strong>8px rhythm</strong>,
-        plus one 2px half-step. Spacing is the same in every theme. In rem (1rem = 16px, the browser default) the steps are 0.25rem apart.
+        plus one 2px half-step. Spacing is the same in every theme. The tokens are in <strong>rem</strong>, so spacing grows with
+        the reader's text size: at the browser's default (1rem = 16px) the steps are the pixels below, 0.25rem apart.
       </p>
 
       <h2 className="gd-h2">The scale</h2>
       <table className="gd-scale">
         <thead>
-          <tr><th>Token</th><th>Value</th><th>rem</th><th aria-label="Size" /><th>Use it for</th></tr>
+          <tr><th>Token</th><th>Value</th><th>At 16px</th><th aria-label="Size" /><th>Use it for</th></tr>
         </thead>
         <tbody>
           { SPACE.map(({ n, use }) => {
-            const value = cssVar(`--space--${n}`) || `${n}px`;
+            const value = cssVar(`--space--${n}`) || `${n / 16}rem`;
             return (
               <tr key={ n }>
                 <td><code>--space--{ n }</code></td>
                 <td className="gd-value">{ value }</td>
-                <td className="gd-value">{ n ? `${n / 16}rem` : '0' }</td>
+                <td className="gd-value">{ `${n}px` }</td>
                 <td><span className="gd-bar" style={ { width: `var(--space--${n})` } } /></td>
                 <td className="gd-use">{ use }</td>
               </tr>
