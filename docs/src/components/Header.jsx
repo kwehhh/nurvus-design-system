@@ -42,13 +42,13 @@ function useLatestVersion() {
  * theme menu, GitHub. `navShown`: whether the navigation is showing (the sidebar on a
  * desktop, the drawer on a phone); the button toggles it.
  */
-export default function Header({ onMenu, navShown, phone }) {
+export default function Header({ onMenu, navShown }) {
   const version = useLatestVersion();
   const fx = useBrandFx();
   return (
     <header className="dx-header">
       <div className="dx-header-start">
-        <MenuToggle open={ navShown } phone={ phone } onClick={ onMenu } />
+        <MenuToggle open={ navShown } onClick={ onMenu } />
         <a className="dx-brand nv-brand-fx" href="#/" { ...fx }>
           <span className="nv-brand-mark-wrap"><Logo id="dx-brand-logo" motion="assemble" className="dx-brand-mark" /><Burst /></span>
           <Wordmark />

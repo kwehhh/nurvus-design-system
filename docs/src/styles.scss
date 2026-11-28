@@ -61,9 +61,10 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
   gap: 10px;
 }
 
-// Desktop: shows and hides the sidebar (a sidebar icon whose pane fills while
-// it shows). Phone: opens the drawer (three bars that become a cross).
-// MenuToggle.jsx.
+// Shows and hides the navigation (the sidebar on a desktop, the drawer on a
+// phone): three bars that move into another shape while it is open
+// (MenuToggle.jsx, MENU_MORPHS; the header uses the cross). SidebarToggle.jsx
+// (a window with a side pane) is kept for later and shares this button style.
 .dx-header .dx-menu-button {
   display: inline-flex;
   align-items: center;
@@ -103,6 +104,27 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
   span:nth-child(3) { top: 12px; }
 }
 
+.dx-menu-bars { transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+
+// Back arrow (←): the outer bars swing in from the left end to make the head.
+[data-shape="arrow"] .dx-menu-bars {
+  span:nth-child(1) { width: 10px; transform: translate(0, 6px) rotate(-45deg); }
+  span:nth-child(3) { width: 10px; transform: translate(0, -6px) rotate(45deg); }
+}
+
+// Chevron (‹): the outer bars fold to a point on the left; the middle fades.
+[data-shape="chevron"] .dx-menu-bars {
+  span:nth-child(1) { width: 9px; transform: translate(4px, 6px) rotate(-45deg); }
+  span:nth-child(2) { opacity: 0; transform: scaleX(0.2); }
+  span:nth-child(3) { width: 9px; transform: translate(4px, -6px) rotate(45deg); }
+}
+
+// Collapse (—): the outer bars slide into the middle one.
+[data-shape="merge"] .dx-menu-bars {
+  span:nth-child(1) { transform: translateY(6px); }
+  span:nth-child(3) { transform: translateY(-6px); }
+}
+
 // Sidebar icon: the window and its divider in lines; the pane fills from the
 // left edge while the sidebar shows.
 .dx-menu-panel {
@@ -124,8 +146,12 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 
 [data-shape="panel"][data-open="false"] .dx-menu-pane { opacity: 0; transform: scaleX(0); }
 
-// Cross (×): the outer bars meet in the middle; the middle one fades.
-[data-shape="close"] .dx-menu-bars {
+// Cross (×): the outer bars meet in the middle; the middle one fades. Spin
+// does the same while the whole button turns half a circle.
+[data-shape="spin"] .dx-menu-bars { transform: rotate(180deg); }
+
+[data-shape="cross"] .dx-menu-bars,
+[data-shape="spin"] .dx-menu-bars {
   span { transform-origin: center; }
   span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   span:nth-child(2) { opacity: 0; transform: scaleX(0.2); }
@@ -133,6 +159,7 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .dx-menu-bars,
   .dx-menu-bars span,
   .dx-menu-pane { transition: none; }
 }
@@ -650,7 +677,8 @@ html[data-mode="light"] .nv-wordmark-sheen {
   20% { opacity: 1; filter: blur(0.45em); }
 }
 
-// Hover (brandFx.jsx speeds the turning): the mark lifts and glows.
+// Hover (brandFx.jsx speeds the turning): the mark lifts a little. No glow
+// (round 8: a colored halo behind it was too strong).
 .nv-brand-mark-wrap {
   position: relative;
   display: inline-flex;
@@ -658,14 +686,13 @@ html[data-mode="light"] .nv-wordmark-sheen {
 }
 
 .nv-brand-fx .nv-logo {
-  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.35s ease;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .nv-brand-fx:hover .nv-logo,
 .nv-brand-fx:focus-visible .nv-logo,
 .nv-brand-fx[data-hover="true"] .nv-logo {
   transform: scale(1.08);
-  filter: drop-shadow(0 0 0.2em color-mix(in srgb, var(--nv-accent) 70%, transparent));
 }
 
 .dx-brand:focus-visible { outline: 2px solid var(--nv-accent); outline-offset: 4px; border-radius: 8px; }
@@ -686,27 +713,41 @@ html[data-mode="light"] .nv-wordmark-sheen {
   pointer-events: none;
 }
 
+// Two thin rings that spread from the mark: crisp lines (1.5px whatever their
+// size: they grow by their inset, not by scaling), a small glow, and an
+// ease-out that starts fast and glides, the second one a beat behind and a
+// little wider so they move like a ripple on water.
 .nv-burst span {
   position: absolute;
-  inset: 0;
-  border: 2px solid var(--nv-accent);
+  inset: 10%;
+  border: 1.5px solid var(--nv-accent);
   border-radius: 50%;
-  box-shadow: 0 0 0.4em var(--nv-accent), inset 0 0 0.3em var(--nv-accent);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--nv-accent) 45%, transparent);
   opacity: 0;
 }
 
 .nv-burst span + span {
   border-color: var(--nv-info);
-  box-shadow: 0 0 0.4em var(--nv-info), inset 0 0 0.3em var(--nv-info);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--nv-info) 45%, transparent);
 }
 
-[data-fx="flare"] .nv-burst span { animation: nv-shock 0.75s cubic-bezier(0.1, 0.7, 0.3, 1) both; }
-[data-fx="flare"] .nv-burst span + span { animation-delay: 0.14s; }
+[data-fx="flare"] .nv-burst span { animation: nv-shock 0.95s cubic-bezier(0.16, 1, 0.3, 1) both; }
+[data-fx="flare"] .nv-burst span + span { animation: nv-shock-2 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both; }
 
 @keyframes nv-shock {
-  from { opacity: 0.95; transform: scale(0.7); }
-  to { opacity: 0; transform: scale(2.6); }
+  0% { opacity: 0; inset: 10%; }
+  8% { opacity: 1; }
+  60% { opacity: 0.45; }
+  100% { opacity: 0; inset: -70%; }
 }
+
+@keyframes nv-shock-2 {
+  0% { opacity: 0; inset: 10%; }
+  10% { opacity: 0.9; }
+  60% { opacity: 0.35; }
+  100% { opacity: 0; inset: -95%; }
+}
+
 
 @media (prefers-reduced-motion: reduce) {
   .nv-wordmark-fill { animation: none; }

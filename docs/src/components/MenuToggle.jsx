@@ -1,40 +1,36 @@
 import React from 'react';
 
+/** The shapes the three bars can turn into while the navigation is open. */
+export const MENU_MORPHS = [
+  { id: 'cross', name: 'Cross', about: 'The outer bars cross, the middle one fades: close. The most common.' },
+  { id: 'arrow', name: 'Back arrow', about: 'The outer bars swing in to make an arrow pointing at the sidebar.' },
+  { id: 'chevron', name: 'Chevron', about: 'The bars fold into a ‹: slide it away, without the arrow\'s shaft.' },
+  { id: 'merge', name: 'Collapse', about: 'The outer bars slide into the middle one: three become one, folded.' },
+  { id: 'spin', name: 'Spin to cross', about: 'The cross, turning half a circle on the way: livelier.' },
+];
+
 /**
- * The header's navigation button, in the shapes people know:
- *  - Desktop, where the sidebar is docked beside the page: a sidebar icon (a
- *    window with a side pane, as in VS Code, ChatGPT or Linear). Its pane is
- *    filled while the sidebar shows and slides empty when it's hidden.
- *  - Phone, where the navigation is a drawer over the page: three bars that
- *    turn into a cross while it is open (the bars move; they aren't swapped).
- * Changes are one smooth motion (instant for reduced motion).
+ * The header's navigation button: three bars (the hamburger) that move into
+ * another shape while the navigation is open (`morph`, default a cross), and
+ * back. The bars move, they aren't swapped, so it is one smooth motion
+ * (instant for reduced motion).
  */
-export default function MenuToggle({ open, phone, onClick }) {
-  const shape = phone ? (open ? 'close' : 'bars') : 'panel';
+export default function MenuToggle({ open, onClick, morph = 'cross', controls = 'dx-sidebar' }) {
   return (
     <button
       type="button"
       className="dx-menu-button"
-      data-shape={ shape }
-      data-open={ open }
+      data-shape={ open ? morph : 'bars' }
       onClick={ onClick }
       aria-label={ open ? 'Hide navigation' : 'Show navigation' }
       aria-expanded={ open }
-      aria-controls="dx-sidebar"
+      aria-controls={ controls }
     >
-      { phone ? (
-        <span className="dx-menu-bars" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </span>
-      ) : (
-        <svg className="dx-menu-panel" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
-          <path className="dx-menu-pane" d="M9 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4z" />
-          <rect x="3" y="4" width="18" height="16" rx="2" />
-          <path d="M9 4v16" />
-        </svg>
-      ) }
+      <span className="dx-menu-bars" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </span>
     </button>
   );
 }
