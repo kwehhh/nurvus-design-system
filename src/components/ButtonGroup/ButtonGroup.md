@@ -1,25 +1,21 @@
 ```jsx
-import { Button, ButtonGroup, Layout } from '@nurvus/ui';
-import AddIcon from '@material-ui/icons/Add';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
+import { Button, ButtonGroup, Icon, Layout } from '@nurvus/ui';
 
 <Layout>
   <ButtonGroup>
-    <Button><AddIcon /></Button>
-    <Button><FileCopyIcon /></Button>
-    <Button disabled={ true }><RemoveRedEyeIcon /></Button>
-    <Button><LockOpenIcon /></Button>
+    <Button aria-label="Add"><Icon name="add" size="1.25em" /></Button>
+    <Button aria-label="Copy"><Icon name="copy" size="1.25em" /></Button>
+    <Button disabled={ true } aria-label="Show"><Icon name="eye" size="1.25em" /></Button>
+    <Button aria-label="Unlock"><Icon name="unlock" size="1.25em" /></Button>
   </ButtonGroup>
 
   <ButtonGroup>
-    <Button disabled={ true }><RemoveRedEyeIcon /></Button>
-    <Button><LockOpenIcon /></Button>
+    <Button disabled={ true } aria-label="Show"><Icon name="eye" size="1.25em" /></Button>
+    <Button aria-label="Unlock"><Icon name="unlock" size="1.25em" /></Button>
   </ButtonGroup>
 
   <ButtonGroup>
-    <Button><LockOpenIcon /></Button>
+    <Button aria-label="Unlock"><Icon name="unlock" size="1.25em" /></Button>
   </ButtonGroup>
 </Layout>
 ```

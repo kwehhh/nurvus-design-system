@@ -31,9 +31,7 @@ import { Text } from '@nurvus/ui';
 
 Using Text Overflow
 ```jsx
-import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
-import AddIcon from '@material-ui/icons/Add';
-import { Button, Layout, Text } from '@nurvus/ui';
+import { Button, Icon, Layout, Text } from '@nurvus/ui';
 
 const overflowStyle = {
   textOverflow: 'ellipsis',
@@ -43,8 +41,8 @@ const overflowStyle = {
 
 <Layout display="flex" alignItems="center" justifyContent="space-between">
   <Text style={ overflowStyle }>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
-  <Button>
-    <AddIcon />
+  <Button aria-label="Add">
+    <Icon name="add" size="1.25em" />
   </Button>
 </Layout>
 ```

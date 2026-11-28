@@ -1,0 +1,10 @@
+@import "../../styles/variables.scss";
+
+// Icons sit on the text's baseline like a letter: 1em tall, nudged down an
+// eighth so their middle lines up with the middle of capitals and lowercase.
+.#{$cls-prefix}.icon {
+  display: inline-block;
+  flex: none;
+  vertical-align: -0.125em;
+  overflow: visible;
+}

@@ -46,9 +46,11 @@ export interface SpawnProps extends ElementProps {
   children?: Child | ((el: HTMLElement) => void);
   /** Appends the new element to this one. */
   mountEl?: Element;
+  /** Makes the element in this namespace, e.g. 'http://www.w3.org/2000/svg' for SVG (Icon uses it). */
+  namespace?: string;
 }
 
-const SKIP = new Set(['tag', 'children', 'className', 'events', 'style', 'mountEl', 'key', 'ref']);
+const SKIP = new Set(['tag', 'children', 'className', 'events', 'style', 'mountEl', 'namespace', 'key', 'ref']);
 const RENAME: Record<string, string> = { htmlFor: 'for', acceptCharset: 'accept-charset', httpEquiv: 'http-equiv' };
 // Attributes whose value is the text "true" / "false" (React writes these as such).
 const BOOLEANISH = new Set(['draggable', 'spellcheck', 'contenteditable']);
@@ -137,8 +139,8 @@ export function toNode(child: Child): Node {
  */
 export function spawn<E extends HTMLElement = HTMLElement>(props: SpawnProps | HTMLElement = {}): E {
   if (isNode(props)) return props as E;
-  const { tag = 'div', children, className, events, style, mountEl } = props;
-  const el = document.createElement(tag) as E;
+  const { tag = 'div', children, className, events, style, mountEl, namespace } = props;
+  const el = (namespace ? document.createElementNS(namespace, tag) : document.createElement(tag)) as E;
   if (className) el.setAttribute('class', className);
   Object.keys(props).forEach((key) => { if (!SKIP.has(key)) applyAttribute(el, key, props[key]); });
   if (style) applyStyle(el, style);

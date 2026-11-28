@@ -7,6 +7,7 @@ import './components/FullPageModal/FullPageModal.scss';
 import './components/HistoryList/HistoryList.scss';
 import './components/Layout/Layout.scss';
 import './components/Link/Link.scss';
+import './components/Icon/Icon.scss';
 import './components/Tree/Tree.scss';
 import './components/Menu/Menu.scss';
 import './components/Select/Select.scss';

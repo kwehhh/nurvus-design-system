@@ -1,3 +1,5 @@
+**Tree or Menu?** Tree picks an item in a list on the same page (layers, folders, outline). To take people to other pages, use [Menu](#/Components/Menu): its rows are links in a `<nav>`.
+
 A list of rows to pick from, nested like a layers panel. Click a row, or use the keyboard: Tab reaches the active row, ↑ ↓ move, → goes to a child row, ← to its parent, Enter or Space picks.
 ```jsx
 import { Tree } from '@nurvus/ui';
@@ -26,16 +28,14 @@ const Layers = () => {
 
 Draw your own rows with `itemRenderer`, e.g. a layer's name with its show and lock icons.
 ```jsx
-import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-import { Layout, Text, Tree } from '@nurvus/ui';
+import { Icon, Layout, Text, Tree } from '@nurvus/ui';
 
 const itemRenderer = ({ label }) => (
   <Layout display="flex" alignItems="center" justifyContent="space-between">
     <Text>{ label }</Text>
     <Layout display="flex" alignItems="center" itemSpacing={ 4 }>
-      <RemoveRedEyeIcon fontSize="small" />
-      <LockOpenIcon fontSize="small" />
+      <Icon name="eye" />
+      <Icon name="unlock" />
     </Layout>
   </Layout>
 );

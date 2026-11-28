@@ -75,6 +75,9 @@ Themes nest (`<nav data-theme="tokyo-neon">` inside a light page), and your own 
 - **`Tree`** is the nested, selectable list that `Menu` used to be (a layers panel), now with keyboard support. `Menu` given the old props (`items`, `activePath`) still draws a `Tree` and warns once, so old code keeps working until you rename it.
 - New: **`Select`**, pick one value from a list (the WAI-ARIA select-only combobox).
 
+### New in 0.1.0-alpha.15
+- **`Icon`**: 42 icons drawn for NURVUS on a 24-unit grid, in the text color, **1em by default** so an icon is as big as the text it sits in (`<Icon name="search" />`; `label` for an icon that stands alone). Names are typed (`IconName`); `ICONS` / `ICON_NAMES` list them. Same markup in `@nurvus/ui/respawn`.
+
 ### Docs
 Every component and theme, with live examples you can edit and each component's props: **https://design.nurvus.ai/**
 
