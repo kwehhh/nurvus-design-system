@@ -1,0 +1,93 @@
+// Brand page. The logo panels use the brand's own two colors (#0B1326 and
+// white), not the theme: they show the files as they are.
+
+.br-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space--16);
+}
+
+.br-panel {
+  display: grid;
+  place-items: center;
+  padding: var(--space--32);
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+}
+
+.br-panel-dark { background: #0b1326; color: #f4f5f8; }
+.br-panel-light { background: #ffffff; color: #0b1326; }
+
+.br-logo { width: min(220px, 100%); height: auto; }
+
+.br-files {
+  display: grid;
+  gap: var(--space--8);
+  margin: 0 0 var(--space--16);
+  padding: 0;
+  list-style: none;
+
+  li { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: var(--space--12); align-items: baseline; }
+  a { font-family: var(--nv-font-mono); font-size: 13px; color: var(--nv-accent); }
+  span { color: var(--nv-text-muted); font-size: 14px; }
+}
+
+.br-wordmark-panel { margin-bottom: var(--space--16); }
+.br-wordmark-img { width: min(420px, 100%); height: auto; }
+
+.br-ui {
+  padding: var(--space--24);
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+  background: var(--nv-surface);
+  font-size: 44px;
+  line-height: 1;
+}
+
+.br-motions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space--16);
+}
+
+.br-motion {
+  margin: 0;
+  border: 1px solid var(--nv-border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--nv-surface);
+
+  figcaption {
+    display: grid;
+    gap: var(--space--4);
+    padding: var(--space--12) var(--space--16) var(--space--16);
+    color: var(--nv-text-muted);
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  strong { color: var(--nv-text); font-size: 16px; }
+}
+
+.br-motion-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space--8); }
+
+.br-stage {
+  display: grid;
+  place-items: center;
+  height: 200px;
+  background: #0b1326;
+  overflow: hidden;
+}
+
+.br-mark { width: 132px; height: 132px; }
+
+@media (max-width: 1100px) {
+  .br-motions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .br-pair,
+  .br-motions { grid-template-columns: minmax(0, 1fr); }
+  .br-files li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .br-ui { font-size: 28px; }
+}

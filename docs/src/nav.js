@@ -25,8 +25,10 @@ export function navSections(framework = 'react') {
       id: 'foundations',
       name: 'Foundations',
       items: [
+        { name: 'Brand', href: href('Foundations', 'Brand'), hint: 'The logo, its files and letters, and how it moves' },
         { name: 'Spacing', href: href('Foundations', 'Spacing'), hint: '4px base, 8px rhythm' },
         { name: 'Typography', href: href('Foundations', 'Typography'), hint: 'Inter, the type scale, Text and Title' },
+        { name: 'Icons', href: href('Foundations', 'Icons'), hint: 'The NURVUS icon set, sized in em' },
         { name: 'Animated type', href: href('Foundations', 'Animated type'), hint: 'Variable weight, letter by letter, shine, neon' },
       ],
     },

@@ -7,9 +7,11 @@
 
 /** The criteria the tags name: number -> name, level, and its W3C "Understanding" page. */
 export const CRITERIA = {
+  '1.1.1': { name: 'Non-text Content', level: 'A', slug: 'non-text-content' },
   '1.3.1': { name: 'Info and Relationships', level: 'A', slug: 'info-and-relationships' },
   '1.4.1': { name: 'Use of Color', level: 'A', slug: 'use-of-color' },
   '1.4.3': { name: 'Contrast (Minimum)', level: 'AA', slug: 'contrast-minimum' },
+  '1.4.11': { name: 'Non-text Contrast', level: 'AA', slug: 'non-text-contrast' },
   '2.1.1': { name: 'Keyboard', level: 'A', slug: 'keyboard' },
   '2.3.3': { name: 'Animation from Interactions', level: 'AAA', slug: 'animation-from-interactions' },
   '2.4.7': { name: 'Focus Visible', level: 'AA', slug: 'focus-visible' },
@@ -48,6 +50,12 @@ export const COMPONENT_A11Y = {
       'It is not marked as a dialog yet (role="dialog", aria-modal, a label), so screen readers don\'t announce it as one.',
       'Focus doesn\'t move into it when it opens, stay inside it, or go back when it closes; Esc doesn\'t close it.',
     ],
+  },
+  Icon: {
+    meets: {
+      '1.1.1': 'Without a label an icon is decorative and hidden from screen readers (the words beside it say it); with a label it is an image with that name.',
+      '1.4.11': 'Drawn in the text color (currentColor): 4.5:1 or more in every theme, above the 3:1 an icon needs.',
+    },
   },
   HistoryList: {
     meets: {

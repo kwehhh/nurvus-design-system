@@ -12,6 +12,8 @@ import ApplyingTheme from './pages/ApplyingTheme';
 import Spacing from './pages/Spacing';
 import Typography from './pages/Typography';
 import AnimatedType from './pages/AnimatedType';
+import Brand from './pages/Brand';
+import Icons from './pages/Icons';
 import ThemeStudio from './pages/ThemeStudio';
 import AccessibilityReport from './pages/AccessibilityReport';
 import RespawnGuide from './pages/RespawnGuide';
@@ -36,6 +38,8 @@ function resolve(route) {
   if (section === 'Themes' && name === 'Accessibility report' && !kind) return { page: <AccessibilityReport />, title: name, current: href('Themes', name) };
   if (section === 'Foundations' && name === 'Spacing' && !kind) return { page: <Spacing />, title: name, current: href('Foundations', name) };
   if (section === 'Foundations' && name === 'Typography' && !kind) return { page: <Typography />, title: name, current: href('Foundations', name) };
+  if (section === 'Foundations' && name === 'Icons' && !kind) return { page: <Icons />, title: name, current: href('Foundations', name) };
+  if (section === 'Foundations' && name === 'Brand' && !kind) return { page: <Brand />, title: name, current: href('Foundations', name) };
   if (section === 'Foundations' && name === 'Animated type' && !kind) return { page: <AnimatedType />, title: name, current: href('Foundations', name) };
   if (section === 'Guides' && name === 'Supported libraries' && !kind) return { page: <SupportedLibraries />, title: name, current: href('Guides', name) };
   // Respawn: the guide, then one page per component. #/Guides/Respawn was its first address.

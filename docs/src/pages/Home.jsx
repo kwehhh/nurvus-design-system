@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Layout, Panel, Table, Tag, Text, Title, themes, setTheme, themeRoles } from '@nurvus/ui';
 import { components } from 'virtual:nurvus-docs';
 import Example from '../examples/Example';
-import Logo from '../components/Logo';
+import Logo, { Wordmark } from '../components/Logo';
 import MotionToggle from '../components/MotionToggle';
 import { href } from '../router';
 import './Home.scss';
@@ -154,8 +154,8 @@ export default function Home() {
             <MotionToggle className="hm-motion" />
           </Layout>
           <h1 className="hm-title">
-            <Logo id="hm-logo" spin className="hm-title-mark" />
-            <span className="hm-neon" data-text="NURVUS UI">NURVUS UI</span>
+            <Logo id="hm-logo" motion="current" className="hm-title-mark" />
+            <Wordmark className="hm-wordmark" />
           </h1>
           <p className="hm-pulse-line"><span className="hm-pulse" aria-hidden="true" />Every pixel has a pulse.</p>
           <p className="hm-about">

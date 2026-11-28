@@ -3,7 +3,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import ThemeSwitcher from './ThemeSwitcher';
 import MenuToggle from './MenuToggle';
-import Logo from './Logo';
+import Logo, { Wordmark } from './Logo';
 import Search from './Search';
 import pkg from '../../../package.json';
 
@@ -39,7 +39,7 @@ export default function Header({ onMenu, navShown, phone }) {
     <header className="dx-header">
       <div className="dx-header-start">
         <MenuToggle open={ navShown } phone={ phone } onClick={ onMenu } />
-        <a className="dx-brand" href="#/"><Logo id="dx-brand-logo" className="dx-brand-mark" />NURVUS UI</a>
+        <a className="dx-brand" href="#/"><Logo id="dx-brand-logo" motion="current" className="dx-brand-mark" /><Wordmark /></a>
       </div>
       <Search id="dx-search" shortcut className="dx-search-header" />
       <div className="dx-header-tools">

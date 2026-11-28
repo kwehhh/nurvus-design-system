@@ -144,6 +144,24 @@ let list = HistoryList({
 app.append(list);`,
   },
   {
+    name: 'Icon',
+    about: 'An <svg> icon from the NURVUS set: 1em, in the text color. update({ name }) swaps it.',
+    code: `import { Button, Icon, Layout, Text } from '@nurvus/ui/respawn';
+
+let state = Icon({ name: 'lock', label: 'Locked', size: 20 });
+
+app.append(Layout({
+  display: 'flex',
+  alignItems: 'center',
+  itemSpacing: 12,
+  children: [
+    state,
+    Button({ type: 'secondary', children: [Icon({ name: 'unlock' }), ' Unlock'], onClick: () => { state = state.update({ name: 'unlock', label: 'Unlocked' }); } }),
+    Text({ tone: 'muted', children: [Icon({ name: 'info' }), ' Icons are 1em: as big as this text.'] }),
+  ],
+}));`,
+  },
+  {
     name: 'Layout',
     about: 'Puts its children in a column or a row, with space from the 4px grid between them.',
     code: `import { Layout, Tag } from '@nurvus/ui/respawn';
@@ -333,12 +351,13 @@ app.append(tree, status);`,
 ];
 
 export const RETURNS = {
-  Button: '<button>', ButtonGroup: '<div>', FullPageModal: '<div class="portal">', HistoryList: '<ol>', Layout: '<div>', Link: '<a>',
+  Button: '<button>', ButtonGroup: '<div>', FullPageModal: '<div class="portal">', HistoryList: '<ol>', Icon: '<svg>', Layout: '<div>', Link: '<a>',
   Menu: '<nav>', Panel: '<section>', Progress: '<div>', Select: '<div>', Table: '<table>', Tag: '<span>', Text: '<span> (or as)', Title: '<h1> to <h6>', Tree: '<div>',
 };
 export const NOTES = {
   FullPageModal: 'Mount it on document.body. update({ visible }) animates it in or out and keeps the same element.',
   HistoryList: 'A click calls onJump(step). Move the current step with update({ index }).',
+  Icon: 'update({ name }) draws another icon in its place.',
   Menu: 'A toggle opens or closes its section in place, then calls onToggle(id, open). update({ current }) marks another page.',
   Select: 'Opening, moving and picking change it in place; picking calls onChange(value, option). update({ value }) sets it from code.',
   Tree: 'A click (or Enter) marks the row active (same element), then calls onClick(event, path).',

@@ -43,6 +43,7 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 }
 
 .dx-brand-mark { width: 28px; height: 28px; flex: none; }
+.dx-brand .nv-wordmark { height: 0.8em; }
 
 .dx-header-start {
   display: flex;
@@ -469,23 +470,126 @@ code { font-family: var(--nv-font-mono); font-size: 0.9em; }
 .dx-isolated .dx-example { border: 0; margin: 0; }
 .dx-isolated-back { display: inline-block; margin-bottom: 16px; font-size: 14px; }
 
-// The NURVUS logo (Logo.jsx). With data-spin its two currents turn slowly,
-// opposite ways, each about the ring's center (an invisible circle in each
-// current centers its box on the ring).
+// The NURVUS logo (Logo.jsx). Each "current" (ring of segments) turns about
+// the ring's center: an invisible circle in each one centers its box there.
+// data-motion picks the motion; Foundations > Brand shows them all.
 .nv-logo { display: block; overflow: visible; }
 
-.nv-logo-current {
+.nv-logo-current,
+.nv-logo-depth {
   transform-box: fill-box;
   transform-origin: center;
 }
 
-.nv-logo[data-spin] .nv-logo-outer { animation: nv-current 60s linear infinite; }
-.nv-logo[data-spin] .nv-logo-inner { animation: nv-current 90s linear infinite reverse; }
-
 @keyframes nv-current { to { transform: rotate(360deg); } }
 
+// Current: slow, opposite ways.
+.nv-logo[data-motion="current"] .nv-logo-outer,
+.nv-logo[data-motion="assemble"] .nv-logo-outer { animation: nv-current 60s linear infinite; }
+.nv-logo[data-motion="current"] .nv-logo-inner,
+.nv-logo[data-motion="assemble"] .nv-logo-inner { animation: nv-current 90s linear infinite reverse; }
+
+// Whirlpool: the same way, the inner ring faster, sinking and rising.
+.nv-logo[data-motion="whirlpool"] .nv-logo-outer { animation: nv-current 24s linear infinite; }
+.nv-logo[data-motion="whirlpool"] .nv-logo-inner { animation: nv-current 12s linear infinite; }
+.nv-logo[data-motion="whirlpool"] .nv-logo-inner .nv-logo-depth { animation: nv-sink 6s ease-in-out infinite alternate; }
+
+@keyframes nv-sink { to { transform: scale(0.86); } }
+
+// Ripple: each segment drifts outward along its own line, one after another.
+.nv-logo[data-motion="ripple"] .nv-logo-seg {
+  animation: nv-ripple 3.2s ease-in-out infinite;
+  animation-delay: calc(var(--a) * -3.2s);
+}
+
+@keyframes nv-ripple {
+  0%, 100% { transform: none; }
+  50% { transform: translate(calc(var(--ux) * 16px), calc(var(--uy) * 16px)); }
+}
+
+// Pulse: a light runs round the ring.
+.nv-logo[data-motion="pulse"] .nv-logo-seg {
+  animation: nv-glint 2.4s ease-in-out infinite;
+  animation-delay: calc(var(--a) * 2.4s - 2.4s);
+}
+
+@keyframes nv-glint {
+  0%, 100% { opacity: 0.45; }
+  12% { opacity: 1; }
+  40% { opacity: 0.45; }
+}
+
+// Spectrum: the colors drift round the color wheel while the rings turn.
+.nv-logo[data-motion="spectrum"] { animation: nv-spectrum 14s linear infinite; }
+.nv-logo[data-motion="spectrum"] .nv-logo-outer { animation: nv-current 60s linear infinite; }
+.nv-logo[data-motion="spectrum"] .nv-logo-inner { animation: nv-current 90s linear infinite reverse; }
+
+@keyframes nv-spectrum { to { filter: hue-rotate(360deg); } }
+
+// Assemble: segments fly in from outside, once, then the rings turn (above).
+.nv-logo[data-motion="assemble"] .nv-logo-seg {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: nv-assemble 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--a) * 0.6s);
+}
+
+@keyframes nv-assemble {
+  from { opacity: 0; transform: translate(calc(var(--ux) * 180px), calc(var(--uy) * 180px)) rotate(-60deg) scale(0.4); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .nv-logo[data-spin] .nv-logo-current { animation: none; }
+  .nv-logo[data-motion],
+  .nv-logo[data-motion] .nv-logo-current,
+  .nv-logo[data-motion] .nv-logo-depth,
+  .nv-logo[data-motion] .nv-logo-seg { animation: none !important; } // beats the more specific motion rules (whirlpool's sink)
+}
+
+// "NURVUS UI" in the logo's letters (Wordmark in Logo.jsx): the letters are a
+// mask over the theme's flowing rainbow (accent, info, success, warning,
+// danger), with a blurred copy behind for the glow. Height follows font-size:
+// the letters are as tall as the text's capitals.
+.nv-wordmark {
+  --nv-rainbow: var(--nv-accent), var(--nv-info), var(--nv-success), var(--nv-warning), var(--nv-danger), var(--nv-accent);
+  position: relative;
+  display: inline-block;
+  flex: none;
+  height: 0.74em;
+  aspect-ratio: 817 / 86;
+  vertical-align: baseline;
+}
+
+.nv-wordmark-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.nv-wordmark-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--nv-rainbow)) 0 0 / 200% 100%;
+  -webkit-mask: var(--nv-wordmark-mask) center / 100% 100% no-repeat;
+  mask: var(--nv-wordmark-mask) center / 100% 100% no-repeat;
+  animation: nv-flow 8s linear infinite;
+}
+
+.nv-wordmark-glow {
+  position: absolute;
+  inset: 0;
+  filter: blur(0.3em);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+// One gradient width per loop: seamless (the gradient starts and ends on accent).
+@keyframes nv-flow { to { background-position: 200% 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .nv-wordmark-fill { animation: none; }
 }
 
 // "Pause motion" (MotionToggle.jsx): pauses every animation on the site for
