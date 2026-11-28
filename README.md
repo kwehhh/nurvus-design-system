@@ -78,6 +78,13 @@ Themes nest (`<nav data-theme="tokyo-neon">` inside a light page), and your own 
 ### New in 0.1.0-alpha.15
 - **`Icon`**: icons drawn for NURVUS on a 24-unit grid, in the text color, **1em by default** so an icon is as big as the text it sits in (`<Icon name="search" />`; `label` for an icon that stands alone). Names are typed (`IconName`); `ICONS` / `ICON_NAMES` list them. Same markup in `@nurvus/ui/respawn`.
 
+### New in 0.1.0-alpha.18
+- **`NavToggle`**: the button that shows and hides navigation. The hamburger (even or asymmetric lines; eight ways to turn into a close mark: slide, cross, squeeze, elastic, spin, arrow, chevron, collapse) or the sidebar icon (its pane fills while the sidebar shows; closed, it shrinks away and the divider slides left). Says what it will do and whether it is open.
+- **`Tooltip`**: a short label for a control, on hover (after a short rest) and keyboard focus, with an optional shortcut as key caps. WCAG 1.4.13: Esc hides it, the pointer can move onto it, it stays while hovered or focused. Describes the control (`aria-describedby`).
+- **`Kbd`**: key caps for shortcuts (`<kbd>` per key), sized in em. `modKey()` returns ⌘ on Apple devices and Ctrl elsewhere.
+- **`Anchor`**: the list icon before its title, a dot at each end of the rail, the highlight over every section in view (the first is `aria-current`), and `fade`: a soft wash behind the row being read.
+- **`align-left` icon** (72).
+
 ### New in 0.1.0-alpha.17
 - **`Dropdown`**: a button that opens a menu of actions (the WAI-ARIA menu button: `aria-haspopup`, ↓ / ↑ / Enter / Space open it, Esc and choosing put focus back on the button, a click outside or Tab closes it).
 - **`Anchor`**: "On this page". A rail beside the rows bends in and out with the nesting, and a highlight slides along it to the section in view (scroll-spy on the page or inside `scrollRoot`); picking a row scrolls there and moves focus. Drawn from the items alone (rows are 1.75rem), so it renders the same on the server.

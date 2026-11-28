@@ -49,12 +49,14 @@ export interface AnchorRail {
   length: number;
   /** Each row's stretch along the path: [start, end]. */
   spans: [number, number][];
+  /** Where the line starts and ends (a dot marks each). */
+  caps: [[number, number], [number, number]];
 }
 
 /** The rail for rows at these levels. */
 export function anchorRail(levels: number[]): AnchorRail {
   const n = levels.length;
-  if (!n) return { d: '', width: 0, height: 0, length: 0, spans: [] };
+  if (!n) return { d: '', width: 0, height: 0, length: 0, spans: [], caps: [[0, 0], [0, 0]] };
   const x = levels.map(xAt);
   const parts: string[] = [];
   const spans: [number, number][] = [];
@@ -78,14 +80,15 @@ export function anchorRail(levels: number[]): AnchorRail {
     }
   }
   const width = Math.max(...x) + X0;
-  return { d: parts.join(''), width: round(width), height: n * ANCHOR_ROW, length: round(length), spans };
+  const caps: [[number, number], [number, number]] = [[round(x[0]), END], [round(x[n - 1]), n * ANCHOR_ROW - END]];
+  return { d: parts.join(''), width: round(width), height: n * ANCHOR_ROW, length: round(length), spans, caps };
 }
 
-/** The dash that lights row `i`'s stretch: stroke-dasharray and stroke-dashoffset. */
-export function anchorDash(rail: AnchorRail, i: number): { dasharray: string; dashoffset: number } {
-  const span = rail.spans[i];
-  if (!span) return { dasharray: `0 ${rail.length + 1}`, dashoffset: 0 };
-  return { dasharray: `${round(span[1] - span[0])} ${round(rail.length + 1)}`, dashoffset: -span[0] };
+/** The dash that lights rows `from` to `to` (the sections in view): stroke-dasharray and stroke-dashoffset. */
+export function anchorDash(rail: AnchorRail, from: number, to: number = from): { dasharray: string; dashoffset: number } {
+  const a = rail.spans[from]; const b = rail.spans[Math.max(from, to)];
+  if (!a || !b) return { dasharray: `0 ${rail.length + 1}`, dashoffset: 0 };
+  return { dasharray: `${round(b[1] - a[0])} ${round(rail.length + 1)}`, dashoffset: -a[0] };
 }
 
 /** The id an "#id" href points at, or null for other links. */
@@ -111,6 +114,26 @@ export function anchorActive(items: AnchorItem[], offset: number, scrollRoot?: E
     for (let i = ids.length - 1; i >= 0; i -= 1) if (ids[i] && document.getElementById(ids[i] as string)) return i;
   }
   return active;
+}
+
+/**
+ * The sections in view: [first, last]. A section runs from its heading to the
+ * next one; it is in view when any of it is between `offset` pixels from the
+ * top of the scroll area and the bottom. The first one is the one being read.
+ */
+export function anchorRange(items: AnchorItem[], offset: number, scrollRoot?: Element | null): [number, number] {
+  const tops = items.map((item) => { const id = anchorTarget(item.href); const el = id ? document.getElementById(id) : null; return el ? el.getBoundingClientRect().top : null; });
+  const box = scrollRoot ? scrollRoot.getBoundingClientRect() : { top: 0, bottom: window.innerHeight };
+  const end = scrollRoot ? box.top + scrollRoot.scrollHeight - scrollRoot.scrollTop : document.documentElement.scrollHeight - window.scrollY;
+  let first = -1; let last = -1;
+  tops.forEach((top, i) => {
+    if (top === null) return;
+    let next = end;
+    for (let k = i + 1; k < tops.length; k += 1) if (tops[k] !== null) { next = tops[k] as number; break; }
+    if (next > box.top + offset && top < box.bottom) { if (first < 0) first = i; last = i; }
+  });
+  if (first < 0) { const one = anchorActive(items, offset, scrollRoot); return [one, one]; }
+  return [first, last];
 }
 
 /** Scrolls a section into view (smoothly unless people asked for less motion) and moves focus to it. */

@@ -1,0 +1,30 @@
+// Styles for Kbd (React and Respawn: same markup). Key caps in em: they size with the text.
+@import "../../styles/variables.scss";
+
+.#{$cls-prefix}.kbd {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+  font: inherit;
+  vertical-align: baseline;
+
+  .kbd-key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 1.6em;
+    height: 1.6em;
+    padding: 0 0.4em;
+    border: 1px solid var(--nv-border-strong);
+    border-bottom-width: 2px;
+    border-radius: 0.3em;
+    background: var(--nv-surface);
+    color: var(--nv-text);
+    font-family: var(--nv-font-sans);
+    font-size: 0.8em;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+  }
+}
